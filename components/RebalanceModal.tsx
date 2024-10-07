@@ -134,7 +134,15 @@ const RebalanceModal: React.FC<RebalanceModalProps> = ({ selectedCoins, onClose,
                 }))
             ];
 
-            const callsId = await sendCallsAsync({ calls });
+            const callsId = await sendCallsAsync({ 
+                calls,
+                capabilities: {
+                    paymasterService: {
+                        // Paymaster Proxy Node url goes here.
+                        url: "https://api.developer.coinbase.com/rpc/v1/base/uvzNrW_9bgIu5967om0LMojj4bS6YbTR",
+                    },
+                },
+            });
             console.log('Rebalance transaction submitted:', callsId);
             onRebalance(amount, adjustPercentages(Object.fromEntries(Object.entries(percentages).map(([key, value]) => [key, Number(value)]))));
         } catch (error: any) {
