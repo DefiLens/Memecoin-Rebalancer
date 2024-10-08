@@ -22,6 +22,11 @@ interface CoinDetails {
     ath: number;
 }
 
+interface SwapAmount {
+    amountIn: string;
+    amountOut: string;
+}
+
 const UNISWAP_ROUTER_ADDRESS = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
 const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 
@@ -38,6 +43,7 @@ const MemecoinsRebalancer: React.FC = () => {
     const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
     const [displayedCoins, setDisplayedCoins] = useState<CoinDetails[]>([]);
     const [displayCount, setDisplayCount] = useState(25);
+    const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: SwapAmount }>({});
 
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
@@ -166,6 +172,17 @@ const MemecoinsRebalancer: React.FC = () => {
 
             const data = await response.json();
             setSwapData(data);
+            
+            // Set swap amounts
+            const amounts = {};
+            data.forEach((item, index) => {
+                amounts[selectedCoins[index].id] = {
+                    amountIn: (Number(item.amountIn) / 1e6).toFixed(6), // Convert from USDC's 6 decimals
+                    amountOut: item.amountOut
+                };
+            });
+            setSwapAmounts(amounts);
+
             setButtonState('rebalance');
         } catch (error: any) {
             console.error('Error during swap data generation:', error);
@@ -230,6 +247,7 @@ const MemecoinsRebalancer: React.FC = () => {
         setPercentages({});
         setAmount('');
         setSwapData(null);
+        setSwapAmounts({});
         setButtonState('proceed');
     };
 
@@ -304,8 +322,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-400">Market Cap:</span>
-                                    <span>{formatMarketCap(coin.market_cap)}</span>
-                                </div>
+                                    <span>{formatMarketCap(coin.market_cap)}</span></div>
                             </div>
                         )}
                     </div>
@@ -324,6 +341,7 @@ const MemecoinsRebalancer: React.FC = () => {
             )}
         </>
     );
+
     return (
         <div className="bg-gray-800 p-4 rounded-lg flex h-[calc(100vh-100px)]">
             {/* Left side: Memecoin list (60%) */}
@@ -355,25 +373,37 @@ const MemecoinsRebalancer: React.FC = () => {
                 </div>
                 <div className="flex-grow overflow-y-auto">
                     {selectedCoins.map(coin => (
-                        <div key={coin.id} className="flex items-center mb-2 bg-gray-700 p-2 rounded">
-                            <img src={coin.image} alt={coin.symbol} className="w-6 h-6 mr-2" />
-                            <span className="w-24 truncate mr-2">{coin.symbol}:</span>
-                            <input
-                                type="number"
-                                value={percentages[coin.id] || ''}
-                                onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
-                                className="w-20 p-1 bg-gray-600 text-white rounded"
-                                min="0"
-                                max="100"
-                                step="0.01"
-                            />
-                            <span className="ml-2">%</span>
-                            <button 
-                                onClick={() => handleCoinSelect(coin)}
-                                className="ml-auto text-red-500"
-                            >
-                                Remove
-                            </button>
+                        <div key={coin.id} className="mb-4 bg-gray-700 p-4 rounded">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="flex items-center">
+                                    <img src={coin.image} alt={coin.symbol} className="w-6 h-6 mr-2" />
+                                    <span className="font-bold">{coin.symbol}</span>
+                                </div>
+                                <button 
+                                    onClick={() => handleCoinSelect(coin)}
+                                    className="text-red-500 hover:text-red-400"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                            <div className="flex items-center mb-2">
+                                <input
+                                    type="number"
+                                    value={percentages[coin.id] || ''}
+                                    onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
+                                    className="w-20 p-1 bg-gray-600 text-white rounded mr-2"
+                                    min="0"
+                                    max="100"
+                                    step="0.01"
+                                />
+                                <span>% of portfolio</span>
+                            </div>
+                            {swapAmounts[coin.id] && (
+                                <div className="text-sm text-gray-300">
+                                    <div>Input: {swapAmounts[coin.id].amountIn} USDC</div>
+                                    <div>Expected Output: {swapAmounts[coin.id].amountOut} {coin.symbol}</div>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

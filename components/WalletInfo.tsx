@@ -29,7 +29,7 @@ const WalletInfo: React.FC = () => {
                     onClick={() => setShowDepositModal(true)}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 >
-                    Deposit
+                    + Deposit USDC
                 </button>
             </div>
             <div className="mb-4">
