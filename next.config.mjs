@@ -9,6 +9,9 @@ const withTranspile = withTM(['@uniswap/smart-order-router']);
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['coin-images.coingecko.com'],
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
