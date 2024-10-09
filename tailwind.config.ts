@@ -12,6 +12,14 @@ const config: Config = {
         'dark-blue': '#1A202C',
         'light-blue': '#2D3748',
         'accent-green': '#48BB78',
+
+        P1: '#1E1F20',
+        P2: '#0E0E0E',
+        P3: '#060606',
+      },
+
+      backgroundImage: {
+        "primary-gradient": "linear-gradient(to bottom, #5566FF, #333D99)",
       },
     },
   },

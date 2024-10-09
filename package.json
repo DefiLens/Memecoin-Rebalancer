@@ -13,13 +13,16 @@
     "@uniswap/sdk-core": "^5.8.1",
     "@uniswap/smart-order-router": "^4.5.2",
     "axios": "^1.7.7",
+    "boring-avatars": "^1.11.2",
     "browserify-zlib": "^0.2.0",
+    "chart.js": "^4.4.4",
     "crypto-browserify": "^3.12.0",
     "ethers": "^5.7.2",
     "https-browserify": "^1.0.0",
     "next": "^12.3.4",
     "next-transpile-modules": "^10.0.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.3.0",
     "react-toastify": "^10.0.5",
@@ -41,5 +44,6 @@
     "prettier": "^2.8.7",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.0.3"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
