@@ -8,6 +8,7 @@ import TransactionStatus from './TransactionStatus';
 import { BASE_URL } from '../utils/keys';
 import MemeCoinGrid from './MemeCoinGrid';
 import { RxCross1 } from 'react-icons/rx';
+import PriceChart from './base/PriceChart';
 export interface CoinDetails {
   id: string;
   name: string;
@@ -23,133 +24,18 @@ export interface CoinDetails {
   ath: number;
 }
 
-const UNISWAP_ROUTER_ADDRESS = '0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD';
-const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from 'chart.js';
-import moment from 'moment';
-import axios from 'axios';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
-
-interface CoinChartData {
-  x: number;
-  y: string;
+interface SwapAmount {
+  amountIn: string;
+  amountOut: string;
 }
 
-const HistoryChart = () => {
-  const [data, setData] = useState<any>(null);
-  const [timeframe, setTimeframe] = useState('365'); // Default to 1 year
+interface SwapAmount {
+  amountIn: string;
+  amountOut: string;
+}
 
-  const id = 'bitcoin'; // You can pass this as a prop if dynamic
-
-  const getData = async (days: string) => {
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`
-      );
-      setData(response.data);
-    } catch (error) {
-      console.error('Error fetching coin data:', error);
-    }
-  };
-
-  useEffect(() => {
-    getData(timeframe); // Fetch data when component mounts or timeframe changes
-  }, [timeframe]);
-
-  if (!data) {
-    return <>Loading...</>;
-  }
-
-  // Map the API response to chart data format
-  const coinChartData: CoinChartData[] = data?.prices?.map((value: any) => ({
-    x: value[0],
-    y: value[1].toFixed(2),
-  }));
-
-  // Chart options and data
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Market Price History',
-      },
-    },
-  };
-
-  const chartData = {
-    labels: coinChartData.map((value) => moment(value.x).format('MMM DD')),
-    datasets: [
-      {
-        fill: true,
-        label: `${id.toUpperCase()} Price (USD)`,
-        data: coinChartData.map((val) => val.y),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      },
-    ],
-  };
-
-  const handleTimeframeChange = (days: string) => {
-    setTimeframe(days);
-  };
-
-  return (
-    <div className="max-w-6xl">
-      <div className="flex justify-between mb-4">
-        <button onClick={() => handleTimeframeChange('1')} className="btn">
-          Today
-        </button>
-        <button onClick={() => handleTimeframeChange('7')} className="btn">
-          1 Week
-        </button>
-        <button onClick={() => handleTimeframeChange('30')} className="btn">
-          1 Month
-        </button>
-        <button onClick={() => handleTimeframeChange('182')} className="btn">
-          6 Months
-        </button>
-        <button onClick={() => handleTimeframeChange('365')} className="btn">
-          1 Year
-        </button>
-      </div>
-      <span
-        data-converter-target="price"
-        data-coin-id="39910"
-        data-price-target="price"
-        data-price-btc="6.218603274842037e-11"
-        data-prev-price="0.000003858537491411746"
-      >
-        $0.0<sub title="$0.000003859">5</sub>3859
-      </span>
-      <Line options={options} data={chartData} />
-    </div>
-  );
-};
+const UNISWAP_ROUTER_ADDRESS = '0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD';
+const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 
 const MemecoinsRebalancer: React.FC = () => {
   const [selectedCoins, setSelectedCoins] = useState<CoinDetails[]>([]);
@@ -162,6 +48,7 @@ const MemecoinsRebalancer: React.FC = () => {
     'proceed' | 'quoting' | 'rebalance' | 'rebalancing'
   >('proceed');
   const [selectTokenLoading, setSelectTokenLoading] = useState<string | null>(null);
+  const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: SwapAmount }>({});
 
   const { address } = useAccount();
   const {
@@ -245,6 +132,8 @@ const MemecoinsRebalancer: React.FC = () => {
           (Number(amount) * 1e6 * Number(percentages[coin.id])) / 100
         ).toString(),
         recipient: address,
+        decimalsIn: 6,
+        decimalsOut: coin.decimal_place,
       }));
 
       const response = await fetch(`${BASE_URL}/swap/generate`, {
@@ -261,6 +150,17 @@ const MemecoinsRebalancer: React.FC = () => {
 
       const data = await response.json();
       setSwapData(data);
+
+      // Set swap amounts
+      const amounts = {};
+      data.forEach((item: any, index: number) => {
+        amounts[selectedCoins[index].id] = {
+          amountIn: (Number(item.amountIn) / 1e6).toFixed(6), // Convert from USDC's 6 decimals
+          amountOut: item.amountOut,
+        };
+      });
+      setSwapAmounts(amounts);
+
       setButtonState('rebalance');
     } catch (error: any) {
       console.error('Error during swap data generation:', error);
@@ -336,6 +236,7 @@ const MemecoinsRebalancer: React.FC = () => {
     setPercentages({});
     setAmount('');
     setSwapData(null);
+    setSwapAmounts({});
     setButtonState('proceed');
   };
 
@@ -394,11 +295,9 @@ const MemecoinsRebalancer: React.FC = () => {
 
   return (
     <>
-      {/* <HistoryChart /> */}
-
-      <div className="bg-P1 p-4 rounded-lg flex h-[calc(100vh-100px)]">
+      <div className="flex flex-1 bg-P1 p-4 rounded-lg overflow-hidden">
         {/* Left side: Memecoin list (60%) */}
-        <div className="w-3/5 pr-4 overflow-y-auto hide_scrollbar">
+        <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
           <MemeCoinGrid
             selectedCoins={selectedCoins}
             handleCoinSelect={handleCoinSelect}
@@ -407,51 +306,65 @@ const MemecoinsRebalancer: React.FC = () => {
         </div>
 
         {/* Right side: Rebalancing controls (40%) */}
-        <div className="w-2/5 pl-4 border-l border-zinc-700 flex flex-col">
-          <div className="mb-4 sticky top-0 z-10">
+        <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full">
+          <div className="">
             <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
-            <label htmlFor="amount" className="text-sm text-zinc-200">
-              Amount
-            </label>
+            <h2 className="text-sm text-zinc-200 mb-1">Amount</h2>
             <input
-              type="text" // Change type to text
-              inputMode="numeric"
+              type="number"
               value={amount}
-              onChange={setAmountChange}
+              onChange={(e) => setAmount(e.target.value)}
               placeholder="Enter USDC amount"
-              className="w-full p-2 mb-4 bg-zinc-800 border border-zinc-700 outline-none text-white rounded"
+              className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none"
             />
           </div>
-          <div className="flex-grow overflow-y-auto">
+
+          <div className="flex-grow overflow-y-auto hide_scrollbar">
             {selectedCoins.map((coin) => (
-              <div
-                key={coin.id}
-                className="flex items-center mb-2 border border-zinc-700 p-2 rounded"
-              >
-                <img src={coin.image} alt={coin.symbol} className="w-6 h-6 mr-2" />
-                <span className="w-24 truncate mr-2">{coin.symbol}:</span>
-                <input
-                  type="text" // Change type to text
-                  inputMode="numeric" // Set input mode to numeric
-                  value={percentages[coin.id] || ''}
-                  onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
-                  className="w-20 p-1 bg-zinc-800 text-white rounded outline-none"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                />
-                <span className="ml-2">%</span>
-                <button
-                  onClick={() => handleCoinSelect(coin)}
-                  className="ml-auto text-zinc-200 hover:bg-zinc-700 p-1 rounded-md transition-all duration-200"
-                >
-                  <RxCross1 />
-                </button>
+              <div key={coin.id} className="mb-4 bg-zinc-800 p-4 rounded-lg ">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <img src={coin.image} alt={coin.symbol} className="w-6 h-6 mr-2" />
+                    <span className="font-bold">{coin.symbol}</span>
+                  </div>
+                  <button
+                    onClick={() => handleCoinSelect(coin)}
+                    className="p-1 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
+                  >
+                    <RxCross1 />
+                  </button>
+                </div>
+                <div className="flex items-center mb-2 text-zinc-300">
+                  <input
+                    type="number"
+                    value={percentages[coin.id] || ''}
+                    onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
+                    className="w-20 border border-zinc-700 p-1 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none mr-1"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                  />
+                  <span>% of portfolio</span>
+                </div>
+                {swapAmounts[coin.id] && (
+                  <div className="text-sm text-zinc-300">
+                    <div className="font-light text-zinc-400">
+                      <span className="font-semibold text-zinc-200">Input:</span>{' '}
+                      {swapAmounts[coin.id].amountIn} USDC
+                    </div>
+                    <div className="font-light text-zinc-400">
+                      <span className="font-semibold text-zinc-200">Expected Output:</span>{' '}
+                      {swapAmounts[coin.id].amountOut} {coin.symbol}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-          <div className="mt-4 sticky bottom-0 z-10">
-            <div className="flex justify-between items-center mb-4">
+
+          <div className="">
+            {error && <div className="text-red-500 mb-4">{error}</div>}
+            <div className="flex justify-between items-center">
               <button
                 onClick={
                   buttonState === 'proceed'
@@ -460,7 +373,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     ? handleRebalance
                     : undefined
                 }
-                className={`bg-primary-gradient text-white font-bold py-2 px-4 rounded ${
+                className={`px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 ${
                   selectedCoins.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 disabled={
@@ -485,15 +398,14 @@ const MemecoinsRebalancer: React.FC = () => {
               )}
               <button
                 onClick={resetState}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-2"
+                className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
               >
                 <FiTrash2 />
               </button>
             </div>
             {/* {sendCallsStatus !== 'idle' && (
-            <div className="mt-4 text-white">Rebalance Status: {sendCallsStatus}</div>
-          )} */}
-            {/* {error && <div className="text-red-500 mb-4">{error}</div>}  */}
+              <div className="mt-4 text-white">Rebalance Status: {sendCallsStatus}</div>
+            )} */}
             {sendCallsError && <div className="text-red-500 mt-4">{sendCallsError.message}</div>}
             <TransactionStatus callStatus={callsStatus} />
           </div>

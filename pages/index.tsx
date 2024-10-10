@@ -5,24 +5,33 @@ import WalletInfo from '../components/WalletInfo';
 import MemecoinsRebalancer from '../components/MemecoinsRebalancer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image';
+import Footer from '../components/base/Footer';
 
 export default function Home() {
   const { isConnected } = useAccount();
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="flex flex-col h-screen bg-zinc-950">
       <Head>
         <title>DefiLens - Memecoin Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <div className="absolute h-screen left-0 top-0 z-50 w-16 hover:w-60 transition-all duration-200 bg-zinc-800 flex flex-col items-center py-4 rounded-tr-xl rounded-br-xl">
-        <img src="/logo.svg" alt="DefiLens" className="h-12 w-12" />
-      </div> */}
-      <Header />
-      <main className="container mx-auto px-4 py-8 flex flex-col gap-5">
-        {isConnected && <WalletInfo />}
-        <MemecoinsRebalancer />
+      <header className="h-[60px] bg-P1">
+        <Header />
+      </header>
+
+      <main className="flex flex-col flex-1 overflow-hidden">
+        <section className="px-2 pt-2">{isConnected && <WalletInfo />}</section>
+
+        <section className="flex-1 overflow-hidden">
+          <div className="p-2 flex h-full flex-col">
+            <MemecoinsRebalancer />
+          </div>
+        </section>
       </main>
+
+      <Footer />
       <ToastContainer />
     </div>
   );
