@@ -1,26 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { CoinDetails } from './MemecoinsRebalancer';
-import { FiChevronDown, FiChevronUp, FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
 import { BASE_URL } from '../utils/keys';
-import Link from 'next/link';
 import Coin from './Coin';
-
-export const formatPercentage = (percentage: number | null) =>
-  percentage ? percentage.toFixed(2) : 'N/A';
-
-const formatMarketCap = (marketCap: number) => {
-  if (marketCap > 1e9) return `$${(marketCap / 1e9).toFixed(2)}B`;
-  if (marketCap > 1e6) return `$${(marketCap / 1e6).toFixed(2)}M`;
-  return `$${(marketCap / 1e3).toFixed(2)}K`;
-};
 
 const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: any) => {
   const [allCoins, setAllCoins] = useState<CoinDetails[]>([]);
   const [displayedCoins, setDisplayedCoins] = useState<CoinDetails[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
   const [displayCount, setDisplayCount] = useState(25);
 
   const fetchCoins = useCallback(async () => {
@@ -66,6 +53,11 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
       toast.error('Failed to fetch memecoin list');
     }
   }, []);
+
+  const loadMore = () => {
+    setDisplayCount((prevCount) => prevCount + 25);
+  };
+
   useEffect(() => {
     fetchCoins();
     const intervalId = setInterval(fetchCoins, 60000); // Fetch every 60 seconds
@@ -81,16 +73,6 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
     setDisplayedCoins(filtered.slice(0, displayCount));
   }, [allCoins, searchTerm, displayCount]);
 
-  const toggleExpand = (coinId: string) => {
-    setExpandedCoin(expandedCoin === coinId ? null : coinId);
-  };
-
-  const loadMore = () => {
-    setDisplayCount((prevCount) => prevCount + 25);
-  };
-
-  const formatPrice = (price: number) => (price < 0.01 ? price.toFixed(6) : price.toFixed(2));
-
   return (
     <div className="w-full flex flex-col gap-4">
       <input
@@ -101,9 +83,9 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
           setSearchTerm(e.target.value);
           setDisplayCount(25); // Reset display count when searching
         }}
-        className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none"
+        className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
       />
-      <div className="flex flex-col hide_scrollbar divide-y divide-zinc-700">
+      <div className="grid grid-cols-2 gap-2 hide_scrollbar">
         {displayedCoins.map((coin: any) => (
           <Coin
             coin={coin}
@@ -111,73 +93,6 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
             selectTokenLoading={selectTokenLoading}
             handleSelect={() => handleCoinSelect(coin)}
           />
-          // <div key={coin.id} className="border-zinc-700 border p-2 rounded-lg flex flex-col h-fit">
-          //   <div className="flex items-center justify-between mb-2">
-          //     <div className="flex items-center">
-          //       <img src={coin.image} alt={coin.name} className="w-12 h-12 rounded-full mr-1" />
-          //       <span className="font-bold text-base">{coin.symbol.toUpperCase()}</span>
-          //     </div>
-          //     <button
-          //       onClick={() => handleCoinSelect(coin)}
-          //       className={`px-2 py-0.5 rounded text-sm ${
-          //         selectedCoins.find((c: any) => c.id === coin.id)
-          //           ? 'bg-primary-gradient'
-          //           : 'bg-zinc-700 hover:bg-zinc-700 hover: bg-opacity-70'
-          //       }`}
-          //     >
-          //       {selectTokenLoading === coin.id ? (
-          //         <>Loading...</>
-          //       ) : selectedCoins.find((c: any) => c.id === coin.id) ? (
-          //         'Selected'
-          //       ) : (
-          //         'Select'
-          //       )}
-          //     </button>
-          //   </div>
-          //   <div className="text-sm mb-1">
-          //     <span className="text-zinc-400 mr-1">Price:</span>
-          //     <span>${formatPrice(coin.current_price)}</span>
-          //   </div>
-          //   {/* <button
-          //     onClick={() => toggleExpand(coin.id)}
-          //     className="text-zinc-400 hover:text-white text-xs flex items-center justify-center mt-1"
-          //   >
-          //     {expandedCoin === coin.id ? <FiChevronUp /> : <FiChevronDown />}
-          //   </button>
-          //   {expandedCoin === coin.id && (
-          //     <div className="text-sm mt-2 border-t border-zinc-600 pt-2">
-          //       <div className="flex justify-between mb-1">
-          //         <span className="text-zinc-400">24h:</span>
-          //         <span
-          //           className={
-          //             coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0
-          //               ? 'text-green-500'
-          //               : 'text-red-500'
-          //           }
-          //         >
-          //           {formatPercentage(coin.price_change_percentage_24h)}%
-          //         </span>
-          //       </div>
-          //       <div className="flex justify-between mb-1">
-          //         <span className="text-zinc-400">7d:</span>
-          //         <span
-          //           className={
-          //             coin.price_change_percentage_7d_in_currency &&
-          //             coin.price_change_percentage_7d_in_currency >= 0
-          //               ? 'text-green-500'
-          //               : 'text-red-500'
-          //           }
-          //         >
-          //           {formatPercentage(coin.price_change_percentage_7d_in_currency)}%
-          //         </span>
-          //       </div>
-          //       <div className="flex justify-between">
-          //         <span className="text-zinc-400">Market Cap:</span>
-          //         <span>{formatMarketCap(coin.market_cap)}</span>
-          //       </div>
-          //     </div>
-          //   )} */}
-          // </div>
         ))}
       </div>
       {displayedCoins.length <

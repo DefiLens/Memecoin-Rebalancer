@@ -12,12 +12,12 @@ export default function Home() {
   const { isConnected } = useAccount();
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950">
+    <div className="flex flex-col h-screen bg-[#131313]">
       <Head>
         <title>DefiLens - Memecoin Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="h-[60px] bg-P1">
+      <header className="h-[60px] bg-B1">
         <Header />
       </header>
 

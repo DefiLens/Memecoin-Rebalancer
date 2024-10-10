@@ -5,8 +5,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import CopyButton from './shared/CopyButton';
 import AvatarIcon from './shared/Avatar';
-import { MdOutlineFileDownload } from "react-icons/md";
-
+import { MdOutlineFileDownload } from 'react-icons/md';
 
 const WalletInfo: React.FC = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
@@ -27,7 +26,8 @@ const WalletInfo: React.FC = () => {
 
   return (
     <>
-      <div className=" w-full flex flex-row justify-between items-center gap-3 bg-N0 shadow-lg rounded-lg px-2 py-3 bg-P1 pr-10">
+      {/* <div className=" w-full flex flex-row justify-between items-center gap-3 bg-N0 shadow-lg rounded-lg px-2 py-3 bg-P1 pr-10"> */}
+      <div className=" w-full flex flex-row justify-between items-center gap-3 bg-N0 shadow-lg rounded-lg px-2 py-3 bg-B1 pr-10">
         <div className="w-full flex flex-col md:flex-row justify-between items-start gap-2 text-start relative">
           {/* User Image and total Worth of tokens */}
           <div className="flex flex-row items-center gap-2">

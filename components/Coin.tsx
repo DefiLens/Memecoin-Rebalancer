@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
-import { currencyFormat } from '../utils/helper';
+import { FiChevronDown, FiChevronUp, FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
+import { currencyFormat, formatPercentage, numberFormat } from '../utils/helper';
 import SingleCoin from './coin/SingleCoin';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
+
+  const toggleExpand = (coinId: string) => {
+    setExpandedCoin(expandedCoin === coinId ? null : coinId);
+  };
 
   const handleCoinClick = () => {
     setIsModalOpen(true); // Open the modal
@@ -16,36 +22,41 @@ const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) =>
 
   return (
     <div>
-      <div>
-        {/* <div className="grid grid-cols-3 sm:grid-cols-5 font-light items-center p-2 rounded hover:bg-zinc-800 my-1"> */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 font-light items-center p-2 rounded my-1">
-          <div
-            className="flex items-center gap-2 w-full hover:text-cyan-500 cursor-pointer"
-            onClick={handleCoinClick}
-          >
-            <img className="w-10 h-10 rounded-full" src={coin.image} alt={coin.name} />
-            <p>{coin.name}</p>
+      <div key={coin.id} className="border-zinc-700 border p-2 rounded-lg flex flex-col h-fit">
+        <div className="flex justify-between">
+          <div className="flex flex-col mb-2">
+            <div className="flex items-center gap-2 mb-2">
+              <img src={coin.image} className="w-10 h-10 rounded-full" />
+              <span className="text-xl font-semibold text-zinc-100">{coin.name}</span>
+              <span className="text-sm text-zinc-300">{coin.symbol.toLocaleUpperCase()}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="relative text-2xl font-medium inline-flex items-center gap-1">
+                ${coin.current_price}
+              </span>
+              <span
+                className={`text-lg flex items-center gap-1 ${
+                  coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0
+                    ? 'text-green-500'
+                    : 'text-red-500'
+                }`}
+              >
+                {coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0 ? (
+                  <TiArrowSortedUp />
+                ) : (
+                  <TiArrowSortedDown />
+                )}
+                {formatPercentage(coin.price_change_percentage_24h)}%
+              </span>
+            </div>
           </div>
-          <span className="w-full text-center">{currencyFormat(coin.current_price)}</span>
-          <span
-            className={`flex items-center gap-2 ${
-              coin.price_change_percentage_24h < 0 ? 'text-red-400' : 'text-green-400'
-            }`}
-          >
-            {coin.price_change_percentage_24h < 0 ? <FiTrendingDown /> : <FiTrendingUp />}
-            {coin.price_change_percentage_24h}
-          </span>
-          <div className="hidden sm:block">
-            <p className="font-semibold text-zinc-200 text-xs">Market Cap</p>
-            <span>{currencyFormat(coin.market_cap)}</span>
-          </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2 mt-4">
             <button
               onClick={handleSelect}
-              className={`border border-zinc-700 text-xs rounded-lg p-1 ${
+              className={`px-2 py-1 rounded text-xs ${
                 selectedCoins.find((c: any) => c.id === coin.id)
-                  ? 'bg-cyan-700'
-                  : 'bg-zinc-800 hover:bg-zinc-800 hover:bg-opacity-70'
+                  ? 'bg-primary-gradient'
+                  : 'bg-zinc-700 hover:bg-zinc-700 hover: bg-opacity-70'
               }`}
             >
               {selectTokenLoading === coin.id ? (
@@ -58,12 +69,52 @@ const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) =>
             </button>
             <button
               onClick={handleCoinClick}
-              className="bg-zinc-800 hover:bg-zinc-8z00 hover:bg-opacity-70 text-xs p-1 border border-zinc-700 rounded-lg"
+              className={`px-2 py-1 rounded text-xs bg-zinc-700 hover:bg-zinc-700 hover: bg-opacity-70`}
             >
               View Details
             </button>
           </div>
         </div>
+        <button
+          onClick={() => toggleExpand(coin.id)}
+          className={`transform duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${
+            expandedCoin === coin.id ? 'rotate-180' : 'rotate-0'
+          }`}
+        >
+          <FiChevronDown />
+        </button>
+
+        {expandedCoin === coin.id && (
+          <table className="w-full border-t border-zinc-700">
+            <tbody className="grid grid-cols-1 divide-y divide-zinc-700 dark:divide-moon-700">
+              <tr className="flex justify-between py-3">
+                <th className="text-left text-zinc-200 dark:text-moon-200 font-medium text-sm leading-5">
+                  Market Cap
+                </th>
+                <td className="pl-2 text-right text-zinc-300 dark:text-moon-50 font-semibold text-sm leading-5">
+                  <span>{currencyFormat(coin.market_cap)}</span>
+                </td>
+              </tr>
+
+              <tr className="flex justify-between py-3">
+                <th className="text-left text-zinc-200 font-medium text-sm leading-5">
+                  24 Hour Trading Vol
+                </th>
+                <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
+                  <span>{currencyFormat(coin.total_volume)}</span>
+                </td>
+              </tr>
+              <tr className="flex justify-between py-3">
+                <th className="text-left text-zinc-200 dark:text-moon-200 font-medium text-sm leading-5">
+                  Circulating Supply
+                </th>
+                <td className="pl-2 text-right text-zinc-300 dark:text-moon-50 font-semibold text-sm leading-5">
+                  {numberFormat(coin.circulating_supply)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
       </div>
       <SingleCoin isOpen={isModalOpen} onClose={handleCloseModal} coin={coin} />
     </div>

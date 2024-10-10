@@ -3,7 +3,7 @@ import CoinbaseButton from './CoinbaseButton';
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-P1 h-[60px] flex items-center">
+    <header className="bg-B1 h-[60px] flex items-center">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <img src="/logo.svg" alt="DefiLens" className="h-8 w-8 mr-2" />

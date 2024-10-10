@@ -3,7 +3,7 @@ import { socialHandles } from '../../utils/constant';
 
 const Footer = () => {
   return (
-    <footer className="h-[36px] bg-P1 flex items-center">
+    <footer className="h-[36px] bg-B1 flex items-center">
       <div className="mx-auto max-w-5xl w-full px-4 flex items-center justify-between">
         <div className="flex justify-center items-center space-x-3">
           <p className="hidden md:block text-center text-xs leading-5 text-zinc-300 mr-4">

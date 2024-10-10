@@ -1,9 +1,8 @@
 import React from 'react';
 import { BASE_URL } from '../../utils/keys';
 import PriceChart from '../base/PriceChart';
-import { formatPercentage } from '../MemeCoinGrid';
 import { RxCross1 } from 'react-icons/rx';
-import { currencyFormat, numberFormat } from '../../utils/helper';
+import { currencyFormat, formatPercentage, numberFormat } from '../../utils/helper';
 import { TiArrowSortedUp } from 'react-icons/ti';
 import { TiArrowSortedDown } from 'react-icons/ti';
 const SingleCoin = ({
@@ -45,18 +44,14 @@ const SingleCoin = ({
             >
               {coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0 ? (
                 <TiArrowSortedUp />
-                ) : (
+              ) : (
                 <TiArrowSortedDown />
               )}
               {formatPercentage(coin.price_change_percentage_24h)}%
             </span>
           </div>
           <table className="w-full">
-            <tbody
-              x-data="{ mcap_expanded: false, fdv_expanded: false }"
-              data-view-component="true"
-              className="grid grid-cols-1 divide-y divide-zinc-700 dark:divide-moon-700"
-            >
+            <tbody className="grid grid-cols-1 divide-y divide-zinc-700 dark:divide-moon-700">
               <tr className="flex justify-between py-3">
                 <th className="text-left text-zinc-200 dark:text-moon-200 font-medium text-sm leading-5">
                   Market Cap

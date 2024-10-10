@@ -16,6 +16,7 @@ const config: Config = {
         P1: '#1E1F20',
         P2: '#0E0E0E',
         P3: '#060606',
+        B1: 'rgba(27,27,27)',
       },
 
       backgroundImage: {
