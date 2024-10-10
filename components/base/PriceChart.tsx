@@ -14,6 +14,7 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { BASE_URL } from '../../utils/keys';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -38,7 +39,7 @@ const PriceChart = ({ id }: any) => {
   const getData = async (days: string) => {
     try {
       const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`
+        `${BASE_URL}/swap/chart?id=${id}&days=${days}`
       );
       setData(response.data);
     } catch (error) {

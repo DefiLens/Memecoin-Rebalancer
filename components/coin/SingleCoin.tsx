@@ -118,34 +118,3 @@ const SingleCoin = ({
 };
 
 export default SingleCoin;
-
-const coinn = {
-  id: 'based-brett',
-  symbol: 'brett',
-  name: 'Brett',
-  image: 'https://coin-images.coingecko.com/coins/images/35529/large/1000050750.png?1709031995',
-  current_price: 0.085559,
-  market_cap: 846873399,
-  market_cap_rank: 89,
-  fully_diluted_valuation: 846873399,
-  total_volume: 79797791,
-  high_24h: 0.090002,
-  low_24h: 0.085534,
-  price_change_24h: -0.002637681620222307,
-  price_change_percentage_24h: -2.99069,
-  market_cap_change_24h: -29752298.337415457,
-  market_cap_change_percentage_24h: -3.39396,
-  circulating_supply: 9910164234.00308,
-  total_supply: 9910164234.00308,
-  max_supply: 9999998988,
-  ath: 0.193328,
-  ath_change_percentage: -55.70629,
-  ath_date: '2024-06-09T12:55:51.835Z',
-  atl: 0.00084753,
-  atl_change_percentage: 10003.75257,
-  atl_date: '2024-02-29T08:40:24.951Z',
-  roi: null,
-  last_updated: '2024-10-09T15:00:55.470Z',
-  price_change_percentage_24h_in_currency: -2.9906879620137667,
-  price_change_percentage_7d_in_currency: -1.1910852155549905,
-};
