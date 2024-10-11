@@ -1,40 +1,127 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DefiLens Memecoins Rebalancer | Home
 
-## Getting Started
+Introducing DefiLens Memecoin Rebalancer – the easiest way to manage and grow your memecoin portfolio.
+Batch Buy Across Chains: Buy multiple memecoins from different chains at once with a single click. No need to go to different platforms or handle separate transactions.
+No Fees, Gasless Trading: Forget about paying gas fees. DefiLens covers all transaction costs so you can trade without extra charges.
+Automated Trades: Set conditions to buy or sell memecoins, and DefiLens will handle the rest—no need to constantly monitor the market.
+Stay Informed: Get the latest memecoin trends, market updates, and news so you can make smart decisions and adjust your portfolio easily.
+DefiLens gives you all the tools to handle your memecoins, automate trades, and stay on top of the market—effortlessly and without fees.
 
-First, run the development server:
+## How to Get in Touch?
+
+The DefiLens team is active and open to questions on our [Telegram community](https://t.me/defilenscommunity).
+
+## How to Set Up and Run the Project Locally
+
+Follow these steps to set up and run the DefiLens landing page using Next.js:
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- **Node.js** (version 14.x or higher)
+- **npm** (comes with Node.js) or **yarn**
+
+You can check if they are installed by running:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+node -v
+npm -v
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If you don't have Node.js installed, download it from [Node.js official website](https://nodejs.org/).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Steps to Run the Project
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. **Clone the Repository**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   First, clone the repository to your local machine using `git`:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   git clone https://github.com/DefiLens/defilens-landing.git
+   ```
 
-## Learn More
+2. **Navigate to the Project Directory**
 
-To learn more about Next.js, take a look at the following resources:
+   After cloning, navigate into the project folder:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cd defilens-landing
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Install Dependencies**
 
-## Deploy on Vercel
+   Next, install the required dependencies. You can use either `npm` or `yarn`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - Using npm:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+     ```bash
+     npm install
+     ```
+
+   - Using yarn:
+     ```bash
+     yarn install
+     ```
+
+4. **Run the Development Server**
+
+   Start the Next.js development server by running the following command:
+
+   - With npm:
+
+     ```bash
+     npm run dev
+     ```
+
+   - With yarn:
+     ```bash
+     yarn dev
+     ```
+
+   This will start a local development server, and the application should be running on:
+
+   ```
+   http://localhost:3000
+   ```
+
+5. **Build for Production (Optional)**
+
+   To create a production-ready build of the app:
+
+   - With npm:
+
+     ```bash
+     npm run build
+     ```
+
+   - With yarn:
+     ```bash
+     yarn build
+     ```
+
+   After building, you can start the production server with:
+
+   ```bash
+   npm run start
+   ```
+
+   or
+
+   ```bash
+   yarn start
+   ```
+
+6. **Environment Variables (Optional)**
+
+   If the project relies on environment variables, make sure to add them in a `.env.local` file in the root directory. For example:
+
+   ```bash
+   NEXT_PUBLIC_API_URL=https://api.example.com
+   ```
+
+### Troubleshooting
+
+If you run into any issues while setting up or running the project, please reach out to the DefiLens team on [Telegram](https://t.me/defilenscommunity).
+
+---

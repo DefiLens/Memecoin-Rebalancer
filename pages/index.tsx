@@ -7,16 +7,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
 import Footer from '../components/base/Footer';
+import MetaTags from '../components/metaTags';
 
 export default function Home() {
   const { isConnected } = useAccount();
 
   return (
     <div className="flex flex-col h-screen bg-[#131313]">
-      <Head>
-        <title>DefiLens - Memecoin Dashboard</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <MetaTags />
       <header className="h-[60px] bg-B1">
         <Header />
       </header>
@@ -32,7 +30,7 @@ export default function Home() {
       </main>
 
       <Footer />
-      <ToastContainer />
+      <ToastContainer theme="dark" />
     </div>
   );
 }

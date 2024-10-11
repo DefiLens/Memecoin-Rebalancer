@@ -3,20 +3,6 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { BASE_URL } from '../utils/keys';
 import { handleLogin } from '../utils/apis/trackingApi';
 
-const buttonStyles = {
-  border: '1px solid transparent',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  fontFamily: 'Arial, sans-serif',
-  fontWeight: 'bold',
-  fontSize: 16,
-  padding: '8px 20px 8px 14px',
-  borderRadius: 10,
-  color: 'white',
-  cursor: 'pointer',
-};
-
 export default function CoinbaseButton() {
   const { connect, connectors } = useConnect();
   const { isConnected, address } = useAccount();
@@ -41,13 +27,19 @@ export default function CoinbaseButton() {
 
   if (isConnected)
     return (
-      <button style={buttonStyles} onClick={() => disconnect()} className='bg-primary-gradient'>
+      <button
+        onClick={() => disconnect()}
+        className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 hover:bg-opacity-70 transition-all duration-200"
+      >
         <span>Disconnect</span>
       </button>
     );
 
   return (
-    <button style={buttonStyles} onClick={connectToSmartWallet} className='bg-primary-gradient'>
+    <button
+      onClick={connectToSmartWallet}
+      className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 hover:bg-opacity-70 transition-all duration-200"
+    >
       <span>Connect Wallet</span>
     </button>
   );

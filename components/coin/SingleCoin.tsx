@@ -5,6 +5,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { currencyFormat, formatPercentage, numberFormat } from '../../utils/helper';
 import { TiArrowSortedUp } from 'react-icons/ti';
 import { TiArrowSortedDown } from 'react-icons/ti';
+import FormatDecimalValue from '../base/FormatDecimalValue';
 const SingleCoin = ({
   isOpen,
   onClose,
@@ -20,7 +21,10 @@ const SingleCoin = ({
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="flex gap-4 flex-col lg:flex-row bg-zinc-900 p-5 rounded shadow-lg w-[80%] relative">
         <button
-          onClick={onClose}
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent triggering token selection on expand
+            onClose();
+          }}
           className="absolute top-0 right-4 mt-4 p-1 bg-zinc-800 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
         >
           <RxCross1 />
@@ -33,7 +37,7 @@ const SingleCoin = ({
           </div>
           <div className="flex items-center gap-3">
             <span className="relative text-3xl font-medium inline-flex items-center gap-1">
-              ${coin.current_price}
+              ${FormatDecimalValue(coin.current_price)}
             </span>
             <span
               className={`text-xl flex items-center gap-1 ${

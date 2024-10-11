@@ -85,7 +85,7 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
         }}
         className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
       />
-      <div className="grid grid-cols-2 gap-2 hide_scrollbar">
+      <div className="grid grid-cols-3 gap-2 hide_scrollbar">
         {displayedCoins.map((coin: any) => (
           <Coin
             coin={coin}
