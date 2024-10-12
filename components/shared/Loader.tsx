@@ -1,9 +1,10 @@
 import loaderAnimation from '../../public/assets/animation/loader.json';
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
+const LottieComponent = dynamic(() => import('lottie-react'), { ssr: false });
 const Loader: React.FC<{ size?: number }> = ({ size }) => {
   return (
     <div className="w-6 h-6 overflow-hidden flex items-center justify-center">
-      <Lottie
+      <LottieComponent
         animationData={loaderAnimation}
         loop={true}
         autoplay={true}
