@@ -192,15 +192,7 @@ const MemecoinsRebalancer: React.FC = () => {
             setSelectedCoins(selectedCoins.filter((c) => c.id !== coin.id));
         } else {
             try {
-                setSelectTokenLoading(coin.id);
-                const response = await fetch(`${BASE_URL}/swap/token/${coin.id}`);
-                const data = await response.json();
-                const updatedCoin: CoinDetails = {
-                    ...coin,
-                    contract_address: data.detail_platforms.base?.contract_address || "",
-                    decimal_place: data.detail_platforms.base?.decimal_place || 18,
-                };
-                setSelectedCoins([...selectedCoins, updatedCoin]);
+                setSelectedCoins([...selectedCoins, coin]);
                 setSelectTokenLoading(null);
             } catch (error) {
                 console.error("Error fetching coin details:", error);

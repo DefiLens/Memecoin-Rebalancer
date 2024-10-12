@@ -46,3 +46,18 @@ export const meta = {
     username: "@DefiLensTech",
     email: "contact@defilens.com",
 };
+
+import meme_coin_details from './meme_coin_details.json';
+
+interface IMemeCoinData {
+    id: string;
+    detail_platforms: {
+        base: {
+            decimal_place: number;
+            contract_address: string;
+        };
+    };
+    error: string | null;
+}
+
+export const memeCoinData: IMemeCoinData[] = meme_coin_details as IMemeCoinData[];

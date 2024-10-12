@@ -1,0 +1,1042 @@
+[
+    {
+      "id": "based-brett",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x532f27101965dd16442e59d40670faf5ebb142e4"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "degen-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mister-miggles",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xb1a03eda10342529bbf8eb700a06c60441fef25d"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mfercoin",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xe3086852a4b125803c815a158249ae468a3254ca"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "keyboard-cat-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x9a26f5433671751c3276a065f57e5a02d2817973"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "benji-bananas",
+      "detail_platforms": {
+        "ethereum": {
+          "decimal_place": 18,
+          "contract_address": "0xca5b0ae1d104030a9b8f879523508efd86c14483"
+        },
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x029a3b0532871735809a51e8653d6017ef04b6fa"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "moew",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x15ac90165f8b45a80534228bdcb124a011f62fee"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "toshi",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "boomer",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xcde172dc5ffc46d228838446c57c1227e0b82049"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "basenji",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xbc45647ea894030a4e9801ec03479739fa2485f0"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "doginme",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "base-god",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "based-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x32e0f9d26d1e33625742a52620cc76c1130efde6"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "coding-dino",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x85e90a5430af45776548adb82ee4cd9e33b08077"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "normie-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 9,
+          "contract_address": "0x47b464edb8dc9bc67b5cd4c9310bb87b773845bd"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "skull-of-pepe-token",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6d3b8c76c5396642960243febf736c6be8b60562"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "higher",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x0578d8a44db98b23bf096a382e016e29a5ce0ffe"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "based-chad",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xecaf81eb42cd30014eb44130b89bcd6d4ad98b92"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "marso-tech",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xdfd579dd6aeb232e95a15d964a135a61925b5c93"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "chompcoin",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xebff2db643cf955247339c8c6bcd8406308ca437"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "floppa-cat",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x776aaef8d8760129a0398cf8674ee28cefc0eab9"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "moby-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xea1d649ddc8e2a6e6ee40b89b2997518476cafa5"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "toby-toadgod",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xb8d98a102b0079b69ffbc760c8d857a31653e56e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "goodle",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x9f235d23354857efe6c541db92a9ef1877689bcb"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "based-usa",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xb56d0839998fd79efcd15c27cf966250aa58d6d3"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "edison-bored",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x70737489dfdf1a29b7584d40500d3561bd4fe196"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "okayeg",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xdb6e0e5094a25a052ab6845a9f1e486b9a9b3dde"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "ski-mask-dog",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 9,
+          "contract_address": "0x768be13e1680b5ebe0024c42c896e3db59ec0149"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "briun-armstrung",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x8c81b4c816d66d36c4bf348bdec01dbcbc70e987"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "andy-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x18a8bd1fe17a1bb9ffb39ecd83e9489cfd17a022"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "tadpole",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x55027a5b06f4340cc4c82dcc74c90ca93dcb173e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "weirdo-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 8,
+          "contract_address": "0x76734b57dfe834f102fb61e1ebf844adf8dd931e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "noggles",
+      "detail_platforms": {
+        "ethereum": {
+          "decimal_place": 18,
+          "contract_address": "0x5fa20d59d2a907e5fed9fb80b4a8d9f0d069a48d"
+        },
+        "polygon-pos": {
+          "decimal_place": 16,
+          "contract_address": "0x0f09e11501b01b3e9dc77d96db752d1a2ac84b20"
+        },
+        "base": {
+          "decimal_place": 15,
+          "contract_address": "0x13741c5df9ab03e7aa9fb3bf1f714551dd5a5f8a"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "basedmilio",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x28e29ec91db66733a94ee8e3b86a6199117baf99"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "roost",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xed899bfdb28c8ad65307fa40f4acab113ae2e14c"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "maga-vp",
+      "detail_platforms": {
+        "ethereum": {
+          "decimal_place": 18,
+          "contract_address": "0x766d2fcece1e3eef32aae8711ab886ee95fd5b2a"
+        },
+        "solana": {
+          "decimal_place": 8,
+          "contract_address": "55qMv1HtV8fqRjnFwDb9yDi9tBCeV8xwfgrPKgiJk5DN"
+        },
+        "binance-smart-chain": {
+          "decimal_place": 18,
+          "contract_address": "0xa4e8e73c8be170528385bbce78172c891f1febd7"
+        },
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x58cd93c4a91c3940109fa27d700f5013b18b5dc2"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "crash-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x4dd9077269dd08899f2a9e73507125962b5bc87f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "upside-down-meme",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6b9bb36519538e0c073894e964e90172e1c0b41f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "landwolf-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x88faea256f789f8dd50de54f9c807eef24f71b16"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mutatio-flies",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x8b67f2e56139ca052a7ec49cbcd1aa9c83f2752a"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "this-is-my-iguana",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x9beec80e62aa257ced8b0edd8692f79ee8783777"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "beni",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xde7a416ac821c77478340eebaa21b68297025ef3"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mochi-thecatcoin",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xf6e932ca12afa26665dc4dde7e27be02a7c02e50"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "carlo",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x38d513ec43dda20f323f26c7bef74c5cf80b6477"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "bamboo-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x689644b86075ed61c647596862c7403e1c474dbf"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "blockchainpeople",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x87c211144b1d9bdaa5a791b8099ea4123dc31d21"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "poncho",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xc2fe011c3885277c7f0e7ffd45ff90cadc8ecd12"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "gamestop-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 9,
+          "contract_address": "0xbeb0fd48c2ba0f1aacad2814605f09e08a96b94e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "based-shiba-inu",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xfea9dcdc9e23a9068bf557ad5b186675c61d33ea"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "base-pro-shops",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xda761a290e01c69325d12d82ac402e5a73d62e81"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "all-your-base-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x7ed613ab8b2b4c6a781ddc97ea98a666c6437511"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "based-lambow",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x4b61e2f1bbdee6d746209a693156952936f1702c"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "alf",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x26f1bb40ea88b46ceb21557dc0ffac7b7c0ad40f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "louder",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x120edc8e391ba4c94cb98bb65d8856ae6ec1525f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "condo",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x30d19fb77c3ee5cfa97f73d72c6a1e509fa06aef"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "bolt-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x7cf7132ede0ca592a236b6198a681bb7b42dd5ae"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "minky",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xf9b738c2e7adc4f299c57afd0890b925a5efea6f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "wild-goat-coin-2",
+      "detail_platforms": {
+        "solana": {
+          "decimal_place": 6,
+          "contract_address": "4Eb7ReeT936hX25KMBfYtyP1RWDdd9iixEwGJroACeLC"
+        },
+        "sui": {
+          "decimal_place": 6,
+          "contract_address": "0x492ff7bc419c2502604980c486aa291d48f7ffc10e8073f38c59329491f106d5::coin::COIN"
+        },
+        "polygon-pos": {
+          "decimal_place": 6,
+          "contract_address": "0x04565fe9aa3ae571ada8e1bebf8282c4e5247b2a"
+        },
+        "base": {
+          "decimal_place": 6,
+          "contract_address": "0xfb18511f1590a494360069f3640c27d55c2b5290"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "woofwork-io",
+      "detail_platforms": {
+        "ethereum": {
+          "decimal_place": 18,
+          "contract_address": "0x6bc08509b36a98e829dffad49fde5e412645d0a3"
+        },
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xb3a9bd4861454ba94931ebff410c3d828525dce2"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "coinye-west",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x0028e1e60167b48a938b785aa5292917e7eaca8b"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "workie",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x7480527815ccae421400da01e052b120cc4255e9"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "baby-brett-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 9,
+          "contract_address": "0xbe5614875952b1683cb0a2c20e6509be46d353a4"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "crypto-journey",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xdb173587d459ddb1b9b0f2d6d88febef039304a2"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "lower",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x67040bb0ad76236ddd5d156d23ec920a089d1eac"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "marvin-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x7e72d6410803c40e73806f2a72e3eade5d075cc0"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "elonrwa",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xaa6cccdce193698d33deb9ffd4be74eaa74c4898"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "young-peezy-aka-pepe",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x1b6a569dd61edce3c383f6d565e2f79ec3a12980"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "cow",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x2ad3d80c917ddbf08acc04277f379e00e4d75395"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "aerobud",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xfad8cb754230dbfd249db0e8eccb5142dd675a0d"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "keren",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x174e33ef2effa0a4893d97dda5db4044cc7993a3"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "chuck",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x7a8a5012022bccbf3ea4b03cd2bb5583d915fb1a"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "boshi",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x33ad778e6c76237d843c52d7cafc972bb7cf8729"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "pola",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x76e7447bafa3f0acafc9692629b1d1bc937ca15d"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "rocky-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x3636a7734b669ce352e97780df361ce1f809c58c"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "degen-pov-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x4c96a67b0577358894407af7bc3158fc1dffbeb5"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "law-of-attraction",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x8d3419b9a18651f3926a205ee0b1acea1e7192de"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "just-a-rock",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x1804e3db872eed4141e482ff74c56862f2791103"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "bird-dog-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x92af6f53febd6b4c6f5293840b6076a1b82c4bc2"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "gibape",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x589864a9892b1a736ae70a91824ab4dc591fd8cd"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "berf",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xfc5462143a3178cf044e97c491f6bcb5e38f173e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "buttman",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xd11a584de5fa50a4ee560c48ab44dbb31823d9bc"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mork-2",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x0b1594b0e896bf165d925956e0df733b8443af6a"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "sandwich-cat",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xed1978d01d4a8a9d6a43ac79403d5b8dfbed739b"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "aped-3",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x988a17d9ef5683dc125de54ae4cd217c4c26454f"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "normus",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xba5ede8d98ab88cea9f0d69918dde28dc23c2553"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "broge",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xe8e55a847bb446d967ef92f4580162fb8f2d3f38"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "fomo-bull-club",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x9a86980d3625b4a6e69d8a4606d51cbc019e2002"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "moon-inu",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xfd008f937b4d73eeb00cf74ce90c392be5f07f96"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "corgi",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6223901ea64608c75da8497d5eff15d19a1d8fd5"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "anime-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x0e0c9756a3290cd782cf4ab73ac24d25291c9564"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "goatwifhat",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6b82297c6f1f9c3b1f501450d2ee7c37667ab70d"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "basic-dog-meme",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x9e53e88dcff56d3062510a745952dec4cefdff9e"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "blue-guy",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x891502ba08132653151f822a3a430198f1844115"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "roxy-frog",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x10a7a84c91988138f8dbbc82a23b02c8639e2552"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "boe",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xff62ddfa80e513114c3a0bf4d6ffff1c1d17aadf"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "lolcat",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 9,
+          "contract_address": "0xbc72c1ad220315fa849ff237cf5dd0ad0cf75c73"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "mooncats-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xc5396321805c7f1bce608cda194aa9155fb20f7d"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "poopcoin-poop",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x686b1209b2de12818aa69dd139530448d0c792b3"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "just-a-black-rock-on-base",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0xece7b98bd817ee5b1f2f536daf34d0b6af8bb542"
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "treeplanting",
+      "detail_platforms": {
+        "base": {
+          "decimal_place": 18,
+          "contract_address": "0x6888c2409d48222e2cb738eb5a805a522a96ce80"
+        }
+      },
+      "error": null
+    }
+  ]
