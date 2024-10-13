@@ -4,6 +4,10 @@ import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
 import { FaGlobe } from "react-icons/fa6";
+
+export const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+
+
 export const socialHandles = [
     {
         icon: FaTelegramPlane,

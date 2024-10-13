@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* You can add any global styles here */
 body {
   @apply bg-zinc-950 text-white;
 }

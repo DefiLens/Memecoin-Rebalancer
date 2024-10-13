@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { FiChevronDown, FiTrendingDown, FiTrendingUp } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import { currencyFormat, formatPercentage } from "../utils/helper";
 import SingleCoin from "./coin/SingleCoin";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { FaCheckCircle, FaTruckLoading } from "react-icons/fa"; // Import green tick icon
+import { FaCheckCircle } from "react-icons/fa";
 import FormatDecimalValue from "./base/FormatDecimalValue";
-import Loader from "./shared/Loader";
+import { ICoinDetails } from "./rebalance/types";
 
-const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) => {
+interface ReviewRebalanceProps {
+    coin: ICoinDetails;
+    selectedCoins: ICoinDetails[];
+    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
+}
+
+const Coin: React.FC<ReviewRebalanceProps> = ({ coin, selectedCoins, handleCoinSelect }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
 
@@ -26,10 +32,10 @@ const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) =>
 
     const handleSelectToken = (event: React.MouseEvent) => {
         event.stopPropagation(); // Prevent token selection when clicking on specific buttons
-        handleSelect(coin); // Trigger token selection
+        handleCoinSelect(coin); // Trigger token selection
     };
 
-    const isSelected = selectedCoins.some((c: any) => c.id === coin.id);
+    const isSelected = selectedCoins.some((c) => c.id === coin.id);
 
     return (
         <div
@@ -39,16 +45,10 @@ const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) =>
             }`}
         >
             {/* Show green tick if token is selected */}
-            {selectTokenLoading != coin.id &&
-                (isSelected ? (
-                    <FaCheckCircle className="absolute top-2 right-2 text-green-500 w-5 h-5" />
-                ) : (
-                    <div className="absolute top-2 right-2 border border-zinc-700 rounded-full w-5 h-5"></div>
-                ))}
-            {selectTokenLoading === coin.id && (
-                <div className="absolute top-[6px] right-[6px]">
-                    <Loader />
-                </div>
+            {isSelected ? (
+                <FaCheckCircle className="absolute top-2 right-2 text-green-500 w-5 h-5" />
+            ) : (
+                <div className="absolute top-2 right-2 border border-zinc-700 rounded-full w-5 h-5"></div>
             )}
 
             <div className="flex justify-between">
@@ -56,7 +56,6 @@ const Coin = ({ coin, selectTokenLoading, selectedCoins, handleSelect }: any) =>
                     <div className="flex items-center gap-2 mb-2">
                         <img src={coin.image} className="w-10 h-10 rounded-full" alt={coin.name} />
                         <span className="text-xl font-semibold text-zinc-100">{coin.name}</span>
-                        {/* <span className="text-sm text-zinc-300">{coin.symbol.toLocaleUpperCase()}</span> */}
                     </div>
                     <div className="flex items-center gap-3">
                         <span className="relative text-2xl font-medium inline-flex items-center gap-1">

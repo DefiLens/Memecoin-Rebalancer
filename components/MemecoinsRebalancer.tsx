@@ -8,159 +8,24 @@ import TransactionStatus from "./TransactionStatus";
 import { BASE_URL } from "../utils/keys";
 import MemeCoinGrid from "./MemeCoinGrid";
 import { RxCross1 } from "react-icons/rx";
-import { FaHeartCircleXmark } from "react-icons/fa6";
-import Image from "next/image";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { currencyFormat, numberFormat } from "../utils/helper";
 import axios from "axios";
 import FormatDecimalValue from "./base/FormatDecimalValue";
 import Loader from "./shared/Loader";
 import { RiExternalLinkLine } from "react-icons/ri";
-export interface CoinDetails {
-    id: string;
-    name: string;
-    symbol: string;
-    contract_address: string;
-    decimal_place: number;
-    image: string;
-    current_price: number;
-    price_change_percentage_24h: number | null;
-    price_change_percentage_7d_in_currency: number | null;
-    market_cap: number;
-    total_volume: number;
-    ath: number;
-}
-
-interface SwapAmount {
-    amountIn: string;
-    amountOut: string;
-}
-
-interface SwapAmount {
-    amountIn: string;
-    amountOut: string;
-}
-
-const UNISWAP_ROUTER_ADDRESS = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
-const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-
-const ExecuteMethod = ({ selectedCoins, toggleReview, swapAmounts, handleExecute, buttonState }: any) => {
-    return (
-        <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-50 text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
-            <div className="min-h-60 w-[35rem] flex flex-col justify-center items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
-                {/* Heading */}
-                <div className="w-full flex items-center justify-between text-center text-xl md:text-2xl font-bold">
-                    <span>Review Batch</span>
-                    <button
-                        onClick={toggleReview}
-                        className="p-1 text-sm hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
-                    >
-                        <RxCross1 />
-                    </button>
-                </div>
-                <div className="h-full w-full flex flex-col justify-center items-center gap-2">
-                    <div className="w-full border-3 max-h-96 overflow-auto flex flex-col justify-start items-center gap-5 my-5">
-                        <div className="w-full max-h-full overflow-auto flex flex-col gap-5">
-                            {selectedCoins?.length > 0 &&
-                                selectedCoins.map((coin: any, i: number) => (
-                                    <div
-                                        key={coin.id}
-                                        className="w-full flex flex-col justify-between items-start gap-2 p-3 rounded-xl border border-zinc-700 bg-zinc-800"
-                                    >
-                                        <div className="w-full flex flex-col gap-2">
-                                            <div className="w-full flex justify-between items-center gap-2">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="relative">
-                                                        <img
-                                                            src="/usdc.png"
-                                                            alt="USDC"
-                                                            className="h-10 w-10 bg-font-200 rounded-full mt-1.5"
-                                                        />
-                                                    </div>
-                                                    <div className="flex flex-col justify-start items-start">
-                                                        <span className="text-lg font-semibold text-B200">Usdc</span>
-                                                        {swapAmounts[coin.id] && (
-                                                            <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
-                                                                {Number(swapAmounts[coin.id].amountIn)} USDC
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <FaArrowRightLong size="20px" />
-                                                <div className="flex justify-start items-center gap-3">
-                                                    <div className="relative">
-                                                        <img
-                                                            src={coin.image}
-                                                            alt="network logo"
-                                                            className="h-10 w-10 bg-font-200 rounded-full mt-1.5"
-                                                        />
-                                                    </div>
-                                                    <div className="flex flex-col justify-start items-start">
-                                                        <span className="text-lg font-semibold text-B200 capitalize">
-                                                            {coin.name}
-                                                        </span>
-                                                        {swapAmounts[coin.id] && (
-                                                            <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
-                                                                {Number(swapAmounts[coin.id].amountOut).toPrecision(10)}{" "}
-                                                                {coin.symbol}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                        </div>
-                    </div>
-                    <table className="w-full border-t border-zinc-700">
-                        <tbody className="grid grid-cols-1 divide-y divide-zinc-700 dark:divide-moon-700">
-                            <tr className="flex justify-between py-3">
-                                <th className="text-left text-zinc-200 dark:text-moon-200 font-medium text-sm leading-5">
-                                    Max. slippage
-                                </th>
-                                <td className="pl-2 text-right text-zinc-300 dark:text-moon-50 font-semibold text-sm leading-5">
-                                    <span>0.5%</span>
-                                </td>
-                            </tr>
-
-                            <tr className="flex justify-between py-3">
-                                <th className="text-left text-zinc-200 font-medium text-sm leading-5">Gas Fee</th>
-                                <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
-                                    <span>Sponsored by Defilens</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button
-                    onClick={handleExecute}
-                    className={`${
-                        false ? "cursor-not-allowed opacity-40" : ""
-                    } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
-          ${(buttonState === "quoting" || buttonState === "rebalancing") && "cursor-not-allowed opacity-50"}
-          `}
-                    disabled={buttonState === "quoting" || buttonState === "rebalancing" || selectedCoins.length === 0}
-                >
-                    {(buttonState === "quoting" || buttonState === "rebalancing") && <Loader />}
-                    Execute
-                </button>
-            </div>
-        </div>
-    );
-};
+import ReviewRebalance from "./rebalance/ReviewRebalance";
+import { ButtonState, ICoinDetails, ISwapAmount } from "./rebalance/types";
+import { USDC_ADDRESS } from "../utils/constant";
 
 const MemecoinsRebalancer: React.FC = () => {
-    const { isConnected } = useAccount();
-    const [selectedCoins, setSelectedCoins] = useState<CoinDetails[]>([]);
+    const [selectedCoins, setSelectedCoins] = useState<ICoinDetails[]>([]);
     const [amount, setAmount] = useState("");
     const [percentages, setPercentages] = useState<{ [key: string]: string }>({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [swapData, setSwapData] = useState<any>(null);
-    const [buttonState, setButtonState] = useState<"proceed" | "quoting" | "rebalance" | "rebalancing">("proceed");
-    const [selectTokenLoading, setSelectTokenLoading] = useState<string | null>(null);
-    const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: SwapAmount }>({});
+    const [buttonState, setButtonState] = useState<ButtonState>("proceed");
+
+    const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: ISwapAmount }>({});
 
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
@@ -187,17 +52,15 @@ const MemecoinsRebalancer: React.FC = () => {
         }
     }, [selectedCoins]);
 
-    const handleCoinSelect = async (coin: CoinDetails) => {
+    const handleCoinSelect = async (coin: ICoinDetails) => {
         if (selectedCoins.find((c) => c.id === coin.id)) {
             setSelectedCoins(selectedCoins.filter((c) => c.id !== coin.id));
         } else {
             try {
                 setSelectedCoins([...selectedCoins, coin]);
-                setSelectTokenLoading(null);
             } catch (error) {
                 console.error("Error fetching coin details:", error);
                 toast.error(`Failed to fetch details for ${coin.symbol}`);
-                setSelectTokenLoading(null);
             }
         }
     };
@@ -411,16 +274,10 @@ const MemecoinsRebalancer: React.FC = () => {
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                {/* Left side: Memecoin list (60%) */}
                 <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
-                    <MemeCoinGrid
-                        selectedCoins={selectedCoins}
-                        handleCoinSelect={handleCoinSelect}
-                        selectTokenLoading={selectTokenLoading}
-                    />
+                    <MemeCoinGrid selectedCoins={selectedCoins} handleCoinSelect={handleCoinSelect} />
                 </div>
 
-                {/* Right side: Rebalancing controls (40%) */}
                 <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full">
                     <div className="">
                         <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
@@ -429,7 +286,6 @@ const MemecoinsRebalancer: React.FC = () => {
                             type="text"
                             inputMode="numeric"
                             value={amount}
-                            // onChange={(e) => setAmount(e.target.value)}
                             onChange={setAmountChange}
                             placeholder="Enter USDC amount"
                             className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none"
@@ -530,7 +386,7 @@ const MemecoinsRebalancer: React.FC = () => {
                         </div>
                         <TransactionStatus callStatus={callsStatus} />
                         {openReview && (
-                            <ExecuteMethod
+                            <ReviewRebalance
                                 selectedCoins={selectedCoins}
                                 toggleReview={toggleReview}
                                 swapAmounts={swapAmounts}

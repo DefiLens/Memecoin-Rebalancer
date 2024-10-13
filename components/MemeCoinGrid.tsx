@@ -3,50 +3,23 @@ import { toast } from "react-toastify";
 import { BASE_URL } from "../utils/keys";
 import Coin from "./Coin";
 import { memeCoinData } from "../utils/constant";
+import { ICoinDetails } from "./rebalance/types";
 
-interface CoinDetails {
-    id: string;
-    symbol: string;
-    name: string;
-    image: string;
-    current_price: number;
-    market_cap: number;
-    market_cap_rank: number;
-    fully_diluted_valuation: number;
-    total_volume: number;
-    high_24h: number;
-    low_24h: number;
-    price_change_24h: number;
-    price_change_percentage_24h: number;
-    market_cap_change_24h: number;
-    market_cap_change_percentage_24h: number;
-    circulating_supply: number;
-    total_supply: number;
-    max_supply: number;
-    ath: number;
-    ath_change_percentage: number;
-    ath_date: string;
-    atl: number;
-    atl_change_percentage: number;
-    atl_date: string;
-    last_updated: string;
-    price_change_percentage_24h_in_currency: number;
-    price_change_percentage_7d_in_currency: number;
-    // Additional fields to be merged from frontend
-    decimal_place?: number;
-    contract_address?: string;
+interface MemeCoinGridProps {
+    selectedCoins: ICoinDetails[];
+    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
 }
 
-const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: any) => {
-    const [allCoins, setAllCoins] = useState<CoinDetails[]>([]);
-    const [displayedCoins, setDisplayedCoins] = useState<CoinDetails[]>([]);
+const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ selectedCoins, handleCoinSelect }) => {
+    const [allCoins, setAllCoins] = useState<ICoinDetails[]>([]);
+    const [displayedCoins, setDisplayedCoins] = useState<ICoinDetails[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [displayCount, setDisplayCount] = useState(25);
 
     const fetchCoins = useCallback(async () => {
         try {
             const response = await fetch(`${BASE_URL}/swap/token`);
-            const backendData: CoinDetails[] = await response.json();
+            const backendData: ICoinDetails[] = await response.json();
 
             const mergedData = backendData.map((coin) => {
                 const frontendCoin = memeCoinData.find((fcoin) => fcoin.id === coin.id);
@@ -99,13 +72,8 @@ const MemeCoinGrid = ({ selectedCoins, handleCoinSelect, selectTokenLoading }: a
                 className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
             />
             <div className="grid grid-cols-3 gap-2 hide_scrollbar">
-                {displayedCoins.map((coin: any) => (
-                    <Coin
-                        coin={coin}
-                        selectedCoins={selectedCoins}
-                        selectTokenLoading={selectTokenLoading}
-                        handleSelect={() => handleCoinSelect(coin)}
-                    />
+                {displayedCoins.map((coin) => (
+                    <Coin coin={coin} selectedCoins={selectedCoins} handleCoinSelect={handleCoinSelect} />
                 ))}
             </div>
             {displayedCoins.length <
