@@ -46,13 +46,11 @@ export interface PriceChartProps {
     id: string;
 }
 
-export interface ReviewRebalanceProps {
+export interface CoinProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
 }
 
 export interface MemeCoinGridProps {
     selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
 }

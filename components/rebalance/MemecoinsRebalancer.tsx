@@ -13,20 +13,19 @@ import FormatDecimalValue from "../base/FormatDecimalValue";
 import Loader from "../shared/Loader";
 import { RiExternalLinkLine } from "react-icons/ri";
 import ReviewRebalance from "../shared/ReviewRebalance";
-import { ButtonState, ICoinDetails, ISwapAmount } from "./types";
+import { ButtonState, ISwapAmount } from "./types";
 import { USDC_ADDRESS } from "../../utils/constant";
+import { useRebalanceStore } from "../../context/rebalance.store";
 
 const MemecoinsRebalancer: React.FC = () => {
-    const [selectedCoins, setSelectedCoins] = useState<ICoinDetails[]>([]);
+    const { buyTokens, sellTokens, removeBuyToken, removeSellToken } = useRebalanceStore();
     const [amount, setAmount] = useState("");
     const [percentages, setPercentages] = useState<{ [key: string]: string }>({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [swapData, setSwapData] = useState<any>(null);
+    const [buySwapData, setBuySwapData] = useState<any>(null);
     const [buttonState, setButtonState] = useState<ButtonState>("proceed");
-
     const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: ISwapAmount }>({});
-
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
     const { data: callsStatus } = useCallsStatus({
@@ -38,32 +37,19 @@ const MemecoinsRebalancer: React.FC = () => {
     });
 
     useEffect(() => {
-        if (selectedCoins.length > 0) {
-            const equalPercentage = (100 / selectedCoins.length).toFixed(2);
-            const initialPercentages = Object.fromEntries(selectedCoins.map((coin) => [coin.id, equalPercentage]));
+        if (buyTokens.length > 0) {
+            const equalPercentage = (100 / buyTokens.length).toFixed(2);
+            const initialPercentages = Object.fromEntries(buyTokens.map((coin) => [coin.id, equalPercentage]));
             setPercentages(initialPercentages);
         } else {
             setPercentages({});
         }
 
-        if (swapData) {
+        if (buySwapData) {
             setButtonState("proceed");
-            setSwapData(null);
+            setBuySwapData(null);
         }
-    }, [selectedCoins]);
-
-    const handleCoinSelect = async (coin: ICoinDetails) => {
-        if (selectedCoins.find((c) => c.id === coin.id)) {
-            setSelectedCoins(selectedCoins.filter((c) => c.id !== coin.id));
-        } else {
-            try {
-                setSelectedCoins([...selectedCoins, coin]);
-            } catch (error) {
-                console.error("Error fetching coin details:", error);
-                toast.error(`Failed to fetch details for ${coin.symbol}`);
-            }
-        }
-    };
+    }, [buyTokens]);
 
     const handlePercentageChange = (id: string, value: string) => {
         setPercentages((prev) => ({
@@ -71,7 +57,7 @@ const MemecoinsRebalancer: React.FC = () => {
             [id]: value,
         }));
         setButtonState("proceed");
-        setSwapData(null);
+        setBuySwapData(null);
     };
 
     const handleProceed = async () => {
@@ -85,7 +71,7 @@ const MemecoinsRebalancer: React.FC = () => {
         setButtonState("quoting");
 
         try {
-            const swapRequests = selectedCoins.map((coin) => ({
+            const swapRequests = buyTokens.map((coin) => ({
                 tokenIn: USDC_ADDRESS,
                 tokenOut: coin.contract_address,
                 amountIn: Math.floor((Number(amount) * 1e6 * Number(percentages[coin.id])) / 100).toString(),
@@ -107,13 +93,13 @@ const MemecoinsRebalancer: React.FC = () => {
             }
 
             const data = await response.json();
-            setSwapData(data);
+            setBuySwapData(data);
 
             // Set swap amounts
             const amounts: { [key: string]: { amountIn: string; amountOut: string } } = {};
 
             data.forEach((item: any, index: number) => {
-                amounts[selectedCoins[index].id] = {
+                amounts[buyTokens[index].id] = {
                     amountIn: (Number(item.amountIn) / 1e6).toFixed(6), // Convert from USDC's 6 decimals
                     amountOut: item.amountOut,
                 };
@@ -132,7 +118,7 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     const handleRebalance = async () => {
-        if (!swapData) {
+        if (!buySwapData) {
             setError("Swap data not available");
             return;
         }
@@ -156,7 +142,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     },
                 ],
                 functionName: "approve",
-                args: [swapData[0].to, totalAmount],
+                args: [buySwapData[0].to, totalAmount],
             });
 
             const calls = [
@@ -165,7 +151,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     data: approvalData,
                     value: BigInt(0),
                 },
-                ...swapData.map((data: any) => ({
+                ...buySwapData.map((data: any) => ({
                     to: data.to,
                     data: data.calldata,
                     value: BigInt(data.value || 0),
@@ -193,10 +179,10 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     const resetState = () => {
-        setSelectedCoins([]);
+        // setSelectedCoins([]);
         setPercentages({});
         setAmount("");
-        setSwapData(null);
+        setBuySwapData(null);
         setSwapAmounts({});
         setButtonState("proceed");
         setError("");
@@ -219,7 +205,7 @@ const MemecoinsRebalancer: React.FC = () => {
                 userAddress: address,
                 hash: txHash,
                 amount: amount,
-                selectedCoins: selectedCoins,
+                selectedCoins: buyTokens,
                 percentages: percentages,
             });
             toast.success(
@@ -271,14 +257,15 @@ const MemecoinsRebalancer: React.FC = () => {
     const toggleReview = () => {
         setOpenReview(!openReview);
     };
+
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
-                    <MemeCoinGrid selectedCoins={selectedCoins} handleCoinSelect={handleCoinSelect} />
+                <div className="w-9/12 pr-4 overflow-auto hide_scrollbar h-full">
+                    <MemeCoinGrid selectedCoins={buyTokens} />
                 </div>
 
-                <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full">
+                <div className="w-3/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
                     <div className="">
                         <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
                         <h2 className="text-sm text-zinc-200 mb-1">Amount</h2>
@@ -293,7 +280,8 @@ const MemecoinsRebalancer: React.FC = () => {
                     </div>
 
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
-                        {selectedCoins.map((coin) => (
+                        <h1>Buy</h1>
+                        {buyTokens.map((coin) => (
                             <div key={coin.id} className="mb-4 bg-zinc-800 p-4 rounded-lg ">
                                 <div className="flex items-center justify-between mb-2 capitalize">
                                     <div className="flex items-center">
@@ -301,7 +289,46 @@ const MemecoinsRebalancer: React.FC = () => {
                                         <span className="font-bold">{coin.symbol}</span>
                                     </div>
                                     <button
-                                        onClick={() => handleCoinSelect(coin)}
+                                        onClick={() => removeBuyToken(coin)}
+                                        className="p-1 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
+                                    >
+                                        <RxCross1 />
+                                    </button>
+                                </div>
+                                <div className="flex items-center mb-2 text-zinc-300">
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        value={percentages[coin.id] || ""}
+                                        onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
+                                        className="w-20 border border-zinc-700 p-1 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none mr-1"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                    />
+                                    <span>% of portfolio</span>
+                                </div>
+                                {swapAmounts[coin.id] && (
+                                    <div className="mt-2 flex capitalize items-center gap-4">
+                                        <span className="text-sm text-cyan-500">
+                                            {Number(swapAmounts[coin.id].amountIn)} USDC ={" "}
+                                            {FormatDecimalValue(Number(swapAmounts[coin.id].amountOut))}{" "}
+                                            <span className="capitalize">{coin.symbol.toLocaleUpperCase()}</span>
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        <h1>Sell</h1>
+                        {sellTokens.map((coin) => (
+                            <div key={coin.id} className="mb-4 bg-zinc-800 p-4 rounded-lg ">
+                                <div className="flex items-center justify-between mb-2 capitalize">
+                                    <div className="flex items-center">
+                                        <img src={coin.image} alt={coin.symbol} className="w-8 h-8 rounded-full mr-2" />
+                                        <span className="font-bold">{coin.symbol}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => removeSellToken(coin)}
                                         className="p-1 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
                                     >
                                         <RxCross1 />
@@ -345,7 +372,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                         : undefined
                                 }
                                 className={`flex items-center gap-2 px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 ${
-                                    selectedCoins.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                                    buyTokens.length === 0 ? "opacity-50 cursor-not-allowed" : ""
                                 } ${
                                     (isLoading || buttonState === "quoting" || buttonState === "rebalancing") &&
                                     "cursor-not-allowed opacity-50"
@@ -354,7 +381,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                     isLoading ||
                                     buttonState === "quoting" ||
                                     buttonState === "rebalancing" ||
-                                    selectedCoins.length === 0
+                                    buyTokens.length === 0
                                 }
                             >
                                 {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
@@ -366,7 +393,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                 {buttonState === "rebalancing" && "Rebalancing..."}
                             </button>
                             <div className="flex items-center gap-1">
-                                {selectedCoins.length > 0 && (
+                                {buyTokens.length > 0 && (
                                     <button
                                         onClick={resetState}
                                         className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
@@ -387,7 +414,7 @@ const MemecoinsRebalancer: React.FC = () => {
                         <TransactionStatus callStatus={callsStatus} />
                         {openReview && (
                             <ReviewRebalance
-                                selectedCoins={selectedCoins}
+                                selectedCoins={buyTokens}
                                 toggleReview={toggleReview}
                                 swapAmounts={swapAmounts}
                                 buttonState={buttonState}

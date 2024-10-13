@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { createPublicClient, http, parseAbi, formatUnits, Address } from 'viem';
-import { base } from 'viem/chains';
-import { USDC_ADDRESS, memeCoinData } from '../utils/constant';
-import { useBalance } from 'wagmi';
-import { FiX } from 'react-icons/fi';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createPublicClient, http, parseAbi, formatUnits, Address } from "viem";
+import { base } from "viem/chains";
+import { USDC_ADDRESS, memeCoinData } from "../utils/constant";
+import { useBalance } from "wagmi";
+import { FiX } from "react-icons/fi";
 
 interface PortfolioProps {
     isOpen: boolean;
     onClose: () => void;
-    userAddress: Address;
+    userAddress: Address | undefined;
 }
 
 interface TokenBalance {
@@ -30,13 +30,13 @@ interface TokenData {
 const BATCH_SIZE = 20;
 
 const publicClient = createPublicClient({
-  chain: base,
-  transport: http()
+    chain: base,
+    transport: http(),
 });
 
 const erc20ABI = parseAbi([
-  'function balanceOf(address) view returns (uint256)',
-  'function symbol() view returns (string)'
+    "function balanceOf(address) view returns (uint256)",
+    "function symbol() view returns (string)",
 ]);
 
 const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) => {
@@ -51,49 +51,56 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
         token: USDC_ADDRESS as Address,
     });
 
-    const fetchBalancesBatch = useCallback(async (page: number) => {
-        setIsLoading(true);
-        const start = page * BATCH_SIZE;
-        const end = Math.min((page + 1) * BATCH_SIZE, memeCoinData.length);
-        const batch = memeCoinData.slice(start, end);
+    const fetchBalancesBatch = useCallback(
+        async (page: number) => {
+            setIsLoading(true);
+            const start = page * BATCH_SIZE;
+            const end = Math.min((page + 1) * BATCH_SIZE, memeCoinData.length);
+            const batch = memeCoinData.slice(start, end);
 
-        const balancePromises = batch.map(token => 
-            publicClient.multicall({
-                contracts: [
-                    {
-                        address: token.detail_platforms.base.contract_address as Address,
-                        abi: erc20ABI,
-                        functionName: 'balanceOf',
-                        args: [userAddress]
-                    },
-                    {
-                        address: token.detail_platforms.base.contract_address as Address,
-                        abi: erc20ABI,
-                        functionName: 'symbol'
-                    }
-                ]
-            })
-        );
+            if (!userAddress) return;
 
-        const results = await Promise.all(balancePromises);
+            const balancePromises = batch.map((token) =>
+                publicClient.multicall({
+                    contracts: [
+                        {
+                            address: token.detail_platforms.base.contract_address as Address,
+                            abi: erc20ABI,
+                            functionName: "balanceOf",
+                            args: [userAddress],
+                        },
+                        {
+                            address: token.detail_platforms.base.contract_address as Address,
+                            abi: erc20ABI,
+                            functionName: "symbol",
+                        },
+                    ],
+                })
+            );
 
-        const newBalances: TokenBalance[] = results.map((result, index) => {
-            const [balanceResult, symbolResult] = result;
-            const balance = balanceResult.result ? 
-                formatUnits(balanceResult.result as bigint, batch[index].detail_platforms.base.decimal_place) : 
-                '0';
-            const symbol = symbolResult.result as string || '';
+            const results = await Promise.all(balancePromises);
 
-            return {
-                id: batch[index].id,
-                balance,
-                symbol
-            };
-        }).filter(token => parseFloat(token.balance) > 0);
+            const newBalances: TokenBalance[] = results
+                .map((result, index) => {
+                    const [balanceResult, symbolResult] = result;
+                    const balance = balanceResult.result
+                        ? formatUnits(balanceResult.result as bigint, batch[index].detail_platforms.base.decimal_place)
+                        : "0";
+                    const symbol = (symbolResult.result as string) || "";
 
-        setTokenBalances(prev => [...prev, ...newBalances]);
-        setIsLoading(false);
-    }, [userAddress]);
+                    return {
+                        id: batch[index].id,
+                        balance,
+                        symbol,
+                    };
+                })
+                .filter((token) => parseFloat(token.balance) > 0);
+
+            setTokenBalances((prev) => [...prev, ...newBalances]);
+            setIsLoading(false);
+        },
+        [userAddress]
+    );
 
     useEffect(() => {
         if (isOpen && userAddress) {
@@ -106,8 +113,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
     useEffect(() => {
         const options = {
             root: null,
-            rootMargin: '20px',
-            threshold: 1.0
+            rootMargin: "20px",
+            threshold: 1.0,
         };
 
         observer.current = new IntersectionObserver((entries) => {
