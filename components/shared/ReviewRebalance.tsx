@@ -1,8 +1,8 @@
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
-import Loader from "../shared/Loader";
-import { ButtonState, ICoinDetails, ISwapAmount } from "./types";
+import Loader from "./Loader";
+import { ButtonState, ICoinDetails, ISwapAmount } from "../rebalance/types";
 
 interface ReviewRebalanceProps {
     selectedCoins: ICoinDetails[];

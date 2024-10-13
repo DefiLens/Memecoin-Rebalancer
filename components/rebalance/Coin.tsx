@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { currencyFormat, formatPercentage } from "../utils/helper";
-import SingleCoin from "./coin/SingleCoin";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { FaCheckCircle } from "react-icons/fa";
-import FormatDecimalValue from "./base/FormatDecimalValue";
-import { ICoinDetails } from "./rebalance/types";
-
-interface ReviewRebalanceProps {
-    coin: ICoinDetails;
-    selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
-}
+import { ReviewRebalanceProps } from "./types";
+import FormatDecimalValue from "../base/FormatDecimalValue";
+import { currencyFormat, formatPercentage } from "../../utils/helper";
+import SingleCoin from "../coin/SingleCoin";
 
 const Coin: React.FC<ReviewRebalanceProps> = ({ coin, selectedCoins, handleCoinSelect }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility

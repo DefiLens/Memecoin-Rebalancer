@@ -3,8 +3,8 @@ import { useAccount, useBalance } from 'wagmi';
 import { FiCopy, FiExternalLink } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import CopyButton from './shared/CopyButton';
-import AvatarIcon from './shared/Avatar';
+import CopyButton from '../shared/CopyButton';
+import AvatarIcon from '../shared/Avatar';
 import { MdOutlineFileDownload } from 'react-icons/md';
 
 const WalletInfo: React.FC = () => {

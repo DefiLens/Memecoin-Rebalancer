@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { handleLogin } from '../utils/apis/trackingApi';
+import { handleLogin } from '../../utils/apis/trackingApi';
 
 export default function CoinbaseButton() {
   const { connect, connectors } = useConnect();

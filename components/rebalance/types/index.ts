@@ -41,11 +41,18 @@ export type ButtonState = "proceed" | "quoting" | "rebalance" | "rebalancing";
 
 
 
-
-
-
 //Props
-
 export interface PriceChartProps {
     id: string;
+}
+
+export interface ReviewRebalanceProps {
+    coin: ICoinDetails;
+    selectedCoins: ICoinDetails[];
+    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
+}
+
+export interface MemeCoinGridProps {
+    selectedCoins: ICoinDetails[];
+    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
 }

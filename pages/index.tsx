@@ -1,13 +1,13 @@
 import { useAccount } from 'wagmi';
 import Head from 'next/head';
-import Header from '../components/Header';
-import WalletInfo from '../components/WalletInfo';
-import MemecoinsRebalancer from '../components/MemecoinsRebalancer';
+import Header from '../components/base/Header';
+import WalletInfo from '../components/base/WalletInfo';
+import MemecoinsRebalancer from '../components/rebalance/MemecoinsRebalancer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
 import Footer from '../components/base/Footer';
-import MetaTags from '../components/metaTags';
+import MetaTags from '../components/base/metaTags';
 
 export default function Home() {
   const { isConnected } = useAccount();

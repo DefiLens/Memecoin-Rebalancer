@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../utils/keys";
+import { BASE_URL } from "../../utils/keys";
 import Coin from "./Coin";
-import { memeCoinData } from "../utils/constant";
-import { ICoinDetails } from "./rebalance/types";
+import { memeCoinData } from "../../utils/constant";
+import { ICoinDetails, MemeCoinGridProps } from "./types";
 
-interface MemeCoinGridProps {
-    selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
-}
 
 const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ selectedCoins, handleCoinSelect }) => {
     const [allCoins, setAllCoins] = useState<ICoinDetails[]>([]);

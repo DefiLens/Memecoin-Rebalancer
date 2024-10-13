@@ -5,16 +5,16 @@ import { parseUnits, encodeFunctionData } from "viem";
 import { toast } from "react-toastify";
 import { FiRefreshCw, FiTrash2 } from "react-icons/fi";
 import TransactionStatus from "./TransactionStatus";
-import { BASE_URL } from "../utils/keys";
+import { BASE_URL } from "../../utils/keys";
 import MemeCoinGrid from "./MemeCoinGrid";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
-import FormatDecimalValue from "./base/FormatDecimalValue";
-import Loader from "./shared/Loader";
+import FormatDecimalValue from "../base/FormatDecimalValue";
+import Loader from "../shared/Loader";
 import { RiExternalLinkLine } from "react-icons/ri";
-import ReviewRebalance from "./rebalance/ReviewRebalance";
-import { ButtonState, ICoinDetails, ISwapAmount } from "./rebalance/types";
-import { USDC_ADDRESS } from "../utils/constant";
+import ReviewRebalance from "../shared/ReviewRebalance";
+import { ButtonState, ICoinDetails, ISwapAmount } from "./types";
+import { USDC_ADDRESS } from "../../utils/constant";
 
 const MemecoinsRebalancer: React.FC = () => {
     const [selectedCoins, setSelectedCoins] = useState<ICoinDetails[]>([]);
