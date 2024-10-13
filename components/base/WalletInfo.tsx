@@ -6,8 +6,8 @@ import Image from 'next/image';
 import CopyButton from '../shared/CopyButton';
 import AvatarIcon from '../shared/Avatar';
 import { MdOutlineFileDownload } from 'react-icons/md';
-import WithdrawModal from './WithdrawModal';
-import Portfolio from './Portfolio';
+import WithdrawModal from '../WithdrawModal';
+import Portfolio from '../Portfolio';
 
 const WalletInfo: React.FC = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
