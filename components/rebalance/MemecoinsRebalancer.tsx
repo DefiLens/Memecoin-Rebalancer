@@ -142,6 +142,7 @@ const MemecoinsRebalancer: React.FC = () => {
 
         try {
             const totalAmount = parseUnits(amount, 6); // Assuming USDC has 6 decimals
+            alert("swapData[0].to" + swapData[0].to)
             const approvalData = encodeFunctionData({
                 abi: [
                     {
@@ -360,7 +361,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                 {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
                                     <Loader />
                                 )}
-                                {buttonState === "proceed" && "Get Qoute"}
+                                {buttonState === "proceed" && "Get Quote"}
                                 {buttonState === "quoting" && "Wait for Quote..."}
                                 {buttonState === "rebalance" && "Rebalance"}
                                 {buttonState === "rebalancing" && "Rebalancing..."}
