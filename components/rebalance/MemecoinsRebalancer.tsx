@@ -387,7 +387,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                 {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
                                     <Loader />
                                 )}
-                                {buttonState === "proceed" && "Get Qoute"}
+                                {buttonState === "proceed" && "Get Quote"}
                                 {buttonState === "quoting" && "Wait for Quote..."}
                                 {buttonState === "rebalance" && "Rebalance"}
                                 {buttonState === "rebalancing" && "Rebalancing..."}
