@@ -6,9 +6,13 @@ import Image from 'next/image';
 import CopyButton from '../shared/CopyButton';
 import AvatarIcon from '../shared/Avatar';
 import { MdOutlineFileDownload } from 'react-icons/md';
+import WithdrawModal from './WithdrawModal';
+import Portfolio from './Portfolio';
 
 const WalletInfo: React.FC = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showPortfolio, setShowPortfolio] = useState(false);
   const [isAddressHovered, setIsAddressHovered] = useState(false);
   const { address } = useAccount();
   const { data: ethBalance } = useBalance({ address });
@@ -81,10 +85,22 @@ const WalletInfo: React.FC = () => {
           <div className="flex justify-between items-center mb-4">
             <button
               onClick={() => setShowDepositModal(true)}
-              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
+              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed mr-2"
             >
               <MdOutlineFileDownload className="text-B200 text-lg" />
               Deposit USDC
+            </button>
+            <button
+              onClick={() => setShowWithdrawModal(true)}
+              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
+            >
+              Withdraw Tokens
+            </button>
+            <button
+              onClick={() => setShowPortfolio(true)}
+              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
+            >
+              Meme Portfolio
             </button>
           </div>
         </div>
@@ -123,6 +139,20 @@ const WalletInfo: React.FC = () => {
             </p>
           </div>
         </div>
+      )}
+      {showWithdrawModal && (
+        <WithdrawModal
+          isOpen={showWithdrawModal}
+          onClose={() => setShowWithdrawModal(false)}
+          userAddress={address || ''}
+        />
+      )}
+      {showPortfolio && (
+        <Portfolio
+          isOpen={showPortfolio}
+          onClose={() => setShowPortfolio(false)}
+          userAddress={address?.startsWith('0x') ? address : undefined}
+        />
       )}
     </>
   );
