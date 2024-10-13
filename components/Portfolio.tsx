@@ -4,6 +4,7 @@ import { base } from "viem/chains";
 import { USDC_ADDRESS, memeCoinData } from "../utils/constant";
 import { useBalance } from "wagmi";
 import { FiX } from "react-icons/fi";
+import Image from "next/image";
 
 interface PortfolioProps {
     isOpen: boolean;
@@ -13,18 +14,10 @@ interface PortfolioProps {
 
 interface TokenBalance {
     id: string;
-    balance: string;
+    name: string;
     symbol: string;
-}
-
-interface TokenData {
-    id: string;
-    detail_platforms: {
-        base: {
-            contract_address: string;
-            decimal_place: number;
-        };
-    };
+    balance: string;
+    image: string;
 }
 
 const BATCH_SIZE = 20;
@@ -34,10 +27,7 @@ const publicClient = createPublicClient({
     transport: http(),
 });
 
-const erc20ABI = parseAbi([
-    "function balanceOf(address) view returns (uint256)",
-    "function symbol() view returns (string)",
-]);
+const erc20ABI = parseAbi(["function balanceOf(address) view returns (uint256)"]);
 
 const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) => {
     const [tokenBalances, setTokenBalances] = useState<TokenBalance[]>([]);
@@ -59,39 +49,26 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
             const batch = memeCoinData.slice(start, end);
 
             if (!userAddress) return;
-
             const balancePromises = batch.map((token) =>
-                publicClient.multicall({
-                    contracts: [
-                        {
-                            address: token.detail_platforms.base.contract_address as Address,
-                            abi: erc20ABI,
-                            functionName: "balanceOf",
-                            args: [userAddress],
-                        },
-                        {
-                            address: token.detail_platforms.base.contract_address as Address,
-                            abi: erc20ABI,
-                            functionName: "symbol",
-                        },
-                    ],
+                publicClient.readContract({
+                    address: token.detail_platforms.base.contract_address as Address,
+                    abi: erc20ABI,
+                    functionName: "balanceOf",
+                    args: [userAddress],
                 })
             );
 
             const results = await Promise.all(balancePromises);
 
             const newBalances: TokenBalance[] = results
-                .map((result, index) => {
-                    const [balanceResult, symbolResult] = result;
-                    const balance = balanceResult.result
-                        ? formatUnits(balanceResult.result as bigint, batch[index].detail_platforms.base.decimal_place)
-                        : "0";
-                    const symbol = (symbolResult.result as string) || "";
-
+                .map((balance, index) => {
+                    const token = batch[index];
                     return {
-                        id: batch[index].id,
-                        balance,
-                        symbol,
+                        id: token.id,
+                        name: token.name,
+                        symbol: token.symbol,
+                        balance: formatUnits(balance as bigint, token.detail_platforms.base.decimal_place),
+                        image: token.image.small,
                     };
                 })
                 .filter((token) => parseFloat(token.balance) > 0);
@@ -145,9 +122,9 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-zinc-800 p-6 rounded-lg w-full max-w-4xl m-4 max-h-[90vh] flex flex-col">
+            <div className="bg-zinc-800 p-8 rounded-lg w-full max-w-4xl m-4 max-h-[90vh] flex flex-col">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-white">Your Portfolio</h2>
+                    <h2 className="text-3xl font-extrabold text-white">Meme Portfolio</h2>
                     <button onClick={onClose} className="text-gray-400 hover:text-white">
                         <FiX size={24} />
                     </button>
@@ -155,26 +132,60 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
 
                 <div className="overflow-y-auto flex-grow">
                     <table className="w-full text-left">
-                        <thead className="sticky top-0 bg-zinc-800">
+                        <thead className="sticky top-0 bg-zinc-900">
                             <tr className="text-gray-400 border-b border-gray-700">
-                                <th className="py-3 px-4">Token</th>
-                                <th className="py-3 px-4">Balance</th>
-                                <th className="py-3 px-4">Symbol</th>
+                                <th className="py-4 px-6 text-lg font-bold">Token</th>
+                                <th className="py-4 px-6 text-lg font-bold">Balance</th>
+                                <th className="py-4 px-6 text-lg font-bold">Symbol</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {usdcBalance && parseFloat(usdcBalance.formatted) > 0 && (
-                                <tr className="border-b border-gray-700 text-white">
-                                    <td className="py-3 px-4">USDC</td>
-                                    <td className="py-3 px-4">{usdcBalance.formatted}</td>
-                                    <td className="py-3 px-4">USDC</td>
-                                </tr>
-                            )}
-                            {tokenBalances.map((token) => (
+                            <tr className="border-b border-gray-700 text-white">
+                                <td className="py-4 px-6 flex items-center">
+                                    <span className="mr-4 font-bold text-lg">1</span> {/* Token Number */}
+                                    <Image
+                                        src="/usdc.png"
+                                        alt="USDC"
+                                        width={40}
+                                        height={40}
+                                        className="mr-6 rounded-full"
+                                    />{" "}
+                                    {/* Increased image size and space */}
+                                    <span className="text-lg ml-4 font-semibold">USDC</span>{" "}
+                                    {/* Increased font size and bold */}
+                                </td>
+                                <td className="py-4 px-6 text-lg font-semibold">
+                                    {usdcBalance && usdcBalance.formatted}
+                                </td>{" "}
+                                {/* Larger font for balance */}
+                                <td className="py-4 px-6 text-lg font-semibold">USDC</td>{" "}
+                                {/* Increased font size and bold */}
+                            </tr>
+
+                            {/* Example for tokenBalances */}
+                            {tokenBalances.map((token, index) => (
                                 <tr key={token.id} className="border-b border-gray-700 text-white">
-                                    <td className="py-3 px-4">{token.id}</td>
-                                    <td className="py-3 px-4">{parseFloat(token.balance).toFixed(6)}</td>
-                                    <td className="py-3 px-4">{token.symbol}</td>
+                                    <td className="py-4 px-6 flex items-center">
+                                        <span className="mr-4 font-bold text-lg">{index + 2}</span> {/* Token Number */}
+                                        <Image
+                                            src={token.image}
+                                            alt={token.name}
+                                            width={40}
+                                            height={40}
+                                            className="mr-6 rounded-full"
+                                        />{" "}
+                                        {/* Bigger image with more margin */}
+                                        <span className="text-lg ml-4 font-semibold">{token.name}</span>{" "}
+                                        {/* Increased font size and bold */}
+                                    </td>
+                                    <td className="py-4 px-6 text-lg font-semibold">
+                                        {parseFloat(token.balance).toFixed(6)}
+                                    </td>{" "}
+                                    {/* Larger font for balance */}
+                                    <td className="py-4 px-6 text-lg font-semibold">
+                                        {token.symbol.toUpperCase()}
+                                    </td>{" "}
+                                    {/* Increased font size and bold */}
                                 </tr>
                             ))}
                         </tbody>

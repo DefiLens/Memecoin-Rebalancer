@@ -82,10 +82,10 @@ const WalletInfo: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4 gap-3">
             <button
               onClick={() => setShowDepositModal(true)}
-              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed mr-2"
+              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
             >
               <MdOutlineFileDownload className="text-B200 text-lg" />
               Deposit USDC

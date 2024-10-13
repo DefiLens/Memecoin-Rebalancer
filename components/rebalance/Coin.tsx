@@ -7,6 +7,7 @@ import FormatDecimalValue from "../base/FormatDecimalValue";
 import { currencyFormat, formatPercentage } from "../../utils/helper";
 import SingleCoin from "../coin/SingleCoin";
 import { useRebalanceStore } from "../../context/rebalance.store";
+import { DataState } from "../../context/dataProvider";
 
 const Coin: React.FC<CoinProps> = ({ coin }) => {
     const { buyTokens, sellTokens, toggleBuyToken, toggleSellToken } = useRebalanceStore();
@@ -36,7 +37,6 @@ const Coin: React.FC<CoinProps> = ({ coin }) => {
     const handleCloseModal = () => {
         setIsModalOpen(false); // Close the modal
     };
-
     return (
         <div className={`relative cursor-pointer border-zinc-700 border p-2 rounded-lg flex flex-col h-fit`}>
             {/* Show green tick if token is selected in either buy or sell */}
