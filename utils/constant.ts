@@ -55,12 +55,20 @@ import meme_coin_details from './meme_coin_details.json';
 
 interface IMemeCoinData {
     id: string;
+    name: string,
+    symbol: string,
+    asset_platform_id: string,
     detail_platforms: {
         base: {
             decimal_place: number;
             contract_address: string;
         };
-    };
+    },
+    image: {
+        thumb: string;
+        small: string;
+        large: string;
+    }
     error: string | null;
 }
 
