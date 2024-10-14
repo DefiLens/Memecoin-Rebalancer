@@ -50,6 +50,8 @@ export interface ReviewRebalanceProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
     handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
+    wishlist: { coinId: string }[]; // Adjust this type if your wishlist structure is different
+    toggleWishlist: (coinId: string) => Promise<void>;
 }
 
 export interface MemeCoinGridProps {
