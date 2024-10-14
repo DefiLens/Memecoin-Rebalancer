@@ -151,7 +151,6 @@ const WalletInfo: React.FC = () => {
         <Portfolio
           isOpen={showPortfolio}
           onClose={() => setShowPortfolio(false)}
-          userAddress={address?.startsWith('0x') ? address : undefined}
         />
       )}
     </>

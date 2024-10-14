@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
 import Footer from '../components/base/Footer';
-import MetaTags from '../components/base/metaTags';
+import MetaTags from '../components/base/MetaTags';
 
 export default function Home() {
   const { isConnected } = useAccount();

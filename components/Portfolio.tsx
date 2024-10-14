@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createPublicClient, http, parseAbi, formatUnits, Address } from 'viem';
 import { base } from 'viem/chains';
 import { USDC_ADDRESS, memeCoinData } from '../utils/constant';
-import { useBalance } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import { FiX } from 'react-icons/fi';
 import Image from 'next/image';
 
 interface PortfolioProps {
     isOpen: boolean;
     onClose: () => void;
-    userAddress: Address;
 }
 
 interface TokenBalance {
@@ -31,19 +30,21 @@ const erc20ABI = parseAbi([
     'function balanceOf(address) view returns (uint256)'
 ]);
 
-const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) => {
+const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
     const [tokenBalances, setTokenBalances] = useState<TokenBalance[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const observer = useRef<IntersectionObserver | null>(null);
     const loadingRef = useRef<HTMLDivElement>(null);
+    const { address } = useAccount();
 
     const { data: usdcBalance } = useBalance({
-        address: userAddress,
+        address: address,
         token: USDC_ADDRESS as Address,
     });
 
     const fetchBalancesBatch = useCallback(async (page: number) => {
+        if (!address) return
         setIsLoading(true);
         const start = page * BATCH_SIZE;
         const end = Math.min((page + 1) * BATCH_SIZE, memeCoinData.length);
@@ -54,7 +55,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
                 address: token.detail_platforms.base.contract_address as Address,
                 abi: erc20ABI,
                 functionName: 'balanceOf',
-                args: [userAddress]
+                args: [address]
             })
         );
 
@@ -73,15 +74,15 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
 
         setTokenBalances(prev => [...prev, ...newBalances]);
         setIsLoading(false);
-    }, [userAddress]);
+    }, [address]);
 
     useEffect(() => {
-        if (isOpen && userAddress) {
+        if (isOpen && address) {
             setTokenBalances([]);
             setCurrentPage(0);
             fetchBalancesBatch(0);
         }
-    }, [isOpen, userAddress, fetchBalancesBatch]);
+    }, [isOpen, address, fetchBalancesBatch]);
 
     useEffect(() => {
         const options = {
@@ -142,7 +143,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose, userAddress }) =
                                     <Image src="/usdc.png" alt="USDC" width={40} height={40} className="mr-6 rounded-full" /> {/* Increased image size and space */}
                                     <span className="text-lg ml-4 font-semibold">USDC</span> {/* Increased font size and bold */}
                                 </td>
-                                <td className="py-4 px-6 text-lg font-semibold">{usdcBalance.formatted}</td> {/* Larger font for balance */}
+                                {usdcBalance ? <td className="py-4 px-6 text-lg font-semibold">{usdcBalance.formatted}</td> : "0"} {/* Larger font for balance */}
                                 <td className="py-4 px-6 text-lg font-semibold">USDC</td> {/* Increased font size and bold */}
                             </tr>
 
