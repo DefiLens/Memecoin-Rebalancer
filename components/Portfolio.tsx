@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { base } from 'viem/chains';
 import { memeCoinData } from '../utils/constant';
+import { BASE_URL } from '../utils/keys';
 
 // Setup the public client with viem on Base network
 const publicClient = createPublicClient({
@@ -43,7 +44,7 @@ interface TokenBalance {
   imageUrl: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4500/api';
+const URL = BASE_URL || 'http://localhost:4500/api';
 
 // Fetch the meme coin data from meme_coin_details.json
 const fetchTokenDetails = async (): Promise<TokenDetails[]> => {
@@ -74,7 +75,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
   // Fetch token prices
   const fetchTokenPrices = useCallback(async () => {
     try {
-      const response = await fetch(`${BASE_URL}/swap/token`);
+      const response = await fetch(`${URL}/swap/token`);
       if (!response.ok) {
         throw new Error('Failed to fetch token prices');
       }
