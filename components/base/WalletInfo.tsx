@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { useAccount, useBalance } from 'wagmi';
-import { FiCopy, FiExternalLink } from 'react-icons/fi';
-import { toast } from 'react-toastify';
+import { FiExternalLink } from 'react-icons/fi';
+import { MdOutlineFileDownload } from 'react-icons/md';
+import { FaWallet, FaChartPie, FaRocket } from 'react-icons/fa';
 import Image from 'next/image';
 import CopyButton from '../shared/CopyButton';
 import AvatarIcon from '../shared/Avatar';
-import { MdOutlineFileDownload } from 'react-icons/md';
 import WithdrawModal from '../WithdrawModal';
 import Portfolio from '../Portfolio';
+import { toast } from 'react-toastify';
+import CoinbaseButton from './CoinbaseButton';
 
 const WalletInfo: React.FC = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [isAddressHovered, setIsAddressHovered] = useState(false);
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { data: ethBalance } = useBalance({ address });
   const { data: usdcBalance } = useBalance({
     address,
@@ -29,104 +31,117 @@ const WalletInfo: React.FC = () => {
   const formatAddress = (addr: string) => `${addr.slice(0, 10)}`;
 
   return (
-    <>
-      {/* <div className=" w-full flex flex-row justify-between items-center gap-3 bg-N0 shadow-lg rounded-lg px-2 py-3 bg-P1 pr-10"> */}
-      <div className=" w-full flex flex-row justify-between items-center gap-3 bg-N0 shadow-lg rounded-lg px-2 py-3 bg-B1 pr-10">
-        <div className="w-full flex flex-col md:flex-row justify-between items-start gap-2 text-start relative">
-          {/* User Image and total Worth of tokens */}
-          <div className="flex flex-row items-center gap-2">
-            <div className="h-28 w-28 rounded-xl overflow-hidden">
-              <AvatarIcon address={address ?? ''} />
-            </div>
-            <div className="w-full max-w-full sm:max-w-fit flex flex-col sm:flex-row lg:flex-row justify-center items-start gap-4 text-B200 font-bold">
-              <div className="w-full relative flex justify-between items-center p-2 rounded bg-W100 gap-3">
-                <div className="flex flex-col justify-center gap-2 items-start">
-                  <span className="text-B100 text-xl flex items-center gap-2">
-                    <Image
-                      src="/ethereum.svg"
-                      alt="ETH"
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    {ethBalance?.formatted || '0'} ETH
-                  </span>
-                  <span className="text-B100 text-xl flex items-center gap-2">
-                    <Image
-                      src="/usdc.png"
-                      alt="USDC"
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    {usdcBalance?.formatted || '0'} USDC
-                  </span>
-                  {address ? (
-                    <span
+    <div className="bg-gray-900">
+      <header className="bg-B1 h-[60px] flex items-center">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <img src="/assets/logo.svg" alt="DefiLens" className="h-8 w-8 mr-2" />
+            <h1 className="text-2xl font-bold text-white">DefiLens</h1>
+          </div>
+          <CoinbaseButton />
+        </div>
+      </header>
+
+      {isConnected && (
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex-grow">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+                <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg">
+                  <AvatarIcon address={address ?? ''} />
+                </div>
+
+                <div className="flex-grow">
+                  <div className="bg-gray-800 rounded-lg p-4 mb-4">
+                    <h2 className="text-xl font-bold text-white mb-2">Wallet Balance</h2>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex items-center gap-2">
+                        <Image src="/ethereum.svg" alt="ETH" width={24} height={24} className="rounded-full" />
+                        <span className="text-lg text-white">{ethBalance?.formatted || '0'} ETH</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Image src="/usdc.png" alt="USDC" width={24} height={24} className="rounded-full" />
+                        <span className="text-lg text-white">{usdcBalance?.formatted || '0'} USDC</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <p
                       onMouseEnter={() => setIsAddressHovered(true)}
                       onMouseLeave={() => setIsAddressHovered(false)}
-                      className="relative text-base font-medium inline-flex items-center gap-1"
+                      className="text-gray-400 font-mono text-sm mb-4 flex items-center"
                     >
-                      {address && address.slice(0, 14) + '...' + address.slice(-8)}
-                      <CopyButton copy={address} className="text-xs ml-2" />
-                      {isAddressHovered && (
-                        <div className="absolute left-0 bottom-5 mb-2 bg-zinc-900 text-white p-2 rounded shadow-lg whitespace-nowrap text-sm">
-                          {address}
-                        </div>
-                      )}
-                    </span>
-                  ) : (
-                    <span>Not connected</span>
-                  )}
+                      {address ? `${address.slice(0, 10)}...${address.slice(-8)}` : 'Not connected'}
+                      {address && <CopyButton copy={address} className="ml-2 text-blue-400 hover:text-blue-300" />}
+                    </p>
+                    {isAddressHovered && address && (
+                      <div className="absolute left-0 top-6 bg-gray-800 text-white p-2 rounded shadow-lg text-xs z-10">
+                        {address}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
+
+              <div className="flex flex-wrap gap-4 mb-6">
+                <button
+                  onClick={() => setShowDepositModal(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
+                >
+                  <MdOutlineFileDownload className="text-xl" />
+                  <span>Deposit USDC</span>
+                </button>
+                <button
+                  onClick={() => setShowWithdrawModal(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
+                >
+                  <FaWallet className="text-xl" />
+                  <span>Withdraw Tokens</span>
+                </button>
+                <button
+                  onClick={() => setShowPortfolio(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
+                >
+                  <FaChartPie className="text-xl" />
+                  <span>Meme Portfolio</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="lg:w-1/3 bg-gray-800 rounded-lg p-6 flex flex-col items-center justify-center text-center">
+              <FaRocket className="text-5xl text-blue-400 mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-2">Meme Trading Made Easy</h3>
+              <p className="text-gray-300">
+                Buy, sell, and rebalance your meme portfolio with just a few clicks. Start your meme trading journey today!
+              </p>
             </div>
           </div>
-          <div className="flex justify-between items-center mb-4">
-            <button
-              onClick={() => setShowDepositModal(true)}
-              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed mr-2"
-            >
-              <MdOutlineFileDownload className="text-B200 text-lg" />
-              Deposit USDC
-            </button>
-            <button
-              onClick={() => setShowWithdrawModal(true)}
-              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
-            >
-              Withdraw Tokens
-            </button>
-            <button
-              onClick={() => setShowPortfolio(true)}
-              className="hidden lg:flex h-full px-4 py-2 rounded-lg border text-xs font-semibold text-zinc-200 border-zinc-700 bg-P1 hover:bg-zinc-800 transition-all duration-300 ease-in-out transform shadow-sm items-center justify-center gap-1 font-condensed"
-            >
-              Meme Portfolio
-            </button>
-          </div>
         </div>
-      </div>
+      )}
+
+      {/* Modal components (kept the same) */}
       {showDepositModal && (
-        <div className="fixed inset-0 bg-P3 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-P1 p-6 rounded-lg max-w-2xl w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-gray-800 p-6 rounded-lg max-w-2xl w-full relative">
             <button
               onClick={() => setShowDepositModal(false)}
-              className="absolute top-3 right-4 text-zinc-400 hover:text-white"
+              className="absolute top-3 right-4 text-gray-400 hover:text-white"
             >
               ✕
             </button>
             <h3 className="text-xl font-bold mb-4 text-white">Deposit USDC</h3>
-            <p className="mb-4 text-zinc-300">Please send USDC to the following address:</p>
-            <div className="bg-zinc-700 p-3 rounded mb-4">
+            <p className="mb-4 text-gray-300">Please send USDC to the following address:</p>
+            <div className="bg-gray-700 p-3 rounded mb-4">
               <div className="flex justify-between items-center">
                 <span className="text-white font-mono break-all">{address}</span>
                 <div className="flex items-center ml-2">
-                  <CopyButton copy={address} className="text-lg ml-2" />
-
+                  <CopyButton copy={address} className="text-lg ml-2 text-blue-400 hover:text-blue-300" />
                   <a
                     href={`https://basescan.org/address/${address}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg ml-2"
+                    className="text-lg ml-2 text-blue-400 hover:text-blue-300"
                   >
                     <FiExternalLink />
                   </a>
@@ -153,7 +168,7 @@ const WalletInfo: React.FC = () => {
           onClose={() => setShowPortfolio(false)}
         />
       )}
-    </>
+    </div>
   );
 };
 
