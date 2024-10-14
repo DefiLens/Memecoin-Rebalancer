@@ -58,3 +58,7 @@ export interface MemeCoinGridProps {
     selectedCoins: ICoinDetails[];
     handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
 }
+
+export interface ApprovalAddress {
+    [service: string]: `0x${string}`;
+}

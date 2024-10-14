@@ -13,7 +13,7 @@ import MemeCoinGrid from "./MemeCoinGrid";
 import FormatDecimalValue from "../base/FormatDecimalValue";
 import Loader from "../shared/Loader";
 import ReviewRebalance from "../shared/ReviewRebalance";
-import { ButtonState, ICoinDetails, ISwapAmount } from "./types";
+import { ButtonState, ICoinDetails, ISwapAmount, ApprovalAddress } from "./types";
 import { USDC_ADDRESS } from "../../utils/constant";
 
 const MemecoinsRebalancer: React.FC = () => {
@@ -134,7 +134,7 @@ const MemecoinsRebalancer: React.FC = () => {
   };
 
   const handleRebalance = async () => {
-    if (!swapData) {
+    if (!swapData || !swapData.swapResponses || !swapData.approvalAddresses) {
       setError("Swap data not available");
       return;
     }
@@ -144,37 +144,43 @@ const MemecoinsRebalancer: React.FC = () => {
 
     try {
       const totalAmount = parseUnits(amount, 6);
-      const approvalData = encodeFunctionData({
-        abi: [
-          {
-            inputs: [
-              { internalType: "address", name: "spender", type: "address" },
-              { internalType: "uint256", name: "amount", type: "uint256" },
+
+      // Create approval calls for each unique service
+      const approvalCalls = swapData.approvalAddresses.map((approvalObj: ApprovalAddress) => {
+        const [service, address] = Object.entries(approvalObj)[0];
+        return {
+          to: USDC_ADDRESS,
+          data: encodeFunctionData({
+            abi: [
+              {
+                inputs: [
+                  { internalType: "address", name: "spender", type: "address" },
+                  { internalType: "uint256", name: "amount", type: "uint256" },
+                ],
+                name: "approve",
+                outputs: [{ internalType: "bool", name: "", type: "bool" }],
+                stateMutability: "nonpayable",
+                type: "function",
+              },
             ],
-            name: "approve",
-            outputs: [{ internalType: "bool", name: "", type: "bool" }],
-            stateMutability: "nonpayable",
-            type: "function",
-          },
-        ],
-        functionName: "approve",
-        args: [swapData[0].to, totalAmount],
+            functionName: "approve",
+            args: [address, totalAmount],
+          }),
+          value: BigInt(0),
+        };
       });
 
-      console.log(swapData)
+      // Create swap calls
+      const swapCalls = swapData.swapResponses.map((data: any) => ({
+        to: data.to,
+        data: data.calldata,
+        value: BigInt(data.value || 0),
+      }));
 
-      const calls = [
-        {
-          to: USDC_ADDRESS,
-          data: approvalData,
-          value: BigInt(0),
-        },
-        ...swapData.map((data: any) => ({
-          to: data.to,
-          data: data.calldata,
-          value: BigInt(data.value || 0),
-        })),
-      ];
+      // Combine approval and swap calls
+      const calls = [...approvalCalls, ...swapCalls];
+
+      console.log("Calls:", calls);
 
       await sendCallsAsync({
         calls,
@@ -184,6 +190,9 @@ const MemecoinsRebalancer: React.FC = () => {
           },
         },
       });
+
+      toast.success("Rebalance executed successfully!");
+      setButtonState("rebalance");
     } catch (error: any) {
       console.error("Error during rebalance:", error);
       setError(`Failed to execute rebalance`);
