@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { FaCheckCircle, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { FcBookmark } from "react-icons/fc";
+import { CiBookmark } from "react-icons/ci";
 import { ReviewRebalanceProps } from "./types";
 import FormatDecimalValue from "../base/FormatDecimalValue";
 import { currencyFormat, formatPercentage } from "../../utils/helper";
@@ -14,32 +16,32 @@ const Coin: React.FC<ReviewRebalanceProps> = ({
   wishlist,
   toggleWishlist
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
 
   const toggleExpand = (coinId: string, event: React.MouseEvent) => {
-    event.stopPropagation(); // Prevent triggering token selection on expand
+    event.stopPropagation();
     setExpandedCoin(expandedCoin === coinId ? null : coinId);
   };
 
   const handleCoinClick = () => {
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
   };
 
   const handleSelectToken = (event: React.MouseEvent) => {
-    event.stopPropagation(); // Prevent token selection when clicking on specific buttons
-    handleCoinSelect(coin); // Trigger token selection
+    event.stopPropagation();
+    handleCoinSelect(coin);
   };
 
-  const isWishlisted = wishlist.some(item => item.coinId === coin.id);
+  const isWishlisted = wishlist.includes(coin.id);
 
   const handleToggleWishlist = (event: React.MouseEvent) => {
     event.stopPropagation();
-    toggleWishlist(coin.id); // Call the toggle function
+    toggleWishlist(coin.id);
   };
 
   const isSelected = selectedCoins.some((c) => c.id === coin.id);
@@ -50,12 +52,29 @@ const Coin: React.FC<ReviewRebalanceProps> = ({
       className={`relative cursor-pointer border-zinc-700 border p-2 rounded-lg flex flex-col h-fit ${isSelected && "bg-cyan-900 bg-opacity-15"
         }`}
     >
-      {/* Show green tick if token is selected */}
-      {isSelected ? (
-        <FaCheckCircle className="absolute top-2 right-2 text-green-500 w-5 h-5" />
-      ) : (
-        <div className="absolute top-2 right-2 border border-white hover:bg-zinc-700 rounded-full w-5 h-5"></div>
-      )}
+      <div className="absolute top-2 right-2 flex gap-2 text-center py-1">
+        <button
+          onClick={handleToggleWishlist}
+          className="w-5 h-5"
+        >
+          {isWishlisted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" id="bookmark">
+              <path fill="#FF0101" d="M11.0699,0.0001 C13.7799,0.0001 15.9699,1.0701 15.9999,3.7901 L15.9999,3.7901 L15.9999,18.9701 C15.9999,19.1401 15.9599,19.3101 15.8799,19.4601 C15.7499,19.7001 15.5299,19.8801 15.2599,19.9601 C14.9999,20.0401 14.7099,20.0001 14.4699,19.8601 L14.4699,19.8601 L7.9899,16.6201 L1.4999,19.8601 C1.3509,19.9391 1.1799,19.9901 1.0099,19.9901 C0.4499,19.9901 -0.0001,19.5301 -0.0001,18.9701 L-0.0001,18.9701 L-0.0001,3.7901 C-0.0001,1.0701 2.1999,0.0001 4.8999,0.0001 L4.8999,0.0001 Z M11.7499,6.0401 L4.2199,6.0401 C3.7899,6.0401 3.4399,6.3901 3.4399,6.8301 C3.4399,7.2691 3.7899,7.6201 4.2199,7.6201 L4.2199,7.6201 L11.7499,7.6201 C12.1799,7.6201 12.5299,7.2691 12.5299,6.8301 C12.5299,6.3901 12.1799,6.0401 11.7499,6.0401 L11.7499,6.0401 Z" transform="translate(4 2)"></path>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="bookmark">
+              <path fill="#FFFFFF" d="M11.0699,0.0001 C13.7799,0.0001 15.9699,1.0701 15.9999,3.7901 L15.9999,3.7901 L15.9999,18.9701 C15.9999,19.1401 15.9599,19.3101 15.8799,19.4601 C15.7499,19.7001 15.5299,19.8801 15.2599,19.9601 C14.9999,20.0401 14.7099,20.0001 14.4699,19.8601 L14.4699,19.8601 L7.9899,16.6201 L1.4999,19.8601 C1.3509,19.9391 1.1799,19.9901 1.0099,19.9901 C0.4499,19.9901 -0.0001,19.5301 -0.0001,18.9701 L-0.0001,18.9701 L-0.0001,3.7901 C-0.0001,1.0701 2.1999,0.0001 4.8999,0.0001 L4.8999,0.0001 Z M11.7499,6.0401 L4.2199,6.0401 C3.7899,6.0401 3.4399,6.3901 3.4399,6.8301 C3.4399,7.2691 3.7899,7.6201 4.2199,7.6201 L4.2199,7.6201 L11.7499,7.6201 C12.1799,7.6201 12.5299,7.2691 12.5299,6.8301 C12.5299,6.3901 12.1799,6.0401 11.7499,6.0401 L11.7499,6.0401 Z" transform="translate(4 2)"></path>
+            </svg>
+          )}
+        </button>
+
+        {/* Show green tick if token is selected */}
+        {isSelected ? (
+          <FaCheckCircle className="mt-[2px] text-green-500 w-5 h-full" />
+        ) : (
+          <div className="mt-[2px] border border-white hover:bg-zinc-700 rounded-full w-5 h-5"></div>
+        )}
+      </div>
 
       <div className="flex justify-between">
         <div className="flex flex-col mb-2">
@@ -83,17 +102,6 @@ const Coin: React.FC<ReviewRebalanceProps> = ({
           </div>
         </div>
       </div>
-
-      <button
-        onClick={handleToggleWishlist}
-        className="absolute top-2 right-10 rounded-full w-5 h-5 hover:bg-zinc-700"
-      >
-        {isWishlisted ? (
-          <FaHeart className="text-red-500 w-5 h-5" />
-        ) : (
-          <FaRegHeart className="text-zinc-400 w-5 h-5" />
-        )}
-      </button>
 
       {/* Button to expand coin details */}
       <button
