@@ -106,7 +106,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
       });
 
       let totalValue = 0;
-      const balances = results.map((result, index) => {
+      const balances = results.map((result: any, index: any) => {
         if (result.status === 'success') {
           const token = tokenDetails[index];
           const balance = formatUnits(BigInt(result.result as string), token.decimalPlaces);
