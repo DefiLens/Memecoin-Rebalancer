@@ -8,12 +8,10 @@ function FormatDecimalValue(value: number): JSX.Element {
   }
 
   const decimalPart = parts[1];
-  console.log('decimalPart', decimalPart);
 
   // Count the leading zeros in the decimal part
   const leadingZeros = decimalPart.match(/^0+/);
   const zeroCount = leadingZeros ? leadingZeros[0].length : 0;
-  console.log('zeroCount', zeroCount);
 
   if (zeroCount >= 5) {
     // If there are 5 or more leading zeros, show them in a subscript tag
