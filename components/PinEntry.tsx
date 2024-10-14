@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/keys';
 
 interface PinEntryProps {
   onPinVerified: () => void;
@@ -14,7 +15,7 @@ const PinEntry: React.FC<PinEntryProps> = ({ onPinVerified }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4500/api/auth/pin/verify', { pin });
+      const response = await axios.post(`${BASE_URL}/auth/pin/verify`, { pin });
       if (response.status === 200) {
         onPinVerified();
         localStorage.setItem('pinVerified', 'true');
