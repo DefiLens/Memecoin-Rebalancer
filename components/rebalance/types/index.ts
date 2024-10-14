@@ -1,5 +1,5 @@
 export interface ICoinDetails {
-    id: string;
+    id: any;
     symbol: string;
     name: string;
     image: string;
@@ -50,7 +50,7 @@ export interface ReviewRebalanceProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
     handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
-    wishlist: { coinId: string }[]; // Adjust this type if your wishlist structure is different
+    wishlist: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
     toggleWishlist: (coinId: string) => Promise<void>;
 }
 
