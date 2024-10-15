@@ -74,7 +74,7 @@ const SingleCoin: React.FC<SingleCoinProps> = ({ isOpen, onClose, coin }) => {
                             </tr>
                             <tr className="flex justify-between py-3">
                                 <th className="text-left text-zinc-200 font-medium text-sm leading-5">
-                                    24 Hour Trading Vol
+                                    24H Trading Vol
                                 </th>
                                 <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
                                     <span>{currencyFormat(coin.total_volume)}</span>

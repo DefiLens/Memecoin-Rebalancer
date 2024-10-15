@@ -1,20 +1,22 @@
-"use client";
 import React, { createContext, useCallback, useEffect } from "react";
 import BigNumber from "bignumber.js";
 import { ICoinDetails } from "../components/rebalance/types";
 import { BASE_URL } from "../utils/keys";
 import { memeCoinData } from "../utils/constant";
 import { toast } from "react-toastify";
-import { useGlobalStore } from "./global.store";
+import { useGlobalStore } from "./global.store"; // Zustand store
 
 BigNumber.config({ DECIMAL_PLACES: 10 });
 
 const DataProvider = ({ children }: any) => {
-    const { setAllCoins } = useGlobalStore(); // Get the setter from Zustand
+    const { setAllCoins, activeFilter } = useGlobalStore(); // Get the active filter from Zustand
 
     const fetchCoins = useCallback(async () => {
         try {
-            const response = await fetch(`${BASE_URL}/swap/token`);
+            const queryParams = new URLSearchParams({
+                [activeFilter]: "desc", // Apply the active filter dynamically
+            });
+            const response = await fetch(`${BASE_URL}/swap/token?${queryParams}`);
             const backendData: ICoinDetails[] = await response.json();
 
             const mergedData = backendData.map((coin) => {
@@ -29,12 +31,12 @@ const DataProvider = ({ children }: any) => {
                 return coin;
             });
 
-            setAllCoins(mergedData); // Use the Zustand setter to update allCoins
+            setAllCoins(mergedData); // Update Zustand state with merged data
         } catch (error) {
             console.error("Error fetching coin data:", error);
             toast.error("Failed to fetch memecoin list");
         }
-    }, [setAllCoins]);
+    }, [setAllCoins, activeFilter]);
 
     useEffect(() => {
         fetchCoins();

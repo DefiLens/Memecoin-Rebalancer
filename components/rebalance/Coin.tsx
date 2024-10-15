@@ -120,9 +120,8 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
     return (
         <div
             onClick={handleSelectToken}
-            className={`relative cursor-pointer border-zinc-700 border p-2 rounded-lg flex flex-col h-fit ${
-                isSelected && "bg-cyan-900 bg-opacity-15"
-            }`}
+            className={`relative cursor-pointer border-zinc-700 border p-2 rounded-lg flex flex-col h-fit ${isSelected && "bg-cyan-900 bg-opacity-15"
+                }`}
         >
             <div className="absolute top-2 right-2 flex gap-2 text-center py-1 items-center">
                 <button onClick={handleToggleWishlist} className="w-5 h-5 text-xl">
@@ -151,11 +150,10 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                             ${FormatDecimalValue(coin.current_price)}
                         </span>
                         <span
-                            className={`text-lg flex items-center gap-1 ${
-                                coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0
+                            className={`text-lg flex items-center gap-1 ${coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0
                                     ? "text-green-500"
                                     : "text-red-500"
-                            }`}
+                                }`}
                         >
                             {coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0 ? (
                                 <TiArrowSortedUp />
@@ -182,9 +180,8 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
             {/* Button to expand coin details */}
             <button
                 onClick={(event) => toggleExpand(coin.id, event)}
-                className={`transform duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${
-                    expandedCoin === coin.id ? "rotate-180" : "rotate-0"
-                }`}
+                className={`transform duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${expandedCoin === coin.id ? "rotate-180" : "rotate-0"
+                    }`}
             >
                 <FiChevronDown />
             </button>
@@ -204,7 +201,28 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
 
                         <tr className="flex justify-between py-3">
                             <th className="text-left text-zinc-200 font-medium text-sm leading-5">
-                                24 Hour Trading Vol
+                                Market Cap 24H Change
+                            </th>
+                            <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
+                                <span
+                                    className={`text-lg flex items-center gap-1 ${coin.market_cap_change_percentage_24h && coin.market_cap_change_percentage_24h >= 0
+                                            ? "text-green-500"
+                                            : "text-red-500"
+                                        }`}
+                                >
+                                    {coin.market_cap_change_percentage_24h && coin.market_cap_change_percentage_24h >= 0 ? (
+                                        <TiArrowSortedUp />
+                                    ) : (
+                                        <TiArrowSortedDown />
+                                    )}
+                                    {formatPercentage(coin.market_cap_change_percentage_24h)}%
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr className="flex justify-between py-3">
+                            <th className="text-left text-zinc-200 font-medium text-sm leading-5">
+                                24H Trading Vol
                             </th>
                             <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
                                 <span>{currencyFormat(coin.total_volume)}</span>
