@@ -11,6 +11,8 @@ import { Address } from "viem";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../utils/keys";
+import { IoBookmarkOutline } from "react-icons/io5";
+import { IoBookmark } from "react-icons/io5";
 
 const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
@@ -73,7 +75,6 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
         fetchWishlist();
     }, [fetchWishlist]);
 
-
     const isWishlisted = wishlist?.includes(coin.id);
 
     const toggleWishlist = async (coinId: string) => {
@@ -123,47 +124,22 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                 isSelected && "bg-cyan-900 bg-opacity-15"
             }`}
         >
-            {/* Show green tick if token is selected */}
-            {/* {isSelected ? (
-                <FaCheckCircle className="absolute top-2 right-2 text-green-500 w-5 h-5" />
-            ) : (
-                <div className="absolute top-2 right-2 border border-zinc-700 rounded-full w-5 h-5"></div>
-            )} */}
-            <div className="absolute top-2 right-2 flex gap-2 text-center py-1">
-                <button onClick={handleToggleWishlist} className="w-5 h-5">
+            <div className="absolute top-2 right-2 flex gap-2 text-center py-1 items-center">
+                <button onClick={handleToggleWishlist} className="w-5 h-5 text-xl">
                     {isWishlisted ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" id="bookmark">
-                            <path
-                                fill="#FF0101"
-                                d="M11.0699,0.0001 C13.7799,0.0001 15.9699,1.0701 15.9999,3.7901 L15.9999,3.7901 L15.9999,18.9701 C15.9999,19.1401 15.9599,19.3101 15.8799,19.4601 C15.7499,19.7001 15.5299,19.8801 15.2599,19.9601 C14.9999,20.0401 14.7099,20.0001 14.4699,19.8601 L14.4699,19.8601 L7.9899,16.6201 L1.4999,19.8601 C1.3509,19.9391 1.1799,19.9901 1.0099,19.9901 C0.4499,19.9901 -0.0001,19.5301 -0.0001,18.9701 L-0.0001,18.9701 L-0.0001,3.7901 C-0.0001,1.0701 2.1999,0.0001 4.8999,0.0001 L4.8999,0.0001 Z M11.7499,6.0401 L4.2199,6.0401 C3.7899,6.0401 3.4399,6.3901 3.4399,6.8301 C3.4399,7.2691 3.7899,7.6201 4.2199,7.6201 L4.2199,7.6201 L11.7499,7.6201 C12.1799,7.6201 12.5299,7.2691 12.5299,6.8301 C12.5299,6.3901 12.1799,6.0401 11.7499,6.0401 L11.7499,6.0401 Z"
-                                transform="translate(4 2)"
-                            ></path>
-                        </svg>
+                        <IoBookmark className="text-cyan-500" />
                     ) : (
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            id="bookmark"
-                        >
-                            <path
-                                fill="#FFFFFF"
-                                d="M11.0699,0.0001 C13.7799,0.0001 15.9699,1.0701 15.9999,3.7901 L15.9999,3.7901 L15.9999,18.9701 C15.9999,19.1401 15.9599,19.3101 15.8799,19.4601 C15.7499,19.7001 15.5299,19.8801 15.2599,19.9601 C14.9999,20.0401 14.7099,20.0001 14.4699,19.8601 L14.4699,19.8601 L7.9899,16.6201 L1.4999,19.8601 C1.3509,19.9391 1.1799,19.9901 1.0099,19.9901 C0.4499,19.9901 -0.0001,19.5301 -0.0001,18.9701 L-0.0001,18.9701 L-0.0001,3.7901 C-0.0001,1.0701 2.1999,0.0001 4.8999,0.0001 L4.8999,0.0001 Z M11.7499,6.0401 L4.2199,6.0401 C3.7899,6.0401 3.4399,6.3901 3.4399,6.8301 C3.4399,7.2691 3.7899,7.6201 4.2199,7.6201 L4.2199,7.6201 L11.7499,7.6201 C12.1799,7.6201 12.5299,7.2691 12.5299,6.8301 C12.5299,6.3901 12.1799,6.0401 11.7499,6.0401 L11.7499,6.0401 Z"
-                                transform="translate(4 2)"
-                            ></path>
-                        </svg>
+                        <IoBookmarkOutline className="hover:text-cyan-500" />
                     )}
                 </button>
 
                 {/* Show green tick if token is selected */}
                 {isSelected ? (
-                    <FaCheckCircle className="mt-[2px] text-green-500 w-5 h-full" />
+                    <FaCheckCircle className="text-green-500 w-5 h-full" />
                 ) : (
-                    <div className="mt-[2px] border border-white hover:bg-zinc-700 rounded-full w-5 h-5"></div>
+                    <div className="border hover:border-cyan-500 rounded-full w-5 h-5"></div>
                 )}
             </div>
-
             <div className="flex justify-between">
                 <div className="flex flex-col mb-2">
                     <div className="flex items-center gap-2 mb-2">

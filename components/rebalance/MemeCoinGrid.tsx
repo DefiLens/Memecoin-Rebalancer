@@ -9,39 +9,32 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            <div className="flex gap-3">
+            <div className="flex items-center border-zinc-500">
                 <button
-                    className={`px-4 py-2 min-w-20 rounded-lg border ${
-                        activeTab === "buy"
-                            ? "bg-zinc-800 text-white border-zinc-700"
-                            : "bg-zinc-900 text-zinc-200 border-zinc-800"
-                    }`}
                     onClick={() => setActiveTab("buy")}
+                    className={`font-semibold text-base hover:bg-zinc-800 px-6 py-1 transition-all duration-300 border-b-4 ${
+                        activeTab === "buy" ? "border-zinc-500" : "border-transparent"
+                    }`}
                 >
-                    Buy
+                    Bots
                 </button>
                 <button
-                    className={`px-4 py-2 min-w-20 rounded-lg border ${
-                        activeTab === "sell"
-                            ? "bg-zinc-800 text-white border-zinc-700"
-                            : "bg-zinc-900 text-zinc-200 border-zinc-800"
-                    }`}
                     onClick={() => setActiveTab("sell")}
+                    className={`font-semibold text-base hover:bg-zinc-800 px-6 py-1 transition-all duration-300 border-b-4 ${
+                        activeTab === "sell" ? "border-zinc-500" : "border-transparent"
+                    }`}
                 >
-                    Sell
+                    History
                 </button>
                 <button
-                    className={`px-4 py-2 min-w-20 rounded-lg border ${
-                        activeTab === "bookmark"
-                            ? "bg-zinc-800 text-white border-zinc-700"
-                            : "bg-zinc-900 text-zinc-200 border-zinc-800"
-                    }`}
                     onClick={() => setActiveTab("bookmark")}
+                    className={`font-semibold text-base hover:bg-zinc-800 px-6 py-1 transition-all duration-300 border-b-4 ${
+                        activeTab === "bookmark" ? "border-zinc-500" : "border-transparent"
+                    }`}
                 >
                     Bookmark
                 </button>
             </div>
-
             {activeTab === "buy" && <BuyTokens resetSwapAmount={resetSwapAmount} />}
             {activeTab === "sell" && <SellTokens resetSwapAmount={resetSwapAmount} />}
             {activeTab === "bookmark" && <WishListTokens />}

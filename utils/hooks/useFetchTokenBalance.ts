@@ -2,6 +2,8 @@ import { useEffect, useCallback } from "react";
 import axios from "axios";
 import { decreasePowerByDecimals } from "../helper";
 
+export type TransactionStatus = "pending" | "completed" | "notStarted";
+
 // Define the structure of the API response
 interface TokenBalanceResponse {
     balance: string;

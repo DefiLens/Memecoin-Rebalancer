@@ -7,13 +7,12 @@ import { FiRefreshCw, FiTrash2 } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
 import { RiExternalLinkLine, RiCoinsLine } from "react-icons/ri";
 import axios from "axios";
-import TransactionStatus from "./TransactionStatus";
 import { BASE_URL } from "../../utils/keys";
 import MemeCoinGrid from "./MemeCoinGrid";
 import FormatDecimalValue from "../base/FormatDecimalValue";
 import Loader from "../shared/Loader";
 import ReviewRebalance from "../shared/ReviewRebalance";
-import { ButtonState, ICoinDetails, ISwapAmount, ApprovalAddress } from "./types";
+import { ButtonState, ICoinDetails, ISwapAmount, ApprovalAddress, TransactionStatus } from "./types";
 import { USDC_ADDRESS } from "../../utils/constant";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import SelectedSellToken from "./SelectedSellToken";
@@ -29,6 +28,7 @@ export interface ISwapData {
     to: Address;
     value: string;
 }
+
 const MemecoinsRebalancer: React.FC = () => {
     const { buyTokens, sellTokens, clearSelectedTokens } = useRebalanceStore();
     const [amount, setAmount] = useState("");
@@ -36,11 +36,13 @@ const MemecoinsRebalancer: React.FC = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [buttonState, setButtonState] = useState<ButtonState>("proceed");
+    const [transactionStatus, setTransactionStatus] = useState<TransactionStatus>("idle");
     const [openReview, setOpenReview] = useState(false);
     const [swapData, setSwapData] = useState<any>(null);
     const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: { amountIn: string; amountOut: string } }>({});
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
+
     const { data: callsStatus } = useCallsStatus({
         id: callsId as string,
         query: {
@@ -175,6 +177,7 @@ const MemecoinsRebalancer: React.FC = () => {
 
         setIsLoading(true);
         setButtonState("rebalancing");
+        setTransactionStatus("pending");
 
         try {
             const totalAmount = parseUnits(amount, 6);
@@ -268,11 +271,13 @@ const MemecoinsRebalancer: React.FC = () => {
 
             toast.success("Rebalance executed successfully!");
             setButtonState("rebalance");
+            setTransactionStatus("success");
         } catch (error: any) {
             console.error("Error during rebalance:", error);
             setError(`Failed to execute rebalance`);
             toast.error("Rebalance failed. Please try again.");
             setButtonState("rebalance");
+            setTransactionStatus("error");
         } finally {
             setIsLoading(false);
         }
@@ -291,6 +296,14 @@ const MemecoinsRebalancer: React.FC = () => {
     const resetSwapAmount = () => {
         setSwapAmounts({});
     };
+    const resetTransactionStatus = () => {
+        setTransactionStatus("idle");
+    };
+
+    useEffect(() => {
+        resetSwapAmount();
+        setButtonState("proceed");
+    }, [buyTokens, sellTokens]);
 
     const saveTxn = async (data: any) => {
         try {
@@ -302,36 +315,66 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     useEffect(() => {
-        resetSwapAmount();
-        setButtonState("proceed");
-    }, [buyTokens, sellTokens]);
+        // if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
+        //     const txHash = callsStatus.receipts[0].transactionHash;
 
-    useEffect(() => {
-        if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
-            const txHash = callsStatus.receipts[0].transactionHash;
+        //     await saveTxn({
+        //         userAddress: address,
+        //         hash: txHash,
+        //         amount: amount,
+        //         selectedCoins: buyTokens,
+        //         percentages: percentages,
+        //     });
+        //     toast.success(
+        //         <a
+        //             href={`https://basescan.org/tx/${txHash}`}
+        //             target="_blank"
+        //             rel="noopener noreferrer"
+        //             className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
+        //         >
+        //             Success: {txHash.substring(0, 5)}...
+        //             {txHash.substring(txHash.length - 5, txHash.length)}
+        //             <RiExternalLinkLine className="text-base" />
+        //         </a>
+        //     );
+        //     resetState();
+        // }
+        const handleTransactionSave = async () => {
+            if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
+                const txHash = callsStatus.receipts[0].transactionHash;
 
-            saveTxn({
-                userAddress: address,
-                hash: txHash,
-                amount: amount,
-                selectedCoins: buyTokens,
-                percentages: percentages,
-            });
-            toast.success(
-                <a
-                    href={`https://basescan.org/tx/${txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
-                >
-                    Success: {txHash.substring(0, 5)}...
-                    {txHash.substring(txHash.length - 5, txHash.length)}
-                    <RiExternalLinkLine className="text-base" />
-                </a>
-            );
-            resetState();
-        }
+                try {
+                    toast.success(
+                        <a
+                            href={`https://basescan.org/tx/${txHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
+                        >
+                            Success: {txHash.substring(0, 5)}...
+                            {txHash.substring(txHash.length - 5, txHash.length)}
+                            <RiExternalLinkLine className="text-base" />
+                        </a>
+                    );
+                    // Save the transaction first
+                    await saveTxn({
+                        userAddress: address,
+                        hash: txHash,
+                        amount: amount,
+                        selectedCoins: buyTokens,
+                        percentages: percentages,
+                    });
+                    // Reset the state after saving the transaction
+                    resetState();
+                } catch (error) {
+                    console.error("Failed to save transaction or reset state:", error);
+                }
+            }
+        };
+
+        handleTransactionSave();
     }, [callsStatus]);
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     //set amount value
@@ -391,20 +434,22 @@ const MemecoinsRebalancer: React.FC = () => {
                     <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
 
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
+                        {/* Buy Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50 mb-3">
-                            <h1
-                                className="text-sm text-zinc-200
-                            font-semibold mb-2"
-                            >
-                                Buy Tokens
+                            <h1 className="text-base text-zinc-200 font-bold">
+                                {sellTokens.length > 0 && buyTokens.length === 0
+                                    ? "No Buy Token selected"
+                                    : "Buy Tokens"}
                             </h1>
+
+                            {/* Buy Token Input and Display */}
                             {buyTokens.length > 0 ? (
-                                <div className="flex flex-col mb-2 text-zinc-300">
+                                <div className="flex flex-col mb-2 text-zinc-300 mt-2">
                                     <label className="text-xs text-zinc-200 mb-1">Total amount</label>
                                     <div className="w-full relative">
                                         <input
-                                            type="text" // Change type to text
-                                            inputMode="numeric" // Set input mode to numeric
+                                            type="text"
+                                            inputMode="numeric"
                                             className="bg-zinc-800 rounded-xl px-4 py-2 w-full text-zinc-200 text-base outline-none"
                                             placeholder={`Total Amount in USDC`}
                                             value={amount}
@@ -426,10 +471,19 @@ const MemecoinsRebalancer: React.FC = () => {
                                     </span>
                                 </div>
                             ) : (
-                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                    No tokens selected
-                                </div>
+                                <>
+                                    {/* No Tokens Selected or Only Sell Tokens Selected */}
+                                    {sellTokens.length === 0 && buyTokens.length === 0 ? (
+                                        <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
+                                            No tokens selected
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </>
                             )}
+
+                            {/* List of Selected Buy Tokens */}
                             {buyTokens.map((coin) => (
                                 <SelectedBuyToken
                                     key={coin.id}
@@ -441,18 +495,35 @@ const MemecoinsRebalancer: React.FC = () => {
                                 />
                             ))}
                         </div>
+
+                        {/* Sell Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50">
                             <h1
-                                className="text-sm text-zinc-200
-                            font-semibold mb-2"
+                                className={`text-base text-zinc-200 font-bold ${
+                                    buyTokens.length > 0 && sellTokens.length === 0 ? "" : "mb-2"
+                                }`}
                             >
-                                Sell Tokens
+                                {buyTokens.length > 0 && sellTokens.length === 0
+                                    ? "No Sell Token selected"
+                                    : "Sell Tokens"}
                             </h1>
-                            {sellTokens.length <= 0 && (
-                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                    No tokens selected
-                                </div>
+
+                            {/* No Tokens Selected or Only Buy Tokens Selected */}
+                            {sellTokens.length > 0 ? (
+                                <></>
+                            ) : (
+                                <>
+                                    {buyTokens.length === 0 && sellTokens.length === 0 ? (
+                                        <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
+                                            No tokens selected
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </>
                             )}
+
+                            {/* List of Selected Sell Tokens */}
                             {sellTokens.map((coin) => (
                                 <SelectedSellToken
                                     key={coin.id}
@@ -524,13 +595,16 @@ const MemecoinsRebalancer: React.FC = () => {
                             </div>
                         </div>
                         <div className="text-red-500 mt-1 text-xs">{error}</div>
-                        <TransactionStatus callStatus={callsStatus} />
+
                         {openReview && (
                             <ReviewRebalance
                                 toggleReview={toggleReview}
                                 swapAmounts={swapAmounts}
                                 buttonState={buttonState}
                                 handleExecute={handleRebalance}
+                                status={transactionStatus}
+                                callsStatus={callsStatus}
+                                resetTransactionStatus={resetTransactionStatus}
                             />
                         )}
                     </div>
