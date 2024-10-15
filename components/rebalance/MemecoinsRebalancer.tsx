@@ -422,7 +422,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                         </div>
                                     </div>
                                     <span className="ml-auto text-xs text-cyan-500 mb-1 pr-1">
-                                        Bal: {Number(usdcBalance?.formatted).toPrecision(4)} USDC
+                                        Balance: {Number(usdcBalance?.formatted)} USDC
                                     </span>
                                 </div>
                             ) : (

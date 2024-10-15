@@ -124,7 +124,7 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
                     </span>
                 )}
                 <span className="text-xs text-cyan-500 ml-auto">
-                    {Number(balance?.formatted).toPrecision(4)} {coin.symbol.toLocaleUpperCase()}
+                    Balance: {Number(balance?.formatted)} {coin.symbol.toLocaleUpperCase()}
                 </span>
             </div>
         </div>
