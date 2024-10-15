@@ -19,6 +19,7 @@ import SelectedSellToken from "./SelectedSellToken";
 import SelectedBuyToken from "./SelectedBuyToken";
 import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
 import { BigNumber as bg } from "bignumber.js";
+import { FaArrowCircleDown, FaArrowCircleUp, FaBitbucket } from "react-icons/fa";
 bg.config({ DECIMAL_PLACES: 20 });
 
 export interface ISwapData {
@@ -436,11 +437,10 @@ const MemecoinsRebalancer: React.FC = () => {
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
                         {/* Buy Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50 mb-3">
-                            <h1 className="text-base text-zinc-200 font-bold">
-                                {sellTokens.length > 0 && buyTokens.length === 0
-                                    ? "No Buy Token selected"
-                                    : "Buy Tokens"}
-                            </h1>
+                            <div className="flex items-center">
+                                <FaArrowCircleUp className="text-green-500 mr-2" />
+                                <h1 className="text-base text-zinc-200 font-bold">Buy Tokens</h1>
+                            </div>
 
                             {/* Buy Token Input and Display */}
                             {buyTokens.length > 0 ? (
@@ -474,8 +474,10 @@ const MemecoinsRebalancer: React.FC = () => {
                                 <>
                                     {/* No Tokens Selected or Only Sell Tokens Selected */}
                                     {sellTokens.length === 0 && buyTokens.length === 0 ? (
-                                        <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                            No tokens selected
+                                        <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
+                                            <FaBitbucket />
+                                            <p className="text-sm font-medium">No tokens selected</p>
+                                            <p className="text-xs font-light mt-1">Select tokens to start rebalancing</p>
                                         </div>
                                     ) : (
                                         <></>
@@ -498,24 +500,21 @@ const MemecoinsRebalancer: React.FC = () => {
 
                         {/* Sell Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50">
-                            <h1
-                                className={`text-base text-zinc-200 font-bold ${
-                                    buyTokens.length > 0 && sellTokens.length === 0 ? "" : "mb-2"
-                                }`}
-                            >
-                                {buyTokens.length > 0 && sellTokens.length === 0
-                                    ? "No Sell Token selected"
-                                    : "Sell Tokens"}
-                            </h1>
+                            <div className="flex items-center">
+                                <FaArrowCircleDown className="text-red-500 mr-2" />
+                                <h1 className="text-base text-zinc-200 font-bold">Sell Tokens</h1>
+                            </div>
 
                             {/* No Tokens Selected or Only Buy Tokens Selected */}
                             {sellTokens.length > 0 ? (
                                 <></>
                             ) : (
                                 <>
-                                    {buyTokens.length === 0 && sellTokens.length === 0 ? (
-                                        <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                            No tokens selected
+                                    {buyTokens.length === 0 && buyTokens.length === 0 ? (
+                                        <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
+                                            <FaBitbucket />
+                                            <p className="text-sm font-medium">No tokens selected</p>
+                                            <p className="text-xs font-light mt-1">Select tokens to start rebalancing</p>
                                         </div>
                                     ) : (
                                         <></>
@@ -543,20 +542,18 @@ const MemecoinsRebalancer: React.FC = () => {
                                         buttonState === "proceed"
                                             ? handleProceed
                                             : buttonState === "rebalance"
-                                            ? toggleReview
-                                            : undefined
+                                                ? toggleReview
+                                                : undefined
                                     }
                                     className={`flex items-center gap-2 px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 
-                                    ${
-                                        buyTokens.length === 0 && sellTokens.length === 0
+                                    ${buyTokens.length === 0 && sellTokens.length === 0
                                             ? "opacity-50 cursor-not-allowed"
                                             : ""
-                                    }
-                                    ${
-                                        isLoading || buttonState === "quoting" || buttonState === "rebalancing"
+                                        }
+                                    ${isLoading || buttonState === "quoting" || buttonState === "rebalancing"
                                             ? "cursor-not-allowed opacity-50"
                                             : ""
-                                    }
+                                        }
                                 `}
                                     disabled={
                                         isLoading ||
