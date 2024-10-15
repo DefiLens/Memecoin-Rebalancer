@@ -50,7 +50,7 @@ const Header: React.FC = () => {
 
     return (
         <header className="bg-B1 h-[60px] flex items-center">
-            <div className="container mx-auto px-4 flex justify-between items-center">
+            <div className="w-full flex justify-between items-center px-4"> {/* Removed 'container mx-auto' */}
                 <div className="flex items-center">
                     <img src="/assets/logo.svg" alt="DefiLens" className="h-8 w-8 mr-2" />
                     <h1 className="text-2xl font-bold text-white">DefiLens</h1>
@@ -89,9 +89,8 @@ const Header: React.FC = () => {
                             </div>
                             <span className="text-white rounded-full text-base">{shorten(address)}</span>
                             <IoIosArrowDown
-                                className={`text-white text-xl transition-all duration-150 ${
-                                    showDropDown ? "rotate-180" : ""
-                                }`}
+                                className={`text-white text-xl transition-all duration-150 ${showDropDown ? "rotate-180" : ""
+                                    }`}
                             />
 
                             {showDropDown && (

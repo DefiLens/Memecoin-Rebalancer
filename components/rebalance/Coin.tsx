@@ -171,7 +171,7 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                                 <></>
                             ) : (
                                 <>
-                                    {FormatDecimalValue(Number(balance?.formatted))} {coin.symbol}
+                                    Your Balance: {FormatDecimalValue(Number(balance?.formatted))} {coin.symbol}
                                 </>
                             )}
                         </span>

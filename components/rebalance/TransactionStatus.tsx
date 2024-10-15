@@ -5,11 +5,11 @@ export default function TransactionStatus({
     callStatus,
 }: {
     callStatus:
-        | {
-              status: "PENDING" | "CONFIRMED";
-              receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
-          }
-        | undefined;
+    | {
+        status: "PENDING" | "CONFIRMED";
+        receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
+    }
+    | undefined;
 }) {
     if (!callStatus) return null;
 
@@ -17,7 +17,8 @@ export default function TransactionStatus({
         return (
             <div className="flex flex-col justify-between p-4">
                 <div className="flex flex-col gap-4 justify-center items-center">
-                    <SiTicktick className="text-cyan-500 text-7xl" />
+                    <BsClockHistory className="text-cyan-500 text-7xl" />
+
                     <h1 className="text-xl font-semibold mb- 2">Transaction {callStatus.status.toLowerCase()}</h1>
                 </div>
             </div>
@@ -30,7 +31,7 @@ export default function TransactionStatus({
         return (
             <div className="flex flex-col justify-between p-4">
                 <div className="flex flex-col gap-4 justify-center items-center">
-                    <BsClockHistory className="text-cyan-500 text-7xl" />
+                    <SiTicktick className="text-cyan-500 text-7xl" />
                     <h1 className="text-xl font-semibold mb-2">Transaction {callStatus.status.toLowerCase()}</h1>
                     <a
                         href={`https://basescan.org/tx/${transactionHash}`}
