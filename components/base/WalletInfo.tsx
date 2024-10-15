@@ -31,7 +31,7 @@ const WalletInfo: React.FC = () => {
   const formatAddress = (addr: string) => `${addr.slice(0, 10)}`;
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-B1">
       <header className="bg-B1 h-[60px] flex items-center">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
@@ -46,7 +46,7 @@ const WalletInfo: React.FC = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex-grow">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-">
                 <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg">
                   <AvatarIcon address={address ?? ''} />
                 </div>
@@ -84,7 +84,7 @@ const WalletInfo: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 mb-6">
+              <div className="flex flex-wrap gap-4">
                 <button
                   onClick={() => setShowDepositModal(true)}
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1"
@@ -109,10 +109,10 @@ const WalletInfo: React.FC = () => {
               </div>
             </div>
 
-            <div className="lg:w-1/3 bg-gray-800 rounded-lg p-6 flex flex-col items-center justify-center text-center">
+            <div className="lg:w-5/12 bg-gray-800 rounded-lg p-6 flex flex-col items-center justify-center text-center h-fit">
               <FaRocket className="text-5xl text-blue-400 mb-4" />
               <h3 className="text-2xl font-bold text-white mb-2">Meme Trading Made Easy</h3>
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-base leading-5 tracking-wide">
                 Buy, sell, and rebalance your meme portfolio with just a few clicks. Start your meme trading journey today!
               </p>
             </div>

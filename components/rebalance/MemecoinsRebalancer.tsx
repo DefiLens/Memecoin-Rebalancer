@@ -36,9 +36,7 @@ const MemecoinsRebalancer: React.FC = () => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [buttonState, setButtonState] = useState<ButtonState>("proceed");
-    // const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: ISwapAmount }>({});
     const [openReview, setOpenReview] = useState(false);
-
     const [swapData, setSwapData] = useState<any>(null);
     const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: { amountIn: string; amountOut: string } }>({});
     const { address } = useAccount();
@@ -81,9 +79,15 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     const handleProceed = async () => {
-        if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
-            setError("Please enter a valid amount");
+        if (buyTokens.length > 0 && (!amount || isNaN(Number(amount)) || Number(amount) <= 0)) {
+            setError("Please enter a valid buy amount");
             return;
+        }
+        for (const sellToken of sellTokens) {
+            if (!sellToken.amount || isNaN(Number(sellToken.amount)) || Number(sellToken.amount) <= 0) {
+                setError(`Please enter a valid sell amount for token: ${sellToken.symbol.toLocaleUpperCase()}`);
+                return;
+            }
         }
 
         setError("");
@@ -110,7 +114,7 @@ const MemecoinsRebalancer: React.FC = () => {
                 })),
             ];
 
-            console.log("swapRequests: ", swapRequests)
+            console.log("swapRequests: ", swapRequests);
 
             const response = await fetch(`${BASE_URL}/swap/generate`, {
                 method: "POST",
@@ -125,7 +129,7 @@ const MemecoinsRebalancer: React.FC = () => {
             }
 
             const data = await response.json();
-            console.log(data)
+            console.log(data);
 
             // Create a new amounts object to store amountIn and amountOut for each token.
             const amounts: { [key: string]: { amountIn: string; amountOut: string } } = {};
@@ -223,7 +227,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     functionName: "approve",
                     args: [
                         swapData.swapResponses[index].to,
-                        parseUnits(String(token.amount), Number(token.decimal_place))
+                        parseUnits(String(token.amount), Number(token.decimal_place)),
                     ],
                 });
 
@@ -233,7 +237,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     value: BigInt(0),
                 };
             });
-        
+
             // const calls = [
             //     {
             //         to: USDC_ADDRESS,
@@ -283,9 +287,9 @@ const MemecoinsRebalancer: React.FC = () => {
         setButtonState("proceed");
         setError("");
     };
-    
+
     const resetSwapAmount = () => {
-        setSwapAmounts({})
+        setSwapAmounts({});
     };
 
     const saveTxn = async (data: any) => {
@@ -296,6 +300,11 @@ const MemecoinsRebalancer: React.FC = () => {
             console.error("Failed to store transaction:", error);
         }
     };
+
+    useEffect(() => {
+        resetSwapAmount();
+        setButtonState("proceed");
+    }, [buyTokens, sellTokens]);
 
     useEffect(() => {
         if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
@@ -375,7 +384,7 @@ const MemecoinsRebalancer: React.FC = () => {
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
                 <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
-                    <MemeCoinGrid resetSwapAmount={resetSwapAmount}/>
+                    <MemeCoinGrid resetSwapAmount={resetSwapAmount} />
                 </div>
 
                 <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
@@ -412,6 +421,9 @@ const MemecoinsRebalancer: React.FC = () => {
                                             </button>
                                         </div>
                                     </div>
+                                    <span className="ml-auto text-xs text-cyan-500 mb-1 pr-1">
+                                        Bal: {Number(usdcBalance?.formatted).toPrecision(4)} USDC
+                                    </span>
                                 </div>
                             ) : (
                                 <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
@@ -454,35 +466,44 @@ const MemecoinsRebalancer: React.FC = () => {
 
                     <div className="">
                         <div className="flex justify-between items-center">
-                            <button
-                                onClick={
-                                    buttonState === "proceed"
-                                        ? handleProceed
-                                        : buttonState === "rebalance"
-                                        ? toggleReview
-                                        : undefined
-                                }
-                                className={`flex items-center gap-2 px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 ${
-                                    buyTokens.length === 0 ? "opacity-50 cursor-not-allowed" : ""
-                                } ${
-                                    (isLoading || buttonState === "quoting" || buttonState === "rebalancing") &&
-                                    "cursor-not-allowed opacity-50"
-                                }`}
-                                disabled={
-                                    isLoading ||
-                                    buttonState === "quoting" ||
-                                    buttonState === "rebalancing" ||
-                                    buyTokens.length === 0
-                                }
-                            >
-                                {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
-                                    <Loader />
-                                )}
-                                {buttonState === "proceed" && "Get Quote"}
-                                {buttonState === "quoting" && "Wait for Quote..."}
-                                {buttonState === "rebalance" && "Rebalance"}
-                                {buttonState === "rebalancing" && "Rebalancing..."}
-                            </button>
+                            {(buyTokens.length != 0 || sellTokens.length != 0) && (
+                                <button
+                                    onClick={
+                                        buttonState === "proceed"
+                                            ? handleProceed
+                                            : buttonState === "rebalance"
+                                            ? toggleReview
+                                            : undefined
+                                    }
+                                    className={`flex items-center gap-2 px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 
+                                    ${
+                                        buyTokens.length === 0 && sellTokens.length === 0
+                                            ? "opacity-50 cursor-not-allowed"
+                                            : ""
+                                    }
+                                    ${
+                                        isLoading || buttonState === "quoting" || buttonState === "rebalancing"
+                                            ? "cursor-not-allowed opacity-50"
+                                            : ""
+                                    }
+                                `}
+                                    disabled={
+                                        isLoading ||
+                                        buttonState === "quoting" ||
+                                        buttonState === "rebalancing" ||
+                                        (buyTokens.length === 0 && sellTokens.length === 0) // Enable if there are buy or sell tokens
+                                    }
+                                >
+                                    {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
+                                        <Loader />
+                                    )}
+                                    {buttonState === "proceed" && "Get Quote"}
+                                    {buttonState === "quoting" && "Wait for Quote..."}
+                                    {buttonState === "rebalance" && "Rebalance"}
+                                    {buttonState === "rebalancing" && "Rebalancing..."}
+                                </button>
+                            )}
+
                             <div className="flex items-center gap-1">
                                 {buyTokens.length > 0 && (
                                     <button
@@ -502,11 +523,10 @@ const MemecoinsRebalancer: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                        {/* <div className="text-red-500 mt-1 text-sm">{error}</div> */}
+                        <div className="text-red-500 mt-1 text-xs">{error}</div>
                         <TransactionStatus callStatus={callsStatus} />
                         {openReview && (
                             <ReviewRebalance
-                                selectedCoins={buyTokens}
                                 toggleReview={toggleReview}
                                 swapAmounts={swapAmounts}
                                 buttonState={buttonState}
@@ -514,20 +534,8 @@ const MemecoinsRebalancer: React.FC = () => {
                             />
                         )}
                     </div>
-                    {/* <TransactionStatus callStatus={callsStatus} />
-                    {openReview && (
-                        <ReviewRebalance
-                            selectedCoins={selectedCoins}
-                            toggleReview={toggleReview}
-                            swapAmounts={swapAmounts}
-                            buttonState={buttonState}
-                            handleExecute={handleRebalance}
-                        />
-                    )}
-                </div> */}
-                
+                </div>
             </div>
-        </div>
         </>
     );
 };

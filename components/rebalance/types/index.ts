@@ -52,9 +52,9 @@ export interface CoinProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
     handleCoinSelect: (coin: ICoinDetails) => void;
+    type: string;
     wishlist?: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
     toggleWishlist?: (coinId: string) => Promise<void>;
-    type: string;
 }
 
 export interface MemeCoinGridProps {

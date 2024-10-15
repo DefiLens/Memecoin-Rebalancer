@@ -94,7 +94,7 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
                     <RxCross1 />
                 </button>
             </div>
-            <div className="flex items-center mb-2 text-zinc-300">
+            <div className="flex items-center mb-1 text-zinc-300">
                 <div className="w-full relative">
                     <input
                         type="text" // Change type to text
@@ -116,17 +116,17 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
                     </div>
                 </div>
             </div>
-            {swapAmounts[coin.id] && (
-                <div className="mt-2 flex capitalize items-center gap-4">
+            <div className="flex capitalize items-center justify-between gap-4 px-1">
+                {swapAmounts[coin.id] && (
                     <span className="text-xs text-cyan-500">
-                        {/* {Number(
-                            decreasePowerByDecimals(swapAmounts[coin.id].amountIn, Number(coin.decimal_place))
-                        ).toPrecision(5)}{" "} */}
-                        {Number(swapAmounts[coin.id].amountIn)} {coin.symbol.toLocaleUpperCase()} ={" "}
+                        {Number(swapAmounts[coin.id].amountIn).toPrecision(4)} {coin.symbol.toLocaleUpperCase()} ={" "}
                         {Number(swapAmounts[coin.id].amountOut)} USDC
                     </span>
-                </div>
-            )}
+                )}
+                <span className="text-xs text-cyan-500 ml-auto">
+                    {Number(balance?.formatted).toPrecision(4)} {coin.symbol.toLocaleUpperCase()}
+                </span>
+            </div>
         </div>
     );
 };

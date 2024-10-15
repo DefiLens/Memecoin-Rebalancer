@@ -6,7 +6,6 @@ import { ButtonState, ICoinDetails, ISwapAmount } from "../rebalance/types";
 import { useRebalanceStore } from "../../context/rebalance.store";
 
 interface ReviewRebalanceProps {
-    selectedCoins: ICoinDetails[];
     swapAmounts: { [key: string]: ISwapAmount };
     buttonState: ButtonState;
     toggleReview: () => void;
@@ -14,7 +13,6 @@ interface ReviewRebalanceProps {
 }
 
 const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
-    selectedCoins,
     toggleReview,
     swapAmounts,
     buttonState,
@@ -167,7 +165,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                     } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
           ${(buttonState === "quoting" || buttonState === "rebalancing") && "cursor-not-allowed opacity-50"}
           `}
-                    disabled={buttonState === "quoting" || buttonState === "rebalancing" || selectedCoins.length === 0}
+                    disabled={buttonState === "quoting" || buttonState === "rebalancing" || (buyTokens.length === 0 && sellTokens.length === 0)}
                 >
                     {(buttonState === "quoting" || buttonState === "rebalancing") && <Loader />}
                     Execute
