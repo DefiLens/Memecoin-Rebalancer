@@ -12,7 +12,6 @@ function FormatDecimalValue(value: number): JSX.Element {
   // Count the leading zeros in the decimal part
   const leadingZeros = decimalPart.match(/^0+/);
   const zeroCount = leadingZeros ? leadingZeros[0].length : 0;
-
   if (zeroCount >= 5) {
     // If there are 5 or more leading zeros, show them in a subscript tag
     return (

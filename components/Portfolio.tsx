@@ -11,7 +11,7 @@ import { BASE_URL } from '../utils/keys';
 // Setup the public client with viem on Base network
 const publicClient = createPublicClient({
     chain: base,
-    transport: http()
+    transport: http(),
 });
 
 // Define ERC20 ABI for multicall

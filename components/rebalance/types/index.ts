@@ -29,6 +29,8 @@ export interface ICoinDetails {
     // Additional fields to be merged from frontend
     decimal_place?: number;
     contract_address?: string;
+    amount?: string;
+    balance?: string;
 }
 
 
@@ -46,17 +48,19 @@ export interface PriceChartProps {
     id: string;
 }
 
-export interface ReviewRebalanceProps {
+export interface CoinProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
-    wishlist: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
-    toggleWishlist: (coinId: string) => Promise<void>;
+    handleCoinSelect: (coin: ICoinDetails) => void;
+    wishlist?: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
+    toggleWishlist?: (coinId: string) => Promise<void>;
+    type: string;
 }
 
 export interface MemeCoinGridProps {
-    selectedCoins: ICoinDetails[];
-    handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
+    // selectedCoins: ICoinDetails[];
+    // handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
+    resetSwapAmount: () => void;
 }
 
 export interface ApprovalAddress {
