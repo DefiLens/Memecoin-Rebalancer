@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import axios from "axios";
-import { decreasePowerByDecimals } from "../utils";
+import { decreasePowerByDecimals } from "../helper";
 
 // Define the structure of the API response
 interface TokenBalanceResponse {
