@@ -3,11 +3,12 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import Loader from "./Loader";
 import { ButtonState, ICoinDetails, ISwapAmount } from "../rebalance/types";
+import { useRebalanceStore } from "../../context/rebalance.store";
 
 interface ReviewRebalanceProps {
     selectedCoins: ICoinDetails[];
     swapAmounts: { [key: string]: ISwapAmount };
-    buttonState: ButtonState,
+    buttonState: ButtonState;
     toggleReview: () => void;
     handleExecute: () => void;
 }
@@ -19,6 +20,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
     buttonState,
     handleExecute,
 }) => {
+    const { buyTokens, sellTokens } = useRebalanceStore();
+
     return (
         <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-50 text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
             <div className="min-h-60 w-[35rem] flex flex-col justify-center items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
@@ -35,8 +38,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                 <div className="h-full w-full flex flex-col justify-center items-center gap-2">
                     <div className="w-full border-3 max-h-96 overflow-auto flex flex-col justify-start items-center gap-5 my-5">
                         <div className="w-full max-h-full overflow-auto flex flex-col gap-5">
-                            {selectedCoins?.length > 0 &&
-                                selectedCoins.map((coin) => (
+                            {buyTokens?.length > 0 &&
+                                buyTokens.map((coin) => (
                                     <div
                                         key={coin.id}
                                         className="w-full flex flex-col justify-between items-start gap-2 p-3 rounded-xl border border-zinc-700 bg-zinc-800"
@@ -77,6 +80,56 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                                             <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
                                                                 {Number(swapAmounts[coin.id].amountOut).toPrecision(10)}{" "}
                                                                 {coin.symbol}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            {sellTokens?.length > 0 &&
+                                sellTokens.map((coin) => (
+                                    <div
+                                        key={coin.id}
+                                        className="w-full flex flex-col justify-between items-start gap-2 p-3 rounded-xl border border-zinc-700 bg-zinc-800"
+                                    >
+                                        <div className="w-full flex flex-col gap-2">
+                                            <div className="w-full flex justify-between items-center gap-2">
+                                                <div className="flex justify-start items-center gap-3">
+                                                    <div className="relative">
+                                                        <img
+                                                            src={coin.image}
+                                                            alt="network logo"
+                                                            className="h-10 w-10 bg-font-200 rounded-full mt-1.5"
+                                                        />
+                                                    </div>
+                                                    <div className="flex flex-col justify-start items-start">
+                                                        <span className="text-lg font-semibold text-B200 capitalize">
+                                                            {coin.name}
+                                                        </span>
+                                                        {swapAmounts[coin.id] && (
+                                                            <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
+                                                                {Number(swapAmounts[coin.id].amountIn).toPrecision(10)}{" "}
+                                                                {coin.symbol}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <FaArrowRightLong size="20px" />
+                                                <div className="flex items-center gap-3">
+                                                    <div className="relative">
+                                                        <img
+                                                            src="/usdc.png"
+                                                            alt="USDC"
+                                                            className="h-10 w-10 bg-font-200 rounded-full mt-1.5"
+                                                        />
+                                                    </div>
+                                                    <div className="flex flex-col justify-start items-start">
+                                                        <span className="text-lg font-semibold text-B200">Usdc</span>
+                                                        {swapAmounts[coin.id] && (
+                                                            <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
+                                                                {Number(swapAmounts[coin.id].amountOut)} USDC
                                                             </p>
                                                         )}
                                                     </div>

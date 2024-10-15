@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import { useSendCalls, useCallsStatus } from "wagmi/experimental";
-import { parseUnits, encodeFunctionData } from "viem";
+import { parseUnits, encodeFunctionData, Address } from "viem";
 import { toast } from "react-toastify";
 import { FiRefreshCw, FiTrash2 } from "react-icons/fi";
 import TransactionStatus from "./TransactionStatus";
@@ -13,19 +13,31 @@ import FormatDecimalValue from "../base/FormatDecimalValue";
 import Loader from "../shared/Loader";
 import { RiExternalLinkLine } from "react-icons/ri";
 import ReviewRebalance from "../shared/ReviewRebalance";
-import { ButtonState, ISwapAmount } from "./types";
+import { ButtonState, ICoinDetails, ISwapAmount } from "./types";
 import { USDC_ADDRESS } from "../../utils/constant";
 import { useRebalanceStore } from "../../context/rebalance.store";
+import SelectedSellToken from "./SelectedSellToken";
+import SelectedBuyToken from "./SelectedBuyToken";
+import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
+import { BigNumber as bg } from "bignumber.js";
+bg.config({ DECIMAL_PLACES: 20 });
 
+export interface ISwapData {
+    amountIn: string;
+    amountOut: string;
+    calldata: string;
+    to: Address;
+    value: string;
+}
 const MemecoinsRebalancer: React.FC = () => {
-    const { buyTokens, sellTokens, removeBuyToken, removeSellToken } = useRebalanceStore();
+    const { buyTokens, sellTokens, clearSelectedTokens } = useRebalanceStore();
     const [amount, setAmount] = useState("");
     const [percentages, setPercentages] = useState<{ [key: string]: string }>({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [buySwapData, setBuySwapData] = useState<any>(null);
     const [buttonState, setButtonState] = useState<ButtonState>("proceed");
-    const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: ISwapAmount }>({});
+    const [swapData, setSwapData] = useState<ISwapData[] | null>(null);
+    const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: { amountIn: string; amountOut: string } }>({});
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
     const { data: callsStatus } = useCallsStatus({
@@ -34,6 +46,11 @@ const MemecoinsRebalancer: React.FC = () => {
             enabled: !!callsId,
             refetchInterval: (data) => (data.state.data?.status === "CONFIRMED" ? false : 1000),
         },
+    });
+    const tokenAddress = USDC_ADDRESS; // Explicitly cast to Address type
+    const { data: usdcBalance } = useBalance({
+        address,
+        token: tokenAddress,
     });
 
     useEffect(() => {
@@ -45,9 +62,9 @@ const MemecoinsRebalancer: React.FC = () => {
             setPercentages({});
         }
 
-        if (buySwapData) {
+        if (swapData) {
             setButtonState("proceed");
-            setBuySwapData(null);
+            setSwapData(null);
         }
     }, [buyTokens]);
 
@@ -57,7 +74,7 @@ const MemecoinsRebalancer: React.FC = () => {
             [id]: value,
         }));
         setButtonState("proceed");
-        setBuySwapData(null);
+        setSwapData(null);
     };
 
     const handleProceed = async () => {
@@ -71,14 +88,24 @@ const MemecoinsRebalancer: React.FC = () => {
         setButtonState("quoting");
 
         try {
-            const swapRequests = buyTokens.map((coin) => ({
-                tokenIn: USDC_ADDRESS,
-                tokenOut: coin.contract_address,
-                amountIn: Math.floor((Number(amount) * 1e6 * Number(percentages[coin.id])) / 100).toString(),
-                recipient: address,
-                decimalsIn: 6,
-                decimalsOut: coin.decimal_place,
-            }));
+            const swapRequests = [
+                ...buyTokens.map((coin) => ({
+                    tokenIn: USDC_ADDRESS,
+                    tokenOut: coin.contract_address,
+                    amountIn: Math.floor((Number(amount) * 1e6 * Number(percentages[coin.id])) / 100).toString(),
+                    recipient: address,
+                    decimalsIn: 6,
+                    decimalsOut: coin.decimal_place,
+                })),
+                ...sellTokens.map((coin) => ({
+                    tokenIn: coin.contract_address,
+                    tokenOut: USDC_ADDRESS,
+                    amountIn: incresePowerByDecimals(String(coin.amount), Number(coin.decimal_place)),
+                    recipient: address,
+                    decimalsIn: coin.decimal_place,
+                    decimalsOut: 6,
+                })),
+            ];
 
             const response = await fetch(`${BASE_URL}/swap/generate`, {
                 method: "POST",
@@ -93,23 +120,36 @@ const MemecoinsRebalancer: React.FC = () => {
             }
 
             const data = await response.json();
-            setBuySwapData(data);
 
-            // Set swap amounts
+            // Create a new amounts object to store amountIn and amountOut for each token.
             const amounts: { [key: string]: { amountIn: string; amountOut: string } } = {};
 
             data.forEach((item: any, index: number) => {
-                amounts[buyTokens[index].id] = {
-                    amountIn: (Number(item.amountIn) / 1e6).toFixed(6), // Convert from USDC's 6 decimals
-                    amountOut: item.amountOut,
-                };
+                if (index < buyTokens.length) {
+                    // For buy tokens, set the amountIn and amountOut.
+                    amounts[buyTokens[index].id] = {
+                        amountIn: (Number(item.amountIn) / 1e6).toFixed(6),
+                        amountOut: item.amountOut,
+                    };
+                } else {
+                    // For sell tokens, update amountIn and amountOut.
+                    const sellIndex = index - buyTokens.length;
+                    amounts[sellTokens[sellIndex].id] = {
+                        amountIn: decreasePowerByDecimals(item.amountIn, Number(sellTokens[sellIndex].decimal_place)),
+                        amountOut: item.amountOut,
+                    };
+                }
             });
-            setSwapAmounts(amounts);
 
+            // Update states
+            setSwapAmounts((prev) => ({
+                ...prev,
+                ...amounts, // Update for buy tokens
+            }));
+            setSwapData(data);
             setButtonState("rebalance");
         } catch (error: any) {
             console.error("Error during swap data generation:", error);
-            // setError(`Failed to generate swap data: ${error.message}`);
             setError(`Failed to generate swap data`);
             setButtonState("proceed");
         } finally {
@@ -118,7 +158,7 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     const handleRebalance = async () => {
-        if (!buySwapData) {
+        if (!swapData) {
             setError("Swap data not available");
             return;
         }
@@ -142,7 +182,35 @@ const MemecoinsRebalancer: React.FC = () => {
                     },
                 ],
                 functionName: "approve",
-                args: [buySwapData[0].to, totalAmount],
+                args: [swapData[0].to, totalAmount],
+            });
+
+            const sellApprove = sellTokens.map((token) => {
+                const approvalData = encodeFunctionData({
+                    abi: [
+                        {
+                            inputs: [
+                                { internalType: "address", name: "spender", type: "address" },
+                                { internalType: "uint256", name: "amount", type: "uint256" },
+                            ],
+                            name: "approve",
+                            outputs: [{ internalType: "bool", name: "", type: "bool" }],
+                            stateMutability: "nonpayable",
+                            type: "function",
+                        },
+                    ],
+                    functionName: "approve",
+                    args: [
+                        swapData[0].to,
+                        BigInt(incresePowerByDecimals(String(token.amount), Number(token.decimal_place))),
+                    ],
+                });
+
+                return {
+                    to: token.contract_address,
+                    data: approvalData,
+                    value: BigInt(0),
+                };
             });
 
             const calls = [
@@ -151,7 +219,8 @@ const MemecoinsRebalancer: React.FC = () => {
                     data: approvalData,
                     value: BigInt(0),
                 },
-                ...buySwapData.map((data: any) => ({
+                ...sellApprove,
+                ...swapData.map((data: any) => ({
                     to: data.to,
                     data: data.calldata,
                     value: BigInt(data.value || 0),
@@ -179,13 +248,16 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     const resetState = () => {
-        // setSelectedCoins([]);
+        clearSelectedTokens();
         setPercentages({});
         setAmount("");
-        setBuySwapData(null);
+        setSwapData(null);
         setSwapAmounts({});
         setButtonState("proceed");
         setError("");
+    };
+    const resetSwapAmount = () => {
+        setSwapAmounts({})
     };
 
     const saveTxn = async (data: any) => {
@@ -223,13 +295,17 @@ const MemecoinsRebalancer: React.FC = () => {
             resetState();
         }
     }, [callsStatus]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    //set amount value
     const setAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let amountChange = e.target.value;
-        setError("");
+        setSwapData(null);
+        setSwapAmounts({});
         // Allow the input to be cleared (empty string)
         if (amountChange === "") {
-            setAmount(amountChange);
+            setErrorMessage(null);
+            setAmount("");
             return;
         }
 
@@ -249,9 +325,27 @@ const MemecoinsRebalancer: React.FC = () => {
 
         // Combine the integer and decimal parts back
         amountChange = decimalParts.join(".");
+
+        // Convert the amount to the correct decimal power
+        const increasedPower = incresePowerByDecimals(amountChange, 6);
+        const increasedUsdcPower = incresePowerByDecimals(String(usdcBalance?.formatted), 6);
+
+        const condition = increasedUsdcPower;
+        if (bg(increasedPower).gte(bg(condition))) {
+            setErrorMessage("Insufficient balance.");
+            return;
+        }
+
+        // Clear any previous errors and update the state
+        setErrorMessage(null);
         setAmount(amountChange);
     };
-
+    const setMaxAmount = () => {
+        if (!usdcBalance) return;
+        setErrorMessage("");
+        setError("");
+        setAmount(usdcBalance.formatted);
+    };
     const [openReview, setOpenReview] = useState(false);
 
     const toggleReview = () => {
@@ -261,107 +355,85 @@ const MemecoinsRebalancer: React.FC = () => {
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                <div className="w-9/12 pr-4 overflow-auto hide_scrollbar h-full">
-                    <MemeCoinGrid selectedCoins={buyTokens} />
+                <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
+                    <MemeCoinGrid resetSwapAmount={resetSwapAmount}/>
                 </div>
 
-                <div className="w-3/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
-                    <div className="">
-                        <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
-                        <h2 className="text-sm text-zinc-200 mb-1">Amount</h2>
-                        <input
-                            type="text"
-                            inputMode="numeric"
-                            value={amount}
-                            onChange={setAmountChange}
-                            placeholder="Enter USDC amount"
-                            className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none"
-                        />
-                    </div>
+                <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
+                    <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
 
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
-                        <h1>Buy</h1>
-                        {buyTokens.map((coin) => (
-                            <div key={coin.id} className="mb-4 bg-zinc-800 p-4 rounded-lg ">
-                                <div className="flex items-center justify-between mb-2 capitalize">
-                                    <div className="flex items-center">
-                                        <img src={coin.image} alt={coin.symbol} className="w-8 h-8 rounded-full mr-2" />
-                                        <span className="font-bold">{coin.symbol}</span>
+                        <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50 mb-3">
+                            <h1
+                                className="text-sm text-zinc-200
+                            font-semibold mb-2"
+                            >
+                                Buy Tokens
+                            </h1>
+                            {buyTokens.length > 0 ? (
+                                <div className="flex flex-col mb-2 text-zinc-300">
+                                    <label className="text-xs text-zinc-200 mb-1">Total amount</label>
+                                    <div className="w-full relative">
+                                        <input
+                                            type="text" // Change type to text
+                                            inputMode="numeric" // Set input mode to numeric
+                                            className="bg-zinc-800 rounded-xl px-4 py-2 w-full text-zinc-200 text-base outline-none"
+                                            placeholder={`Total Amount in USDC`}
+                                            value={amount}
+                                            onChange={setAmountChange}
+                                        />
+                                        <div className="text-red-500 text-[10px] mt-1">{errorMessage}</div>
+                                        <div className="absolute right-3 top-2 flex items-center gap-4">
+                                            USDC
+                                            <button
+                                                onClick={setMaxAmount}
+                                                className="text-cyan-500 hover:text-cyan-400 transition-all duration-300 font-semibold text-xs bg-zinc-900 px-2 py-1 rounded-lg"
+                                            >
+                                                Max
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button
-                                        onClick={() => removeBuyToken(coin)}
-                                        className="p-1 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
-                                    >
-                                        <RxCross1 />
-                                    </button>
                                 </div>
-                                <div className="flex items-center mb-2 text-zinc-300">
-                                    <input
-                                        type="text"
-                                        inputMode="numeric"
-                                        value={percentages[coin.id] || ""}
-                                        onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
-                                        className="w-20 border border-zinc-700 p-1 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none mr-1"
-                                        min="0"
-                                        max="100"
-                                        step="0.01"
-                                    />
-                                    <span>% of portfolio</span>
+                            ) : (
+                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
+                                    No tokens selected
                                 </div>
-                                {swapAmounts[coin.id] && (
-                                    <div className="mt-2 flex capitalize items-center gap-4">
-                                        <span className="text-sm text-cyan-500">
-                                            {Number(swapAmounts[coin.id].amountIn)} USDC ={" "}
-                                            {FormatDecimalValue(Number(swapAmounts[coin.id].amountOut))}{" "}
-                                            <span className="capitalize">{coin.symbol.toLocaleUpperCase()}</span>
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                        <h1>Sell</h1>
-                        {sellTokens.map((coin) => (
-                            <div key={coin.id} className="mb-4 bg-zinc-800 p-4 rounded-lg ">
-                                <div className="flex items-center justify-between mb-2 capitalize">
-                                    <div className="flex items-center">
-                                        <img src={coin.image} alt={coin.symbol} className="w-8 h-8 rounded-full mr-2" />
-                                        <span className="font-bold">{coin.symbol}</span>
-                                    </div>
-                                    <button
-                                        onClick={() => removeSellToken(coin)}
-                                        className="p-1 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 z-[51]"
-                                    >
-                                        <RxCross1 />
-                                    </button>
+                            )}
+                            {buyTokens.map((coin) => (
+                                <SelectedBuyToken
+                                    key={coin.id}
+                                    coin={coin}
+                                    swapData={swapData}
+                                    percentages={percentages}
+                                    handlePercentageChange={handlePercentageChange}
+                                    swapAmounts={swapAmounts}
+                                />
+                            ))}
+                        </div>
+                        <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50">
+                            <h1
+                                className="text-sm text-zinc-200
+                            font-semibold mb-2"
+                            >
+                                Sell Tokens
+                            </h1>
+                            {sellTokens.length <= 0 && (
+                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
+                                    No tokens selected
                                 </div>
-                                <div className="flex items-center mb-2 text-zinc-300">
-                                    <input
-                                        type="text"
-                                        inputMode="numeric"
-                                        value={percentages[coin.id] || ""}
-                                        onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
-                                        className="w-20 border border-zinc-700 p-1 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none mr-1"
-                                        min="0"
-                                        max="100"
-                                        step="0.01"
-                                    />
-                                    <span>% of portfolio</span>
-                                </div>
-                                {swapAmounts[coin.id] && (
-                                    <div className="mt-2 flex capitalize items-center gap-4">
-                                        <span className="text-sm text-cyan-500">
-                                            {Number(swapAmounts[coin.id].amountIn)} USDC ={" "}
-                                            {FormatDecimalValue(Number(swapAmounts[coin.id].amountOut))}{" "}
-                                            <span className="capitalize">{coin.symbol.toLocaleUpperCase()}</span>
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                            )}
+                            {sellTokens.map((coin) => (
+                                <SelectedSellToken
+                                    key={coin.id}
+                                    coin={coin}
+                                    swapData={swapData}
+                                    swapAmounts={swapAmounts}
+                                />
+                            ))}
+                        </div>
                     </div>
 
                     <div className="">
-                        {error && <div className="text-red-500 mb-4">{error}</div>}
                         <div className="flex justify-between items-center">
                             <button
                                 onClick={
@@ -411,6 +483,7 @@ const MemecoinsRebalancer: React.FC = () => {
                                 )}
                             </div>
                         </div>
+                        {/* <div className="text-red-500 mt-1 text-sm">{error}</div> */}
                         <TransactionStatus callStatus={callsStatus} />
                         {openReview && (
                             <ReviewRebalance

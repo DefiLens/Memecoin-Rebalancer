@@ -9,6 +9,10 @@ export interface IRebalanceStore {
     toggleSellToken: (token: ICoinDetails) => void; // Function to toggle sell token selection
     removeBuyToken: (token: ICoinDetails) => void; // Function to remove buy token
     removeSellToken: (token: ICoinDetails) => void; // Function to remove sell token
+
+    updateSellTokenAmount: (tokenId: string, amount: string) => void;
+    addSellTokenBalance: (tokenId: string, balance: string) => void;
+    clearSelectedTokens: () => void;
 }
 
 // Create the Zustand store
@@ -65,4 +69,28 @@ export const useRebalanceStore = create<IRebalanceStore>((set) => ({
         set((state) => ({
             sellTokens: state.sellTokens.filter((t) => t.id !== token.id),
         })),
+
+    updateSellTokenAmount: (tokenId, amount) =>
+        set((state) => ({
+            sellTokens: state.sellTokens.map((token) =>
+                token.id === tokenId ? { ...token, amount } : token
+            ),
+        })),
+
+    addSellTokenBalance: (tokenId: string, balance: string) =>
+        set((state) => {
+            // Find the token in the sellTokens array
+            const updatedSellTokens = state.sellTokens.map((token) => {
+                if (token.id === tokenId) {
+                    // Update the balance for the matching token
+                    return { ...token, balance: balance };
+                }
+                return token;
+            });
+
+            return {
+                sellTokens: updatedSellTokens,
+            };
+        }),
+    clearSelectedTokens: () => set({ buyTokens: [], sellTokens: [] }),
 }));

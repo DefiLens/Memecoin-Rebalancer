@@ -29,6 +29,8 @@ export interface ICoinDetails {
     // Additional fields to be merged from frontend
     decimal_place?: number;
     contract_address?: string;
+    amount?: string;
+    balance?: string;
 }
 
 
@@ -49,8 +51,10 @@ export interface PriceChartProps {
 export interface CoinProps {
     coin: ICoinDetails;
     selectedCoins: ICoinDetails[];
+    handleCoinSelect: (coin: ICoinDetails) => void;
+    type: string;
 }
 
 export interface MemeCoinGridProps {
-    selectedCoins: ICoinDetails[];
+    resetSwapAmount: () => void;
 }
