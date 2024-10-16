@@ -2,14 +2,12 @@ import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import Loader from "./Loader";
-import { ButtonState, ICoinDetails, ISwapAmount } from "../rebalance/types";
+import { ButtonState, ISwapAmount } from "../rebalance/types";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import { WalletCallReceipt } from "viem";
 import { error, loading, success } from "../../public/assets/gifs";
-import Image from "next/image";
 import TransactionStatus from "../rebalance/TransactionStatus";
-import { SiTicktick } from "react-icons/si";
-import Link from "next/link";
+import { FaExchangeAlt, FaShoppingCart } from "react-icons/fa";
 
 interface ReviewRebalanceProps {
     swapAmounts: { [key: string]: ISwapAmount };
@@ -19,11 +17,11 @@ interface ReviewRebalanceProps {
     resetTransactionStatus: () => void;
     status: "pending" | "error" | "idle" | "success";
     callsStatus:
-        | {
-              status: "PENDING" | "CONFIRMED";
-              receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
-          }
-        | undefined;
+    | {
+        status: "PENDING" | "CONFIRMED";
+        receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
+    }
+    | undefined;
 }
 
 const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
@@ -55,7 +53,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
             <div className="min-h-52 w-[35rem] flex flex-col justify-center items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
                 {/* Heading */}
                 <div className="w-full flex items-center justify-between text-center text-xl md:text-2xl font-bold">
-                    <span>Review Batch</span>
+                    <span>Review Cart</span>
                     <button
                         onClick={() => {
                             toggleReview();
@@ -213,9 +211,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                 {status != "success" && (
                     <button
                         onClick={handleExecute}
-                        className={`${
-                            false ? "cursor-not-allowed opacity-40" : ""
-                        } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
+                        className={`${false ? "cursor-not-allowed opacity-40" : ""
+                            } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
           ${(buttonState === "quoting" || buttonState === "rebalancing") && "cursor-not-allowed opacity-50"}
           `}
                         disabled={
@@ -225,7 +222,10 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                         }
                     >
                         {(buttonState === "quoting" || buttonState === "rebalancing") && <Loader />}
-                        Execute
+                        <>
+                            <FaExchangeAlt /> {/* Exchange Icon */}
+                            Execute Cart
+                        </>
                     </button>
                 )}
 
