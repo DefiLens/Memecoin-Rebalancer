@@ -1,0 +1,2094 @@
+[
+    {
+        "id": "based-brett",
+        "name": "Brett",
+        "symbol": "brett",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x532f27101965dd16442e59d40670faf5ebb142e4"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/35529/thumb/1000050750.png?1709031995",
+            "small": "https://coin-images.coingecko.com/coins/images/35529/small/1000050750.png?1709031995",
+            "large": "https://coin-images.coingecko.com/coins/images/35529/large/1000050750.png?1709031995"
+        },
+        "error": null
+    },
+    {
+        "id": "degen-base",
+        "name": "Degen (Base)",
+        "symbol": "degen",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/34515/thumb/android-chrome-512x512.png?1706198225",
+            "small": "https://coin-images.coingecko.com/coins/images/34515/small/android-chrome-512x512.png?1706198225",
+            "large": "https://coin-images.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225"
+        },
+        "error": null
+    },
+    {
+        "id": "mfercoin",
+        "name": "mfercoin",
+        "symbol": "mfer",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xe3086852a4b125803c815a158249ae468a3254ca"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36550/thumb/mfercoin-logo.png?1711876821",
+            "small": "https://coin-images.coingecko.com/coins/images/36550/small/mfercoin-logo.png?1711876821",
+            "large": "https://coin-images.coingecko.com/coins/images/36550/large/mfercoin-logo.png?1711876821"
+        },
+        "error": null
+    },
+    {
+        "id": "mister-miggles",
+        "name": "Mister Miggles",
+        "symbol": "miggles",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xb1a03eda10342529bbf8eb700a06c60441fef25d"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39251/thumb/miggles.jpg?1721283044",
+            "small": "https://coin-images.coingecko.com/coins/images/39251/small/miggles.jpg?1721283044",
+            "large": "https://coin-images.coingecko.com/coins/images/39251/large/miggles.jpg?1721283044"
+        },
+        "error": null
+    },
+    {
+        "id": "benji-bananas",
+        "name": "TYBENG",
+        "symbol": "tybeng",
+        "asset_platform_id": "ethereum",
+        "detail_platforms": {
+            "ethereum": {
+                "decimal_place": 18,
+                "contract_address": "0xca5b0ae1d104030a9b8f879523508efd86c14483"
+            },
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x029a3b0532871735809a51e8653d6017ef04b6fa"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/31022/thumb/NVoa_mZ6_400x400.jpg?1721805735",
+            "small": "https://coin-images.coingecko.com/coins/images/31022/small/NVoa_mZ6_400x400.jpg?1721805735",
+            "large": "https://coin-images.coingecko.com/coins/images/31022/large/NVoa_mZ6_400x400.jpg?1721805735"
+        },
+        "error": null
+    },
+    {
+        "id": "toshi",
+        "name": "Toshi",
+        "symbol": "toshi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/31126/thumb/Toshi_Logo_-_Circular.png?1721677476",
+            "small": "https://coin-images.coingecko.com/coins/images/31126/small/Toshi_Logo_-_Circular.png?1721677476",
+            "large": "https://coin-images.coingecko.com/coins/images/31126/large/Toshi_Logo_-_Circular.png?1721677476"
+        },
+        "error": null
+    },
+    {
+        "id": "moew",
+        "name": "MOEW",
+        "symbol": "moew",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x15ac90165f8b45a80534228bdcb124a011f62fee"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36737/thumb/MOEW.jpeg?1712210114",
+            "small": "https://coin-images.coingecko.com/coins/images/36737/small/MOEW.jpeg?1712210114",
+            "large": "https://coin-images.coingecko.com/coins/images/36737/large/MOEW.jpeg?1712210114"
+        },
+        "error": null
+    },
+    {
+        "id": "keyboard-cat-base",
+        "name": "Keyboard Cat (Base)",
+        "symbol": "keycat",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9a26f5433671751c3276a065f57e5a02d2817973"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36608/thumb/keyboard_cat.jpeg?1711965348",
+            "small": "https://coin-images.coingecko.com/coins/images/36608/small/keyboard_cat.jpeg?1711965348",
+            "large": "https://coin-images.coingecko.com/coins/images/36608/large/keyboard_cat.jpeg?1711965348"
+        },
+        "error": null
+    },
+    {
+        "id": "basenji",
+        "name": "Basenji",
+        "symbol": "benji",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xbc45647ea894030a4e9801ec03479739fa2485f0"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36416/thumb/ben200x200.jpg?1711420807",
+            "small": "https://coin-images.coingecko.com/coins/images/36416/small/ben200x200.jpg?1711420807",
+            "large": "https://coin-images.coingecko.com/coins/images/36416/large/ben200x200.jpg?1711420807"
+        },
+        "error": null
+    },
+    {
+        "id": "based-2",
+        "name": "BASED",
+        "symbol": "based",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x32e0f9d26d1e33625742a52620cc76c1130efde6"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39669/thumb/BASED.jpg?1723603780",
+            "small": "https://coin-images.coingecko.com/coins/images/39669/small/BASED.jpg?1723603780",
+            "large": "https://coin-images.coingecko.com/coins/images/39669/large/BASED.jpg?1723603780"
+        },
+        "error": null
+    },
+    {
+        "id": "boomer",
+        "name": "Boomer",
+        "symbol": "boomer",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xcde172dc5ffc46d228838446c57c1227e0b82049"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36477/thumb/Token_Image_200x200.png?1714757172",
+            "small": "https://coin-images.coingecko.com/coins/images/36477/small/Token_Image_200x200.png?1714757172",
+            "large": "https://coin-images.coingecko.com/coins/images/36477/large/Token_Image_200x200.png?1714757172"
+        },
+        "error": null
+    },
+    {
+        "id": "doginme",
+        "name": "doginme",
+        "symbol": "doginme",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/35123/thumb/doginme-logo1-transparent200.png?1710856784",
+            "small": "https://coin-images.coingecko.com/coins/images/35123/small/doginme-logo1-transparent200.png?1710856784",
+            "large": "https://coin-images.coingecko.com/coins/images/35123/large/doginme-logo1-transparent200.png?1710856784"
+        },
+        "error": null
+    },
+    {
+        "id": "base-god",
+        "name": "Base God",
+        "symbol": "tybg",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/34563/thumb/tybg.png?1705400778",
+            "small": "https://coin-images.coingecko.com/coins/images/34563/small/tybg.png?1705400778",
+            "large": "https://coin-images.coingecko.com/coins/images/34563/large/tybg.png?1705400778"
+        },
+        "error": null
+    },
+    {
+        "id": "higher",
+        "name": "higher",
+        "symbol": "higher",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0578d8a44db98b23bf096a382e016e29a5ce0ffe"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36084/thumb/200x200logo.png?1710427814",
+            "small": "https://coin-images.coingecko.com/coins/images/36084/small/200x200logo.png?1710427814",
+            "large": "https://coin-images.coingecko.com/coins/images/36084/large/200x200logo.png?1710427814"
+        },
+        "error": null
+    },
+    {
+        "id": "coding-dino",
+        "name": "Coding Dino",
+        "symbol": "dino",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x85e90a5430af45776548adb82ee4cd9e33b08077"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36637/thumb/dino_icon_copy.png?1712029544",
+            "small": "https://coin-images.coingecko.com/coins/images/36637/small/dino_icon_copy.png?1712029544",
+            "large": "https://coin-images.coingecko.com/coins/images/36637/large/dino_icon_copy.png?1712029544"
+        },
+        "error": null
+    },
+    {
+        "id": "normie-2",
+        "name": "NORMIE",
+        "symbol": "normie",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0x47b464edb8dc9bc67b5cd4c9310bb87b773845bd"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/35880/thumb/NORMIEsite.png?1709983341",
+            "small": "https://coin-images.coingecko.com/coins/images/35880/small/NORMIEsite.png?1709983341",
+            "large": "https://coin-images.coingecko.com/coins/images/35880/large/NORMIEsite.png?1709983341"
+        },
+        "error": null
+    },
+    {
+        "id": "skull-of-pepe-token",
+        "name": "Skull of Pepe Token",
+        "symbol": "skop",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6d3b8c76c5396642960243febf736c6be8b60562"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38342/thumb/skop.jpeg?1717141011",
+            "small": "https://coin-images.coingecko.com/coins/images/38342/small/skop.jpeg?1717141011",
+            "large": "https://coin-images.coingecko.com/coins/images/38342/large/skop.jpeg?1717141011"
+        },
+        "error": null
+    },
+    {
+        "id": "based-chad",
+        "name": "Based Chad",
+        "symbol": "chad",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xecaf81eb42cd30014eb44130b89bcd6d4ad98b92"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36285/thumb/logo_200_200_square.jpg?1712167823",
+            "small": "https://coin-images.coingecko.com/coins/images/36285/small/logo_200_200_square.jpg?1712167823",
+            "large": "https://coin-images.coingecko.com/coins/images/36285/large/logo_200_200_square.jpg?1712167823"
+        },
+        "error": null
+    },
+    {
+        "id": "chompcoin",
+        "name": "ChompCoin",
+        "symbol": "chomp",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xebff2db643cf955247339c8c6bcd8406308ca437"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36942/thumb/chomplogo200.png?1712864472",
+            "small": "https://coin-images.coingecko.com/coins/images/36942/small/chomplogo200.png?1712864472",
+            "large": "https://coin-images.coingecko.com/coins/images/36942/large/chomplogo200.png?1712864472"
+        },
+        "error": null
+    },
+    {
+        "id": "okayeg",
+        "name": "Okayeg",
+        "symbol": "okayeg",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xdb6e0e5094a25a052ab6845a9f1e486b9a9b3dde"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37748/thumb/Okayeg_200.png?1715442444",
+            "small": "https://coin-images.coingecko.com/coins/images/37748/small/Okayeg_200.png?1715442444",
+            "large": "https://coin-images.coingecko.com/coins/images/37748/large/Okayeg_200.png?1715442444"
+        },
+        "error": null
+    },
+    {
+        "id": "mochi-thecatcoin",
+        "name": "Mochi",
+        "symbol": "mochi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xf6e932ca12afa26665dc4dde7e27be02a7c02e50"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/33083/thumb/CIRCLE-200x200.png?1713297273",
+            "small": "https://coin-images.coingecko.com/coins/images/33083/small/CIRCLE-200x200.png?1713297273",
+            "large": "https://coin-images.coingecko.com/coins/images/33083/large/CIRCLE-200x200.png?1713297273"
+        },
+        "error": null
+    },
+    {
+        "id": "weirdo-2",
+        "name": "Weirdo",
+        "symbol": "weirdo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 8,
+                "contract_address": "0x76734b57dfe834f102fb61e1ebf844adf8dd931e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37847/thumb/New_Project_%2823%29.png?1726539603",
+            "small": "https://coin-images.coingecko.com/coins/images/37847/small/New_Project_%2823%29.png?1726539603",
+            "large": "https://coin-images.coingecko.com/coins/images/37847/large/New_Project_%2823%29.png?1726539603"
+        },
+        "error": null
+    },
+    {
+        "id": "ski-mask-dog",
+        "name": "Ski Mask Dog",
+        "symbol": "ski",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0x768be13e1680b5ebe0024c42c896e3db59ec0149"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37195/thumb/32992128-F52F-4346-84CA-8E0C48F43606.jpeg?1713676521",
+            "small": "https://coin-images.coingecko.com/coins/images/37195/small/32992128-F52F-4346-84CA-8E0C48F43606.jpeg?1713676521",
+            "large": "https://coin-images.coingecko.com/coins/images/37195/large/32992128-F52F-4346-84CA-8E0C48F43606.jpeg?1713676521"
+        },
+        "error": null
+    },
+    {
+        "id": "floppa-cat",
+        "name": "Floppa Cat",
+        "symbol": "floppa",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x776aaef8d8760129a0398cf8674ee28cefc0eab9"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36969/thumb/floppa.jpg?1722771377",
+            "small": "https://coin-images.coingecko.com/coins/images/36969/small/floppa.jpg?1722771377",
+            "large": "https://coin-images.coingecko.com/coins/images/36969/large/floppa.jpg?1722771377"
+        },
+        "error": null
+    },
+    {
+        "id": "marso-tech",
+        "name": "Marso.Tech",
+        "symbol": "marso",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xdfd579dd6aeb232e95a15d964a135a61925b5c93"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/50292/thumb/QKbwAja.png?1726905588",
+            "small": "https://coin-images.coingecko.com/coins/images/50292/small/QKbwAja.png?1726905588",
+            "large": "https://coin-images.coingecko.com/coins/images/50292/large/QKbwAja.png?1726905588"
+        },
+        "error": null
+    },
+    {
+        "id": "goodle",
+        "name": "Goodle",
+        "symbol": "$goodle",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9f235d23354857efe6c541db92a9ef1877689bcb"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39688/thumb/Screenshot_2024-07-26_at_5.38.55_PM-removebg-preview.png?1723660779",
+            "small": "https://coin-images.coingecko.com/coins/images/39688/small/Screenshot_2024-07-26_at_5.38.55_PM-removebg-preview.png?1723660779",
+            "large": "https://coin-images.coingecko.com/coins/images/39688/large/Screenshot_2024-07-26_at_5.38.55_PM-removebg-preview.png?1723660779"
+        },
+        "error": null
+    },
+    {
+        "id": "edison-bored",
+        "name": "BORED",
+        "symbol": "bored",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x70737489dfdf1a29b7584d40500d3561bd4fe196"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37050/thumb/bored.jpeg?1713340233",
+            "small": "https://coin-images.coingecko.com/coins/images/37050/small/bored.jpeg?1713340233",
+            "large": "https://coin-images.coingecko.com/coins/images/37050/large/bored.jpeg?1713340233"
+        },
+        "error": null
+    },
+    {
+        "id": "crash-on-base",
+        "name": "Crash On Base",
+        "symbol": "crash",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x4dd9077269dd08899f2a9e73507125962b5bc87f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38817/thumb/_iNshlUA.png?1722185418",
+            "small": "https://coin-images.coingecko.com/coins/images/38817/small/_iNshlUA.png?1722185418",
+            "large": "https://coin-images.coingecko.com/coins/images/38817/large/_iNshlUA.png?1722185418"
+        },
+        "error": null
+    },
+    {
+        "id": "roost",
+        "name": "Roost",
+        "symbol": "roost",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xed899bfdb28c8ad65307fa40f4acab113ae2e14c"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36458/thumb/roost.jpeg?1711493580",
+            "small": "https://coin-images.coingecko.com/coins/images/36458/small/roost.jpeg?1711493580",
+            "large": "https://coin-images.coingecko.com/coins/images/36458/large/roost.jpeg?1711493580"
+        },
+        "error": null
+    },
+    {
+        "id": "poncho",
+        "name": "Poncho",
+        "symbol": "poncho",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xc2fe011c3885277c7f0e7ffd45ff90cadc8ecd12"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36160/thumb/ponchologo.PNG?1710744293",
+            "small": "https://coin-images.coingecko.com/coins/images/36160/small/ponchologo.PNG?1710744293",
+            "large": "https://coin-images.coingecko.com/coins/images/36160/large/ponchologo.PNG?1710744293"
+        },
+        "error": null
+    },
+    {
+        "id": "based-usa",
+        "name": "Based USA",
+        "symbol": "usa",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xb56d0839998fd79efcd15c27cf966250aa58d6d3"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37981/thumb/BASE_USA_200px.png?1716203776",
+            "small": "https://coin-images.coingecko.com/coins/images/37981/small/BASE_USA_200px.png?1716203776",
+            "large": "https://coin-images.coingecko.com/coins/images/37981/large/BASE_USA_200px.png?1716203776"
+        },
+        "error": null
+    },
+    {
+        "id": "moby-2",
+        "name": "MOBY",
+        "symbol": "moby",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xea1d649ddc8e2a6e6ee40b89b2997518476cafa5"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38988/thumb/moby-icon_%281%29.png?1719807217",
+            "small": "https://coin-images.coingecko.com/coins/images/38988/small/moby-icon_%281%29.png?1719807217",
+            "large": "https://coin-images.coingecko.com/coins/images/38988/large/moby-icon_%281%29.png?1719807217"
+        },
+        "error": null
+    },
+    {
+        "id": "tn100x",
+        "name": "TN100x",
+        "symbol": "tn100x",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x5b5dee44552546ecea05edea01dcd7be7aa6144a"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/35729/thumb/Ham_02-patch.png?1710075243",
+            "small": "https://coin-images.coingecko.com/coins/images/35729/small/Ham_02-patch.png?1710075243",
+            "large": "https://coin-images.coingecko.com/coins/images/35729/large/Ham_02-patch.png?1710075243"
+        },
+        "error": null
+    },
+    {
+        "id": "andy-on-base",
+        "name": "Andy",
+        "symbol": "andy",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x18a8bd1fe17a1bb9ffb39ecd83e9489cfd17a022"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36552/thumb/ANDY.jpg?1711896298",
+            "small": "https://coin-images.coingecko.com/coins/images/36552/small/ANDY.jpg?1711896298",
+            "large": "https://coin-images.coingecko.com/coins/images/36552/large/ANDY.jpg?1711896298"
+        },
+        "error": null
+    },
+    {
+        "id": "young-peezy-aka-pepe",
+        "name": "Young Peezy AKA Pepe",
+        "symbol": "peezy",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x1b6a569dd61edce3c383f6d565e2f79ec3a12980"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36649/thumb/PFP_CG_200x200.jpeg?1719953176",
+            "small": "https://coin-images.coingecko.com/coins/images/36649/small/PFP_CG_200x200.jpeg?1719953176",
+            "large": "https://coin-images.coingecko.com/coins/images/36649/large/PFP_CG_200x200.jpeg?1719953176"
+        },
+        "error": null
+    },
+    {
+        "id": "toby-toadgod",
+        "name": "Toby ToadGod",
+        "symbol": "toby",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xb8d98a102b0079b69ffbc760c8d857a31653e56e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36615/thumb/toby1.png?1711976453",
+            "small": "https://coin-images.coingecko.com/coins/images/36615/small/toby1.png?1711976453",
+            "large": "https://coin-images.coingecko.com/coins/images/36615/large/toby1.png?1711976453"
+        },
+        "error": null
+    },
+    {
+        "id": "blockchainpeople",
+        "name": "BlockChainPeople",
+        "symbol": "bcp",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x87c211144b1d9bdaa5a791b8099ea4123dc31d21"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38085/thumb/200x200.png?1716477512",
+            "small": "https://coin-images.coingecko.com/coins/images/38085/small/200x200.png?1716477512",
+            "large": "https://coin-images.coingecko.com/coins/images/38085/large/200x200.png?1716477512"
+        },
+        "error": null
+    },
+    {
+        "id": "based-lambow",
+        "name": "Based Lambow",
+        "symbol": "lambow",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x4b61e2f1bbdee6d746209a693156952936f1702c"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38690/thumb/lambow.png?1718345303",
+            "small": "https://coin-images.coingecko.com/coins/images/38690/small/lambow.png?1718345303",
+            "large": "https://coin-images.coingecko.com/coins/images/38690/large/lambow.png?1718345303"
+        },
+        "error": null
+    },
+    {
+        "id": "noggles",
+        "name": "Noggles",
+        "symbol": "nogs",
+        "asset_platform_id": "ethereum",
+        "detail_platforms": {
+            "ethereum": {
+                "decimal_place": 18,
+                "contract_address": "0x5fa20d59d2a907e5fed9fb80b4a8d9f0d069a48d"
+            },
+            "polygon-pos": {
+                "decimal_place": 16,
+                "contract_address": "0x0f09e11501b01b3e9dc77d96db752d1a2ac84b20"
+            },
+            "base": {
+                "decimal_place": 15,
+                "contract_address": "0x13741c5df9ab03e7aa9fb3bf1f714551dd5a5f8a"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37238/thumb/nogs.jpeg?1713851209",
+            "small": "https://coin-images.coingecko.com/coins/images/37238/small/nogs.jpeg?1713851209",
+            "large": "https://coin-images.coingecko.com/coins/images/37238/large/nogs.jpeg?1713851209"
+        },
+        "error": null
+    },
+    {
+        "id": "tadpole",
+        "name": "Tadpole",
+        "symbol": "tad",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x55027a5b06f4340cc4c82dcc74c90ca93dcb173e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39783/thumb/IMG_7927.PNG?1724101375",
+            "small": "https://coin-images.coingecko.com/coins/images/39783/small/IMG_7927.PNG?1724101375",
+            "large": "https://coin-images.coingecko.com/coins/images/39783/large/IMG_7927.PNG?1724101375"
+        },
+        "error": null
+    },
+    {
+        "id": "all-your-base-2",
+        "name": "All Your Base",
+        "symbol": "ayb",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7ed613ab8b2b4c6a781ddc97ea98a666c6437511"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/35777/thumb/AYB-Coingecko.png?1718634946",
+            "small": "https://coin-images.coingecko.com/coins/images/35777/small/AYB-Coingecko.png?1718634946",
+            "large": "https://coin-images.coingecko.com/coins/images/35777/large/AYB-Coingecko.png?1718634946"
+        },
+        "error": null
+    },
+    {
+        "id": "louder",
+        "name": "LOUDER",
+        "symbol": "louder",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x120edc8e391ba4c94cb98bb65d8856ae6ec1525f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39495/thumb/louder_icon_200x200.png?1722539190",
+            "small": "https://coin-images.coingecko.com/coins/images/39495/small/louder_icon_200x200.png?1722539190",
+            "large": "https://coin-images.coingecko.com/coins/images/39495/large/louder_icon_200x200.png?1722539190"
+        },
+        "error": null
+    },
+    {
+        "id": "rocky-on-base",
+        "name": "ROCKY",
+        "symbol": "$rocky",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x3636a7734b669ce352e97780df361ce1f809c58c"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37465/thumb/rocky3.png?1714454996",
+            "small": "https://coin-images.coingecko.com/coins/images/37465/small/rocky3.png?1714454996",
+            "large": "https://coin-images.coingecko.com/coins/images/37465/large/rocky3.png?1714454996"
+        },
+        "error": null
+    },
+    {
+        "id": "carlo",
+        "name": "Carlo",
+        "symbol": "carlo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x38d513ec43dda20f323f26c7bef74c5cf80b6477"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37553/thumb/CARLO_200x200.png?1714752141",
+            "small": "https://coin-images.coingecko.com/coins/images/37553/small/CARLO_200x200.png?1714752141",
+            "large": "https://coin-images.coingecko.com/coins/images/37553/large/CARLO_200x200.png?1714752141"
+        },
+        "error": null
+    },
+    {
+        "id": "workie",
+        "name": "Workie",
+        "symbol": "workie",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7480527815ccae421400da01e052b120cc4255e9"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38774/thumb/Pfp2_%281%29.png?1724903016",
+            "small": "https://coin-images.coingecko.com/coins/images/38774/small/Pfp2_%281%29.png?1724903016",
+            "large": "https://coin-images.coingecko.com/coins/images/38774/large/Pfp2_%281%29.png?1724903016"
+        },
+        "error": null
+    },
+    {
+        "id": "coinye-west",
+        "name": "Coinye West",
+        "symbol": "coinye",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0028e1e60167b48a938b785aa5292917e7eaca8b"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36403/thumb/Coinye_West.png?1711369153",
+            "small": "https://coin-images.coingecko.com/coins/images/36403/small/Coinye_West.png?1711369153",
+            "large": "https://coin-images.coingecko.com/coins/images/36403/large/Coinye_West.png?1711369153"
+        },
+        "error": null
+    },
+    {
+        "id": "boshi",
+        "name": "Boshi",
+        "symbol": "boshi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x33ad778e6c76237d843c52d7cafc972bb7cf8729"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37222/thumb/boshi.jpeg?1713775901",
+            "small": "https://coin-images.coingecko.com/coins/images/37222/small/boshi.jpeg?1713775901",
+            "large": "https://coin-images.coingecko.com/coins/images/37222/large/boshi.jpeg?1713775901"
+        },
+        "error": null
+    },
+    {
+        "id": "upside-down-meme",
+        "name": "WEWECOIN",
+        "symbol": "wewe",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6b9bb36519538e0c073894e964e90172e1c0b41f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39135/thumb/wewe_logo.png?1720857800",
+            "small": "https://coin-images.coingecko.com/coins/images/39135/small/wewe_logo.png?1720857800",
+            "large": "https://coin-images.coingecko.com/coins/images/39135/large/wewe_logo.png?1720857800"
+        },
+        "error": null
+    },
+    {
+        "id": "pola",
+        "name": "Pola On Base",
+        "symbol": "pola",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x76e7447bafa3f0acafc9692629b1d1bc937ca15d"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37314/thumb/pola.jpg?1713971028",
+            "small": "https://coin-images.coingecko.com/coins/images/37314/small/pola.jpg?1713971028",
+            "large": "https://coin-images.coingecko.com/coins/images/37314/large/pola.jpg?1713971028"
+        },
+        "error": null
+    },
+    {
+        "id": "bamboo-on-base",
+        "name": "Bamboo on Base",
+        "symbol": "bamboo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x689644b86075ed61c647596862c7403e1c474dbf"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39126/thumb/Bamboo_Logo_800x800.png?1720656497",
+            "small": "https://coin-images.coingecko.com/coins/images/39126/small/Bamboo_Logo_800x800.png?1720656497",
+            "large": "https://coin-images.coingecko.com/coins/images/39126/large/Bamboo_Logo_800x800.png?1720656497"
+        },
+        "error": null
+    },
+    {
+        "id": "landwolf-base",
+        "name": "Landwolf",
+        "symbol": "wolf",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x88faea256f789f8dd50de54f9c807eef24f71b16"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36803/thumb/IMG_8678.jpeg?1712469842",
+            "small": "https://coin-images.coingecko.com/coins/images/36803/small/IMG_8678.jpeg?1712469842",
+            "large": "https://coin-images.coingecko.com/coins/images/36803/large/IMG_8678.jpeg?1712469842"
+        },
+        "error": null
+    },
+    {
+        "id": "alf",
+        "name": "ALF",
+        "symbol": "alf",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x26f1bb40ea88b46ceb21557dc0ffac7b7c0ad40f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38867/thumb/alf200.png?1719283344",
+            "small": "https://coin-images.coingecko.com/coins/images/38867/small/alf200.png?1719283344",
+            "large": "https://coin-images.coingecko.com/coins/images/38867/large/alf200.png?1719283344"
+        },
+        "error": null
+    },
+    {
+        "id": "maga-vp",
+        "name": "MAGA VP",
+        "symbol": "mvp",
+        "asset_platform_id": "ethereum",
+        "detail_platforms": {
+            "ethereum": {
+                "decimal_place": 18,
+                "contract_address": "0x766d2fcece1e3eef32aae8711ab886ee95fd5b2a"
+            },
+            "solana": {
+                "decimal_place": 8,
+                "contract_address": "55qMv1HtV8fqRjnFwDb9yDi9tBCeV8xwfgrPKgiJk5DN"
+            },
+            "binance-smart-chain": {
+                "decimal_place": 18,
+                "contract_address": "0xa4e8e73c8be170528385bbce78172c891f1febd7"
+            },
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x58cd93c4a91c3940109fa27d700f5013b18b5dc2"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37462/thumb/1000017296.jpg?1714451792",
+            "small": "https://coin-images.coingecko.com/coins/images/37462/small/1000017296.jpg?1714451792",
+            "large": "https://coin-images.coingecko.com/coins/images/37462/large/1000017296.jpg?1714451792"
+        },
+        "error": null
+    },
+    {
+        "id": "lower",
+        "name": "lower",
+        "symbol": "lower",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x67040bb0ad76236ddd5d156d23ec920a089d1eac"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37153/thumb/lower.jpg?1713471922",
+            "small": "https://coin-images.coingecko.com/coins/images/37153/small/lower.jpg?1713471922",
+            "large": "https://coin-images.coingecko.com/coins/images/37153/large/lower.jpg?1713471922"
+        },
+        "error": null
+    },
+    {
+        "id": "gamestop-2",
+        "name": "GME (Base)",
+        "symbol": "gme",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0xbeb0fd48c2ba0f1aacad2814605f09e08a96b94e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37229/thumb/gamestop.jpeg?1713780481",
+            "small": "https://coin-images.coingecko.com/coins/images/37229/small/gamestop.jpeg?1713780481",
+            "large": "https://coin-images.coingecko.com/coins/images/37229/large/gamestop.jpeg?1713780481"
+        },
+        "error": null
+    },
+    {
+        "id": "bolt-on-base",
+        "name": "BOLT on Base",
+        "symbol": "bolt",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7cf7132ede0ca592a236b6198a681bb7b42dd5ae"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38449/thumb/wwwww.png?1717557162",
+            "small": "https://coin-images.coingecko.com/coins/images/38449/small/wwwww.png?1717557162",
+            "large": "https://coin-images.coingecko.com/coins/images/38449/large/wwwww.png?1717557162"
+        },
+        "error": null
+    },
+    {
+        "id": "betterbelong",
+        "name": "LONG",
+        "symbol": "long",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x2816a491dd0b7a88d84cbded842a618e59016888"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36888/thumb/coin9.png?1712652624",
+            "small": "https://coin-images.coingecko.com/coins/images/36888/small/coin9.png?1712652624",
+            "large": "https://coin-images.coingecko.com/coins/images/36888/large/coin9.png?1712652624"
+        },
+        "error": null
+    },
+    {
+        "id": "briun-armstrung",
+        "name": "Briun Armstrung",
+        "symbol": "briun",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x8c81b4c816d66d36c4bf348bdec01dbcbc70e987"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36183/thumb/200x200.png?1710758416",
+            "small": "https://coin-images.coingecko.com/coins/images/36183/small/200x200.png?1710758416",
+            "large": "https://coin-images.coingecko.com/coins/images/36183/large/200x200.png?1710758416"
+        },
+        "error": null
+    },
+    {
+        "id": "marvin-on-base",
+        "name": "Marvin On Base",
+        "symbol": "mob",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7e72d6410803c40e73806f2a72e3eade5d075cc0"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38960/thumb/Marvin_200.png?1719692064",
+            "small": "https://coin-images.coingecko.com/coins/images/38960/small/Marvin_200.png?1719692064",
+            "large": "https://coin-images.coingecko.com/coins/images/38960/large/Marvin_200.png?1719692064"
+        },
+        "error": null
+    },
+    {
+        "id": "minky",
+        "name": "MINKY",
+        "symbol": "minky",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xf9b738c2e7adc4f299c57afd0890b925a5efea6f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39903/thumb/MINKY_FINAL_PROFILE_PIC_copy.png?1724735986",
+            "small": "https://coin-images.coingecko.com/coins/images/39903/small/MINKY_FINAL_PROFILE_PIC_copy.png?1724735986",
+            "large": "https://coin-images.coingecko.com/coins/images/39903/large/MINKY_FINAL_PROFILE_PIC_copy.png?1724735986"
+        },
+        "error": null
+    },
+    {
+        "id": "beni",
+        "name": "Beni",
+        "symbol": "beni",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xde7a416ac821c77478340eebaa21b68297025ef3"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36691/thumb/1000017459.jpg?1712092250",
+            "small": "https://coin-images.coingecko.com/coins/images/36691/small/1000017459.jpg?1712092250",
+            "large": "https://coin-images.coingecko.com/coins/images/36691/large/1000017459.jpg?1712092250"
+        },
+        "error": null
+    },
+    {
+        "id": "this-is-my-iguana",
+        "name": "This Is My Iguana",
+        "symbol": "timi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9beec80e62aa257ced8b0edd8692f79ee8783777"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39361/thumb/200x200.png?1722464115",
+            "small": "https://coin-images.coingecko.com/coins/images/39361/small/200x200.png?1722464115",
+            "large": "https://coin-images.coingecko.com/coins/images/39361/large/200x200.png?1722464115"
+        },
+        "error": null
+    },
+    {
+        "id": "blue-guy",
+        "name": "Blue Guy",
+        "symbol": "blue",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x891502ba08132653151f822a3a430198f1844115"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39645/thumb/IMG_20240810_073513_639.png?1723412054",
+            "small": "https://coin-images.coingecko.com/coins/images/39645/small/IMG_20240810_073513_639.png?1723412054",
+            "large": "https://coin-images.coingecko.com/coins/images/39645/large/IMG_20240810_073513_639.png?1723412054"
+        },
+        "error": null
+    },
+    {
+        "id": "cow",
+        "name": "Cow",
+        "symbol": "cow",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x2ad3d80c917ddbf08acc04277f379e00e4d75395"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39745/thumb/CrashCowLogo200p.png?1723781632",
+            "small": "https://coin-images.coingecko.com/coins/images/39745/small/CrashCowLogo200p.png?1723781632",
+            "large": "https://coin-images.coingecko.com/coins/images/39745/large/CrashCowLogo200p.png?1723781632"
+        },
+        "error": null
+    },
+    {
+        "id": "mutatio-flies",
+        "name": "MUTATIO",
+        "symbol": "flies",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x8b67f2e56139ca052a7ec49cbcd1aa9c83f2752a"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36752/thumb/MUTATIO.png?1712218952",
+            "small": "https://coin-images.coingecko.com/coins/images/36752/small/MUTATIO.png?1712218952",
+            "large": "https://coin-images.coingecko.com/coins/images/36752/large/MUTATIO.png?1712218952"
+        },
+        "error": null
+    },
+    {
+        "id": "degen-pov-2",
+        "name": "Degen POV",
+        "symbol": "pov",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x4c96a67b0577358894407af7bc3158fc1dffbeb5"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37921/thumb/degen.jpeg?1715936621",
+            "small": "https://coin-images.coingecko.com/coins/images/37921/small/degen.jpeg?1715936621",
+            "large": "https://coin-images.coingecko.com/coins/images/37921/large/degen.jpeg?1715936621"
+        },
+        "error": null
+    },
+    {
+        "id": "chuck",
+        "name": "Chuck",
+        "symbol": "chuck",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7a8a5012022bccbf3ea4b03cd2bb5583d915fb1a"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37468/thumb/1000030138.jpg?1714457112",
+            "small": "https://coin-images.coingecko.com/coins/images/37468/small/1000030138.jpg?1714457112",
+            "large": "https://coin-images.coingecko.com/coins/images/37468/large/1000030138.jpg?1714457112"
+        },
+        "error": null
+    },
+    {
+        "id": "basedmilio",
+        "name": "Basedmilio",
+        "symbol": "based",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x28e29ec91db66733a94ee8e3b86a6199117baf99"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37685/thumb/tokenicon.png?1715224333",
+            "small": "https://coin-images.coingecko.com/coins/images/37685/small/tokenicon.png?1715224333",
+            "large": "https://coin-images.coingecko.com/coins/images/37685/large/tokenicon.png?1715224333"
+        },
+        "error": null
+    },
+    {
+        "id": "pacato",
+        "name": "Pacato",
+        "symbol": "pacato",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0x24ca2fcca044b345d0676f770c6cb42ac34809d7"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/50678/thumb/PACATO_200.jpg?1728701090",
+            "small": "https://coin-images.coingecko.com/coins/images/50678/small/PACATO_200.jpg?1728701090",
+            "large": "https://coin-images.coingecko.com/coins/images/50678/large/PACATO_200.jpg?1728701090"
+        },
+        "error": null
+    },
+    {
+        "id": "base-pro-shops",
+        "name": "Base Pro Shops",
+        "symbol": "bps",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xda761a290e01c69325d12d82ac402e5a73d62e81"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36855/thumb/BPS_2.png?1712634757",
+            "small": "https://coin-images.coingecko.com/coins/images/36855/small/BPS_2.png?1712634757",
+            "large": "https://coin-images.coingecko.com/coins/images/36855/large/BPS_2.png?1712634757"
+        },
+        "error": null
+    },
+    {
+        "id": "basic-dog-meme",
+        "name": "Basic Dog Meme",
+        "symbol": "dog",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9e53e88dcff56d3062510a745952dec4cefdff9e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/33749/thumb/Round_Logo.png?1703245893",
+            "small": "https://coin-images.coingecko.com/coins/images/33749/small/Round_Logo.png?1703245893",
+            "large": "https://coin-images.coingecko.com/coins/images/33749/large/Round_Logo.png?1703245893"
+        },
+        "error": null
+    },
+    {
+        "id": "fomo-bull-club",
+        "name": "FOMO BULL CLUB",
+        "symbol": "fomo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9a86980d3625b4a6e69d8a4606d51cbc019e2002"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37070/thumb/IMG_20240415_091508_928_%281%29.jpg?1713379565",
+            "small": "https://coin-images.coingecko.com/coins/images/37070/small/IMG_20240415_091508_928_%281%29.jpg?1713379565",
+            "large": "https://coin-images.coingecko.com/coins/images/37070/large/IMG_20240415_091508_928_%281%29.jpg?1713379565"
+        },
+        "error": null
+    },
+    {
+        "id": "based-shiba-inu",
+        "name": "Based Shiba Inu",
+        "symbol": "bshib",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xfea9dcdc9e23a9068bf557ad5b186675c61d33ea"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36092/thumb/logocg.png?1710478223",
+            "small": "https://coin-images.coingecko.com/coins/images/36092/small/logocg.png?1710478223",
+            "large": "https://coin-images.coingecko.com/coins/images/36092/large/logocg.png?1710478223"
+        },
+        "error": null
+    },
+    {
+        "id": "law-of-attraction",
+        "name": "Law of Attraction",
+        "symbol": "loa",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x8d3419b9a18651f3926a205ee0b1acea1e7192de"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38008/thumb/1.png?1716270777",
+            "small": "https://coin-images.coingecko.com/coins/images/38008/small/1.png?1716270777",
+            "large": "https://coin-images.coingecko.com/coins/images/38008/large/1.png?1716270777"
+        },
+        "error": null
+    },
+    {
+        "id": "just-a-black-rock-on-base",
+        "name": "Just a Black Rock on Base",
+        "symbol": "rock",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xece7b98bd817ee5b1f2f536daf34d0b6af8bb542"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36495/thumb/photo_2024-04-05_12-19-47.jpg?1712427724",
+            "small": "https://coin-images.coingecko.com/coins/images/36495/small/photo_2024-04-05_12-19-47.jpg?1712427724",
+            "large": "https://coin-images.coingecko.com/coins/images/36495/large/photo_2024-04-05_12-19-47.jpg?1712427724"
+        },
+        "error": null
+    },
+    {
+        "id": "crypto-journey",
+        "name": "Crypto Journey",
+        "symbol": "daddy",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xdb173587d459ddb1b9b0f2d6d88febef039304a2"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38388/thumb/_daddy_%282%29.png?1717417360",
+            "small": "https://coin-images.coingecko.com/coins/images/38388/small/_daddy_%282%29.png?1717417360",
+            "large": "https://coin-images.coingecko.com/coins/images/38388/large/_daddy_%282%29.png?1717417360"
+        },
+        "error": null
+    },
+    {
+        "id": "elonrwa",
+        "name": "ElonRWA",
+        "symbol": "elonrwa",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xaa6cccdce193698d33deb9ffd4be74eaa74c4898"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36970/thumb/elonrwa.png?1712910039",
+            "small": "https://coin-images.coingecko.com/coins/images/36970/small/elonrwa.png?1712910039",
+            "large": "https://coin-images.coingecko.com/coins/images/36970/large/elonrwa.png?1712910039"
+        },
+        "error": null
+    },
+    {
+        "id": "baby-brett-on-base",
+        "name": "Baby Brett on Base",
+        "symbol": "bbrett",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0xbe5614875952b1683cb0a2c20e6509be46d353a4"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38887/thumb/200x200.png?1719380024",
+            "small": "https://coin-images.coingecko.com/coins/images/38887/small/200x200.png?1719380024",
+            "large": "https://coin-images.coingecko.com/coins/images/38887/large/200x200.png?1719380024"
+        },
+        "error": null
+    },
+    {
+        "id": "wild-goat-coin-2",
+        "name": "Wild Goat Coin",
+        "symbol": "wgc",
+        "asset_platform_id": "solana",
+        "detail_platforms": {
+            "solana": {
+                "decimal_place": 6,
+                "contract_address": "4Eb7ReeT936hX25KMBfYtyP1RWDdd9iixEwGJroACeLC"
+            },
+            "sui": {
+                "decimal_place": 6,
+                "contract_address": "0x492ff7bc419c2502604980c486aa291d48f7ffc10e8073f38c59329491f106d5::coin::COIN"
+            },
+            "polygon-pos": {
+                "decimal_place": 6,
+                "contract_address": "0x04565fe9aa3ae571ada8e1bebf8282c4e5247b2a"
+            },
+            "base": {
+                "decimal_place": 6,
+                "contract_address": "0xfb18511f1590a494360069f3640c27d55c2b5290"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37966/thumb/COIN_200x200.png?1716778831",
+            "small": "https://coin-images.coingecko.com/coins/images/37966/small/COIN_200x200.png?1716778831",
+            "large": "https://coin-images.coingecko.com/coins/images/37966/large/COIN_200x200.png?1716778831"
+        },
+        "error": null
+    },
+    {
+        "id": "corgi",
+        "name": "Corgi",
+        "symbol": "corgi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6223901ea64608c75da8497d5eff15d19a1d8fd5"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36929/thumb/corgi_-_200x200.png?1712803178",
+            "small": "https://coin-images.coingecko.com/coins/images/36929/small/corgi_-_200x200.png?1712803178",
+            "large": "https://coin-images.coingecko.com/coins/images/36929/large/corgi_-_200x200.png?1712803178"
+        },
+        "error": null
+    },
+    {
+        "id": "woofwork-io",
+        "name": "WoofWork.io",
+        "symbol": "woof",
+        "asset_platform_id": "ethereum",
+        "detail_platforms": {
+            "ethereum": {
+                "decimal_place": 18,
+                "contract_address": "0x6bc08509b36a98e829dffad49fde5e412645d0a3"
+            },
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xb3a9bd4861454ba94931ebff410c3d828525dce2"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/28903/thumb/WWlogoTransparent_200x200.png?1696527879",
+            "small": "https://coin-images.coingecko.com/coins/images/28903/small/WWlogoTransparent_200x200.png?1696527879",
+            "large": "https://coin-images.coingecko.com/coins/images/28903/large/WWlogoTransparent_200x200.png?1696527879"
+        },
+        "error": null
+    },
+    {
+        "id": "sandwich-cat",
+        "name": "Sandwich Cat",
+        "symbol": "saca",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xed1978d01d4a8a9d6a43ac79403d5b8dfbed739b"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36876/thumb/200x200_%281%29.png?1712646447",
+            "small": "https://coin-images.coingecko.com/coins/images/36876/small/200x200_%281%29.png?1712646447",
+            "large": "https://coin-images.coingecko.com/coins/images/36876/large/200x200_%281%29.png?1712646447"
+        },
+        "error": null
+    },
+    {
+        "id": "poopcoin-poop",
+        "name": "Poopcoin",
+        "symbol": "poop",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x686b1209b2de12818aa69dd139530448d0c792b3"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36549/thumb/poopcoin.png?1711876394",
+            "small": "https://coin-images.coingecko.com/coins/images/36549/small/poopcoin.png?1711876394",
+            "large": "https://coin-images.coingecko.com/coins/images/36549/large/poopcoin.png?1711876394"
+        },
+        "error": null
+    },
+    {
+        "id": "aped-3",
+        "name": "Aped",
+        "symbol": "aped",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x988a17d9ef5683dc125de54ae4cd217c4c26454f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37802/thumb/aped.jpeg?1715590971",
+            "small": "https://coin-images.coingecko.com/coins/images/37802/small/aped.jpeg?1715590971",
+            "large": "https://coin-images.coingecko.com/coins/images/37802/large/aped.jpeg?1715590971"
+        },
+        "error": null
+    },
+    {
+        "id": "bird-dog-on-base",
+        "name": "Bird Dog on Base",
+        "symbol": "birddog",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x92af6f53febd6b4c6f5293840b6076a1b82c4bc2"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38437/thumb/birddog_logo_sticker_200x200_final_%281%29.png?1719953537",
+            "small": "https://coin-images.coingecko.com/coins/images/38437/small/birddog_logo_sticker_200x200_final_%281%29.png?1719953537",
+            "large": "https://coin-images.coingecko.com/coins/images/38437/large/birddog_logo_sticker_200x200_final_%281%29.png?1719953537"
+        },
+        "error": null
+    },
+    {
+        "id": "berf",
+        "name": "BERF",
+        "symbol": "berf",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xfc5462143a3178cf044e97c491f6bcb5e38f173e"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38169/thumb/1000374533.png?1719434549",
+            "small": "https://coin-images.coingecko.com/coins/images/38169/small/1000374533.png?1719434549",
+            "large": "https://coin-images.coingecko.com/coins/images/38169/large/1000374533.png?1719434549"
+        },
+        "error": null
+    },
+    {
+        "id": "normus",
+        "name": "Normus",
+        "symbol": "normus",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xba5ede8d98ab88cea9f0d69918dde28dc23c2553"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38595/thumb/token-removebg-preview_%281%29.png?1718094574",
+            "small": "https://coin-images.coingecko.com/coins/images/38595/small/token-removebg-preview_%281%29.png?1718094574",
+            "large": "https://coin-images.coingecko.com/coins/images/38595/large/token-removebg-preview_%281%29.png?1718094574"
+        },
+        "error": null
+    },
+    {
+        "id": "condo",
+        "name": "CONDO",
+        "symbol": "condo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x30d19fb77c3ee5cfa97f73d72c6a1e509fa06aef"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37174/thumb/1000012387.jpg?1724589415",
+            "small": "https://coin-images.coingecko.com/coins/images/37174/small/1000012387.jpg?1724589415",
+            "large": "https://coin-images.coingecko.com/coins/images/37174/large/1000012387.jpg?1724589415"
+        },
+        "error": null
+    },
+    {
+        "id": "mork-2",
+        "name": "MORK",
+        "symbol": "mork",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0b1594b0e896bf165d925956e0df733b8443af6a"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39675/thumb/Mork_200_x_200_Circle.png?1723609160",
+            "small": "https://coin-images.coingecko.com/coins/images/39675/small/Mork_200_x_200_Circle.png?1723609160",
+            "large": "https://coin-images.coingecko.com/coins/images/39675/large/Mork_200_x_200_Circle.png?1723609160"
+        },
+        "error": null
+    },
+    {
+        "id": "aerobud",
+        "name": "AEROBUD",
+        "symbol": "aerobud",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xfad8cb754230dbfd249db0e8eccb5142dd675a0d"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38210/thumb/Logo_Coingecko.png?1716798924",
+            "small": "https://coin-images.coingecko.com/coins/images/38210/small/Logo_Coingecko.png?1716798924",
+            "large": "https://coin-images.coingecko.com/coins/images/38210/large/Logo_Coingecko.png?1716798924"
+        },
+        "error": null
+    },
+    {
+        "id": "goatwifhat",
+        "name": "goatwifhat",
+        "symbol": "gif",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6b82297c6f1f9c3b1f501450d2ee7c37667ab70d"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37776/thumb/GIF_logo_200x200.png?1715581191",
+            "small": "https://coin-images.coingecko.com/coins/images/37776/small/GIF_logo_200x200.png?1715581191",
+            "large": "https://coin-images.coingecko.com/coins/images/37776/large/GIF_logo_200x200.png?1715581191"
+        },
+        "error": null
+    },
+    {
+        "id": "lolcat",
+        "name": "Lolcat",
+        "symbol": "cats",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0xbc72c1ad220315fa849ff237cf5dd0ad0cf75c73"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37849/thumb/lolcat.jpeg?1715758924",
+            "small": "https://coin-images.coingecko.com/coins/images/37849/small/lolcat.jpeg?1715758924",
+            "large": "https://coin-images.coingecko.com/coins/images/37849/large/lolcat.jpeg?1715758924"
+        },
+        "error": null
+    },
+    {
+        "id": "moon-inu",
+        "name": "MOON INU",
+        "symbol": "moon",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xfd008f937b4d73eeb00cf74ce90c392be5f07f96"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36493/thumb/moon-200.png?1711612557",
+            "small": "https://coin-images.coingecko.com/coins/images/36493/small/moon-200.png?1711612557",
+            "large": "https://coin-images.coingecko.com/coins/images/36493/large/moon-200.png?1711612557"
+        },
+        "error": null
+    },
+    {
+        "id": "keren",
+        "name": "Keren",
+        "symbol": "keren",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x174e33ef2effa0a4893d97dda5db4044cc7993a3"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37424/thumb/200200.png?1714377875",
+            "small": "https://coin-images.coingecko.com/coins/images/37424/small/200200.png?1714377875",
+            "large": "https://coin-images.coingecko.com/coins/images/37424/large/200200.png?1714377875"
+        },
+        "error": null
+    },
+    {
+        "id": "just-a-rock",
+        "name": "Just a Rock",
+        "symbol": "rocco",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x1804e3db872eed4141e482ff74c56862f2791103"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38025/thumb/Photoroom-20240429_170643_%281%29.png?1716317301",
+            "small": "https://coin-images.coingecko.com/coins/images/38025/small/Photoroom-20240429_170643_%281%29.png?1716317301",
+            "large": "https://coin-images.coingecko.com/coins/images/38025/large/Photoroom-20240429_170643_%281%29.png?1716317301"
+        },
+        "error": null
+    },
+    {
+        "id": "buttman",
+        "name": "Buttman",
+        "symbol": "butt",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xd11a584de5fa50a4ee560c48ab44dbb31823d9bc"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36326/thumb/kqDFdKtJ_400x400.jpeg?1711097504",
+            "small": "https://coin-images.coingecko.com/coins/images/36326/small/kqDFdKtJ_400x400.jpeg?1711097504",
+            "large": "https://coin-images.coingecko.com/coins/images/36326/large/kqDFdKtJ_400x400.jpeg?1711097504"
+        },
+        "error": null
+    },
+    {
+        "id": "roxy-frog",
+        "name": "ROXY FROG",
+        "symbol": "roxy",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x10a7a84c91988138f8dbbc82a23b02c8639e2552"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38170/thumb/ROXY.jpg?1716703909",
+            "small": "https://coin-images.coingecko.com/coins/images/38170/small/ROXY.jpg?1716703909",
+            "large": "https://coin-images.coingecko.com/coins/images/38170/large/ROXY.jpg?1716703909"
+        },
+        "error": null
+    },
+    {
+        "id": "anime-base",
+        "name": "Anime",
+        "symbol": "anime",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0e0c9756a3290cd782cf4ab73ac24d25291c9564"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36565/thumb/coingecko_200_logo.png?1714274913",
+            "small": "https://coin-images.coingecko.com/coins/images/36565/small/coingecko_200_logo.png?1714274913",
+            "large": "https://coin-images.coingecko.com/coins/images/36565/large/coingecko_200_logo.png?1714274913"
+        },
+        "error": null
+    },
+    {
+        "id": "broge",
+        "name": "Broge",
+        "symbol": "broge",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xe8e55a847bb446d967ef92f4580162fb8f2d3f38"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36297/thumb/coingecko-logo.png?1717948949",
+            "small": "https://coin-images.coingecko.com/coins/images/36297/small/coingecko-logo.png?1717948949",
+            "large": "https://coin-images.coingecko.com/coins/images/36297/large/coingecko-logo.png?1717948949"
+        },
+        "error": null
+    },
+    {
+        "id": "brett-2-0",
+        "name": "Brett 2.0",
+        "symbol": "brett2.0",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0x1a475d06d967aeb686c98de80d079d72097aeacf"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37121/thumb/brett200-modified.png?1713366621",
+            "small": "https://coin-images.coingecko.com/coins/images/37121/small/brett200-modified.png?1713366621",
+            "large": "https://coin-images.coingecko.com/coins/images/37121/large/brett200-modified.png?1713366621"
+        },
+        "error": null
+    },
+    {
+        "id": "boe",
+        "name": "Boe",
+        "symbol": "boe",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xff62ddfa80e513114c3a0bf4d6ffff1c1d17aadf"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36712/thumb/79jlrE4M_400x400_%282%29.jpg?1712127456",
+            "small": "https://coin-images.coingecko.com/coins/images/36712/small/79jlrE4M_400x400_%282%29.jpg?1712127456",
+            "large": "https://coin-images.coingecko.com/coins/images/36712/large/79jlrE4M_400x400_%282%29.jpg?1712127456"
+        },
+        "error": null
+    },
+    {
+        "id": "monkey-peepo",
+        "name": "Monkey Peepo",
+        "symbol": "bananas",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x9a27c6759a6de0f26ac41264f0856617dec6bc3f"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37036/thumb/logo-mp.png?1713160745",
+            "small": "https://coin-images.coingecko.com/coins/images/37036/small/logo-mp.png?1713160745",
+            "large": "https://coin-images.coingecko.com/coins/images/37036/large/logo-mp.png?1713160745"
+        },
+        "error": null
+    },
+    {
+        "id": "treeplanting",
+        "name": "/treeplanting",
+        "symbol": "tree",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x6888c2409d48222e2cb738eb5a805a522a96ce80"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38145/thumb/esdotge_phi_logo_dark.jpeg?1720993602",
+            "small": "https://coin-images.coingecko.com/coins/images/38145/small/esdotge_phi_logo_dark.jpeg?1720993602",
+            "large": "https://coin-images.coingecko.com/coins/images/38145/large/esdotge_phi_logo_dark.jpeg?1720993602"
+        },
+        "error": null
+    },
+    {
+        "id": "gibape",
+        "name": "Gibape",
+        "symbol": "gib",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x589864a9892b1a736ae70a91824ab4dc591fd8cd"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37691/thumb/gib_ape_logo.jpeg?1715650189",
+            "small": "https://coin-images.coingecko.com/coins/images/37691/small/gib_ape_logo.jpeg?1715650189",
+            "large": "https://coin-images.coingecko.com/coins/images/37691/large/gib_ape_logo.jpeg?1715650189"
+        },
+        "error": null
+    },
+    {
+        "id": "united-base-postal",
+        "name": "United Base Postal",
+        "symbol": "ubps",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x0c90c756350fb803a7d5d9f9ee5ac29e77369973"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37638/thumb/Logo-2-Dex-Tools.png?1715105556",
+            "small": "https://coin-images.coingecko.com/coins/images/37638/small/Logo-2-Dex-Tools.png?1715105556",
+            "large": "https://coin-images.coingecko.com/coins/images/37638/large/Logo-2-Dex-Tools.png?1715105556"
+        },
+        "error": null
+    },
+    {
+        "id": "mewnb",
+        "name": "MEWNB",
+        "symbol": "mewnb",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x5100d1c6e41984e6a0ae251e5629d538ad33e847"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37568/thumb/1000001337.jpg?1716577525",
+            "small": "https://coin-images.coingecko.com/coins/images/37568/small/1000001337.jpg?1716577525",
+            "large": "https://coin-images.coingecko.com/coins/images/37568/large/1000001337.jpg?1716577525"
+        },
+        "error": null
+    },
+    {
+        "id": "farcaster-flower",
+        "name": "Farcaster Flower",
+        "symbol": "flower",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xb043bad01195700e737d0aee852584eae9393134"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/38726/thumb/200_200.png?1718745253",
+            "small": "https://coin-images.coingecko.com/coins/images/38726/small/200_200.png?1718745253",
+            "large": "https://coin-images.coingecko.com/coins/images/38726/large/200_200.png?1718745253"
+        },
+        "error": null
+    },
+    {
+        "id": "mooncats-on-base",
+        "name": "Mooncats on Base",
+        "symbol": "mooncats",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xc5396321805c7f1bce608cda194aa9155fb20f7d"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36766/thumb/mooncats.png?1712283962",
+            "small": "https://coin-images.coingecko.com/coins/images/36766/small/mooncats.png?1712283962",
+            "large": "https://coin-images.coingecko.com/coins/images/36766/large/mooncats.png?1712283962"
+        },
+        "error": null
+    },
+    {
+        "id": "based-boshi",
+        "name": "Based Boshi",
+        "symbol": "$boshi",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7fdd7419428955dbf36d4176af5a8f09ad29d1f3"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/39403/thumb/gxlfIx0p_400x400.jpg?1722052095",
+            "small": "https://coin-images.coingecko.com/coins/images/39403/small/gxlfIx0p_400x400.jpg?1722052095",
+            "large": "https://coin-images.coingecko.com/coins/images/39403/large/gxlfIx0p_400x400.jpg?1722052095"
+        },
+        "error": null
+    },
+    {
+        "id": "beebase",
+        "name": "BeeBase",
+        "symbol": "bee",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xfd09f108d1728e6b6ed241ccd254775e322f1ed6"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/40003/thumb/logo.png?1725281733",
+            "small": "https://coin-images.coingecko.com/coins/images/40003/small/logo.png?1725281733",
+            "large": "https://coin-images.coingecko.com/coins/images/40003/large/logo.png?1725281733"
+        },
+        "error": null
+    },
+    {
+        "id": "cat-on-catnip",
+        "name": "Cat On Catnip",
+        "symbol": "nippy",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0x7a31512fb17be839b24276c211e941932c9d20e1"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/37516/thumb/Catnip8_1.png?1714631259",
+            "small": "https://coin-images.coingecko.com/coins/images/37516/small/Catnip8_1.png?1714631259",
+            "large": "https://coin-images.coingecko.com/coins/images/37516/large/Catnip8_1.png?1714631259"
+        },
+        "error": null
+    },
+    {
+        "id": "weirdo",
+        "name": "Weirdo [OLD]",
+        "symbol": "weirdo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0xaa3ecad0cb644c0de72110a905a57667c1a1ca96"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36290/thumb/iQ4T0Un__400x400.jpg?1714006579",
+            "small": "https://coin-images.coingecko.com/coins/images/36290/small/iQ4T0Un__400x400.jpg?1714006579",
+            "large": "https://coin-images.coingecko.com/coins/images/36290/large/iQ4T0Un__400x400.jpg?1714006579"
+        },
+        "error": null
+    },
+    {
+        "id": "bald-dog",
+        "name": "Bald Dog",
+        "symbol": "baldo",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 18,
+                "contract_address": "0xd2faa0caee8421959aa13fbd20a7ed7e93702ffe"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36287/thumb/0xD2FAA0cAeE8421959aa13Fbd20A7ed7e93702FFE.png?1711008902",
+            "small": "https://coin-images.coingecko.com/coins/images/36287/small/0xD2FAA0cAeE8421959aa13Fbd20A7ed7e93702FFE.png?1711008902",
+            "large": "https://coin-images.coingecko.com/coins/images/36287/large/0xD2FAA0cAeE8421959aa13Fbd20A7ed7e93702FFE.png?1711008902"
+        },
+        "error": null
+    },
+    {
+        "id": "elephantpepe",
+        "name": "ElephantPepe",
+        "symbol": "elepepe",
+        "asset_platform_id": "base",
+        "detail_platforms": {
+            "base": {
+                "decimal_place": 9,
+                "contract_address": "0xbac48abfd032a30cabba33e393616576462976af"
+            }
+        },
+        "image": {
+            "thumb": "https://coin-images.coingecko.com/coins/images/36507/thumb/coingecko-elepepe.png?1711643850",
+            "small": "https://coin-images.coingecko.com/coins/images/36507/small/coingecko-elepepe.png?1711643850",
+            "large": "https://coin-images.coingecko.com/coins/images/36507/large/coingecko-elepepe.png?1711643850"
+        },
+        "error": null
+    }
+]
