@@ -619,6 +619,14 @@ const MemecoinsRebalancer: React.FC = () => {
                                             <FiTrash2 />
                                         </button>
                                     )}
+                                    {buyTokens.length > 0 && (
+                                    <button
+                                        onClick={handleProceed}
+                                        className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
+                                    >
+                                        <FiRefreshCw />
+                                    </button>
+                                )}
                                 </div>
                             </div>
 
