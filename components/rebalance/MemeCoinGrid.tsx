@@ -117,7 +117,7 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
 
             {/* Conditionally Render Filters Section */}
             {showFilters && (
-                <div className="hidden sm:flex items-center gap-4 mt-4 whitespace-nowrap flex-wrap">
+                <div ref={filterRef} className="hidden sm:flex items-center gap-4 mt-4 whitespace-nowrap flex-wrap">
                     {filterOptions.map((filter) => (
                         <button
                             key={filter.value}
