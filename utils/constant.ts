@@ -52,6 +52,8 @@ export const meta = {
 };
 
 import meme_coin_details from './meme_coin_details.json';
+import { createPublicClient, http, parseAbi } from "viem";
+import { base } from "viem/chains";
 
 interface IMemeCoinData {
     id: string;
@@ -73,3 +75,13 @@ interface IMemeCoinData {
 }
 
 export const memeCoinData: IMemeCoinData[] = meme_coin_details as IMemeCoinData[];
+
+export const erc20Abi = parseAbi([
+    "function balanceOf(address owner) view returns (uint256)",
+]);
+
+export const publicClient = createPublicClient({
+    chain: base,
+    transport: http(),
+  });
+  

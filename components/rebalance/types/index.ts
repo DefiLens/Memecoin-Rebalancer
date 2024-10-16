@@ -31,6 +31,7 @@ export interface ICoinDetails {
     contract_address?: string;
     amount?: string;
     balance?: string;
+    value?: string;
 }
 
 export interface ISwapAmount {

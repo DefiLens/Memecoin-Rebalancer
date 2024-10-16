@@ -7,7 +7,7 @@ import { useRebalanceStore } from "../../context/rebalance.store";
 import { WalletCallReceipt } from "viem";
 import { error, loading, success } from "../../public/assets/gifs";
 import TransactionStatus from "../rebalance/TransactionStatus";
-import { FaExchangeAlt, FaShoppingCart } from "react-icons/fa";
+import { FaExchangeAlt } from "react-icons/fa";
 
 interface ReviewRebalanceProps {
     swapAmounts: { [key: string]: ISwapAmount };
@@ -17,11 +17,11 @@ interface ReviewRebalanceProps {
     resetTransactionStatus: () => void;
     status: "pending" | "error" | "idle" | "success";
     callsStatus:
-    | {
-        status: "PENDING" | "CONFIRMED";
-        receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
-    }
-    | undefined;
+        | {
+              status: "PENDING" | "CONFIRMED";
+              receipts?: WalletCallReceipt<bigint, "success" | "reverted">[] | undefined;
+          }
+        | undefined;
 }
 
 const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
@@ -49,8 +49,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
 
     const imageSrc = getImageSrc();
     return (
-        <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-50 text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
-            <div className="min-h-52 w-[35rem] flex flex-col justify-center items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
+        <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-[70] text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
+            <div className="min-h-52 w-[35rem] flex flex-col justify-between items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
                 {/* Heading */}
                 <div className="w-full flex items-center justify-between text-center text-xl md:text-2xl font-bold">
                     <span>Review Cart</span>
@@ -64,16 +64,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                         <RxCross1 />
                     </button>
                 </div>
-                {/* {imageSrc ? (
-                    <Image
-                        src={imageSrc}
-                        alt="transaction_state_icon"
-                        className="w-20 h-20 md:w-28 md:h-28"
-                        width={100}
-                        height={100}
-                    />
-                ) : null} */}
-                {status === "idle" && (
+
+                {(status === "idle" || status === "pending") && (
                     <div className="h-full w-full flex flex-col justify-center items-center gap-2">
                         <div className="w-full border-3 max-h-96 overflow-auto flex flex-col justify-start items-center gap-5 my-5">
                             <div className="w-full max-h-full overflow-auto flex flex-col gap-5">
@@ -211,8 +203,9 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                 {status != "success" && (
                     <button
                         onClick={handleExecute}
-                        className={`${false ? "cursor-not-allowed opacity-40" : ""
-                            } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
+                        className={`${
+                            false ? "cursor-not-allowed opacity-40" : ""
+                        } bg-zinc-800 border border-zinc-700 hover:bg-opacity-80 w-full flex justify-center items-center gap-2 py-3 px-5 rounded-lg text-base md:text-lg font-semibold font-mono transition duration-300
           ${(buttonState === "quoting" || buttonState === "rebalancing") && "cursor-not-allowed opacity-50"}
           `}
                         disabled={
@@ -229,9 +222,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                     </button>
                 )}
 
-                {/* {status === "success" &&  */}
-                <TransactionStatus callStatus={callsStatus} />
-                {/* } */}
+                {status === "success" && <TransactionStatus callStatus={callsStatus} />}
             </div>
         </div>
     );

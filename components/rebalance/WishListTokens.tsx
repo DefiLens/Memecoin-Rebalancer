@@ -51,11 +51,6 @@ const WishListTokens: React.FC = () => {
         setDisplayedCoins(filtered.slice(0, displayCount));
     }, [allCoins, searchTerm, displayCount, showWishlistOnly, wishlist]);
 
-    const toggleView = () => {
-        setShowWishlistOnly(!showWishlistOnly);
-        setDisplayCount(25); // Reset display count when toggling view
-    };
-
     return (
         <div>
             <div className="flex gap-2 items-center">
@@ -66,10 +61,10 @@ const WishListTokens: React.FC = () => {
                         setSearchTerm(e.target.value);
                         setDisplayCount(25); // Reset display count when searching
                     }}
-                    className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg outline-none"
+                    className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg outline-none mb-4"
                 />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 hide_scrollbar">
                 {displayedCoins.map((coin) => (
                     <Coin key={coin.id} coin={coin} type={"buy"} selectedCoins={[]} handleCoinSelect={() => {}} />
                 ))}

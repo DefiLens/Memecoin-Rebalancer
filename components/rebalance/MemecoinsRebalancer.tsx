@@ -17,7 +17,17 @@ import SelectedSellToken from "./SelectedSellToken";
 import SelectedBuyToken from "./SelectedBuyToken";
 import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
 import { BigNumber as bg } from "bignumber.js";
-import { FaArrowCircleDown, FaArrowCircleUp, FaBitbucket, FaClock, FaExchangeAlt, FaFireAlt, FaShoppingCart, FaSync } from "react-icons/fa";
+import {
+    FaArrowCircleDown,
+    FaArrowCircleUp,
+    FaBitbucket,
+    FaClock,
+    FaExchangeAlt,
+    FaFireAlt,
+    FaShoppingCart,
+    FaSync,
+} from "react-icons/fa";
+import { useGlobalStore } from "../../context/global.store";
 bg.config({ DECIMAL_PLACES: 20 });
 
 export interface ISwapData {
@@ -29,6 +39,7 @@ export interface ISwapData {
 }
 
 const MemecoinsRebalancer: React.FC = () => {
+    const { showCart, setShowCart } = useGlobalStore();
     const { buyTokens, sellTokens, clearSelectedTokens } = useRebalanceStore();
     const [amount, setAmount] = useState("");
     const [percentages, setPercentages] = useState<{ [key: string]: string }>({});
@@ -425,11 +436,15 @@ const MemecoinsRebalancer: React.FC = () => {
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
+                <div className="w-full sm:w-8/12 sm:pr-4 overflow-auto hide_scrollbar h-full">
                     <MemeCoinGrid resetSwapAmount={resetSwapAmount} />
                 </div>
 
-                <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
+                <div
+                    className={`${
+                        showCart ? "block" : "hidden sm:flex"
+                    } sm:static fixed top-[60px] left-0 p-5 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border-t-0 border-zinc-800`}
+                >
                     <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
 
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
@@ -475,7 +490,9 @@ const MemecoinsRebalancer: React.FC = () => {
                                         <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
                                             <FaBitbucket />
                                             <p className="text-sm font-medium">No tokens selected</p>
-                                            <p className="text-xs font-light mt-1">Select tokens to start rebalancing</p>
+                                            <p className="text-xs font-light mt-1">
+                                                Select tokens to start rebalancing
+                                            </p>
                                         </div>
                                     ) : (
                                         <></>
@@ -512,7 +529,9 @@ const MemecoinsRebalancer: React.FC = () => {
                                         <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
                                             <FaBitbucket />
                                             <p className="text-sm font-medium">No tokens selected</p>
-                                            <p className="text-xs font-light mt-1">Select tokens to start rebalancing</p>
+                                            <p className="text-xs font-light mt-1">
+                                                Select tokens to start rebalancing
+                                            </p>
                                         </div>
                                     ) : (
                                         <></>
@@ -543,18 +562,16 @@ const MemecoinsRebalancer: React.FC = () => {
                                             buttonState === "proceed"
                                                 ? handleProceed
                                                 : buttonState === "rebalance"
-                                                    ? toggleReview
-                                                    : undefined
+                                                ? toggleReview
+                                                : undefined
                                         }
                                         className={`flex items-center justify-center gap-2 w-full px-5 py-3 bg-zinc-700 text-white rounded-lg transition-all duration-300 
-                    ${buyTokens.length === 0 && sellTokens.length === 0
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                            }
-                    ${isLoading || buttonState === "quoting" || buttonState === "rebalancing"
-                                                ? "cursor-not-allowed opacity-50"
-                                                : ""
-                                            } text-lg font-bold text-center`} // Center the button text
+                    ${buyTokens.length === 0 && sellTokens.length === 0 ? "opacity-50 cursor-not-allowed" : ""}
+                    ${
+                        isLoading || buttonState === "quoting" || buttonState === "rebalancing"
+                            ? "cursor-not-allowed opacity-50"
+                            : ""
+                    } text-lg font-bold text-center`} // Center the button text
                                         disabled={
                                             isLoading ||
                                             buttonState === "quoting" ||
@@ -607,8 +624,8 @@ const MemecoinsRebalancer: React.FC = () => {
 
                             {/* Zero Gas Fee Label Below the Button, Inside the Box */}
                             <div className="mt-2 ml-1 flex items-center gap-1">
-                                <FaFireAlt className="text-white" /> {/* Fire icon */}
-                                <span className="text-sm font-semibold text-white">
+                                <FaFireAlt className="text-orange-600" /> {/* Fire icon */}
+                                <span className="text-sm font-semibold text-zinc-200">
                                     Zero Gas Fee Sponsored by Us!
                                 </span>
                             </div>
@@ -630,9 +647,6 @@ const MemecoinsRebalancer: React.FC = () => {
                             />
                         )}
                     </div>
-
-
-
                 </div>
             </div>
         </>

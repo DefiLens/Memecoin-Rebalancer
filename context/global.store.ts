@@ -7,6 +7,8 @@ export interface IGlobalStore {
     setAllCoins: (coins: ICoinDetails[]) => void; // Function to set allCoins
     activeFilter: string;
     setActiveFilter: (filter: string) => void;
+    showCart: boolean; // State to show/hide cart
+    setShowCart: (show: boolean) => void; // Function to toggle cart visibility
 }
 
 // Create the Zustand store
@@ -15,4 +17,6 @@ export const useGlobalStore = create<IGlobalStore>((set) => ({
     setAllCoins: (coins) => set({ allCoins: coins }), // Update state with new coins
     activeFilter: "price_change_percentage_24h", // Default filter
     setActiveFilter: (filter) => set({ activeFilter: filter }),
+    showCart: false, // Initially, the cart is hidden
+    setShowCart: (show) => set({ showCart: show }), // Function to toggle cart visibility
 }));
