@@ -190,7 +190,7 @@ const MemecoinsRebalancer: React.FC = () => {
         setTransactionStatus("pending");
 
         try {
-            const totalAmount = parseUnits(amount, 6);
+            const totalAmount = parseUnits(amount, 18);
             // Create approval calls for each unique service
             const approvalCalls = swapData.approvalAddresses.map((approvalObj: ApprovalAddress) => {
                 const [service, address] = Object.entries(approvalObj)[0];
