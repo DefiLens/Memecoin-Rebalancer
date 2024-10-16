@@ -29,7 +29,7 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
 
     const filterRef = useRef(null);
     useClickOutside([filterRef], () => {
-        setShowFilters(false);
+        // setShowFilters(false);
     });
 
     return (

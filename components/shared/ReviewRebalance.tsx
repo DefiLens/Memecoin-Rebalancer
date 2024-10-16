@@ -148,7 +148,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                                                     {Number(swapAmounts[coin.id].amountIn).toPrecision(
                                                                         10
                                                                     )}{" "}
-                                                                    {coin.symbol}
+                                                                    {coin.name}
                                                                 </p>
                                                             )}
                                                         </div>
@@ -164,7 +164,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                                         </div>
                                                         <div className="flex flex-col justify-start items-start">
                                                             <span className="text-lg font-semibold text-B200">
-                                                                Usdc
+                                                                USDC
                                                             </span>
                                                             {swapAmounts[coin.id] && (
                                                                 <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
