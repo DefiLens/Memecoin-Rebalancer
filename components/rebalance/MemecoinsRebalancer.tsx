@@ -4,22 +4,30 @@ import { useSendCalls, useCallsStatus } from "wagmi/experimental";
 import { parseUnits, encodeFunctionData, Address } from "viem";
 import { toast } from "react-toastify";
 import { FiRefreshCw, FiTrash2 } from "react-icons/fi";
-import { RxCross1 } from "react-icons/rx";
-import { RiExternalLinkLine, RiCoinsLine } from "react-icons/ri";
+import { RiExternalLinkLine } from "react-icons/ri";
 import axios from "axios";
-import TransactionStatus from "./TransactionStatus";
 import { BASE_URL } from "../../utils/keys";
 import MemeCoinGrid from "./MemeCoinGrid";
-import FormatDecimalValue from "../base/FormatDecimalValue";
 import Loader from "../shared/Loader";
 import ReviewRebalance from "../shared/ReviewRebalance";
-import { ButtonState, ICoinDetails, ISwapAmount, ApprovalAddress } from "./types";
+import { ButtonState, ApprovalAddress, TransactionStatus } from "./types";
 import { USDC_ADDRESS } from "../../utils/constant";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import SelectedSellToken from "./SelectedSellToken";
 import SelectedBuyToken from "./SelectedBuyToken";
 import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
 import { BigNumber as bg } from "bignumber.js";
+import {
+    FaArrowCircleDown,
+    FaArrowCircleUp,
+    FaBitbucket,
+    FaClock,
+    FaExchangeAlt,
+    FaFireAlt,
+    FaShoppingCart,
+    FaSync,
+} from "react-icons/fa";
+import { useGlobalStore } from "../../context/global.store";
 bg.config({ DECIMAL_PLACES: 20 });
 
 export interface ISwapData {
@@ -29,18 +37,22 @@ export interface ISwapData {
     to: Address;
     value: string;
 }
+
 const MemecoinsRebalancer: React.FC = () => {
+    const { showCart, setShowCart } = useGlobalStore();
     const { buyTokens, sellTokens, clearSelectedTokens } = useRebalanceStore();
     const [amount, setAmount] = useState("");
     const [percentages, setPercentages] = useState<{ [key: string]: string }>({});
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [buttonState, setButtonState] = useState<ButtonState>("proceed");
+    const [transactionStatus, setTransactionStatus] = useState<TransactionStatus>("idle");
     const [openReview, setOpenReview] = useState(false);
     const [swapData, setSwapData] = useState<any>(null);
     const [swapAmounts, setSwapAmounts] = useState<{ [key: string]: { amountIn: string; amountOut: string } }>({});
     const { address } = useAccount();
     const { sendCallsAsync, data: callsId, status: sendCallsStatus, error: sendCallsError } = useSendCalls();
+
     const { data: callsStatus } = useCallsStatus({
         id: callsId as string,
         query: {
@@ -175,9 +187,10 @@ const MemecoinsRebalancer: React.FC = () => {
 
         setIsLoading(true);
         setButtonState("rebalancing");
+        setTransactionStatus("pending");
 
         try {
-            const totalAmount = parseUnits(amount, 6);
+            const totalAmount = parseUnits(amount, 18);
             // Create approval calls for each unique service
             const approvalCalls = swapData.approvalAddresses.map((approvalObj: ApprovalAddress) => {
                 const [service, address] = Object.entries(approvalObj)[0];
@@ -268,11 +281,13 @@ const MemecoinsRebalancer: React.FC = () => {
 
             toast.success("Rebalance executed successfully!");
             setButtonState("rebalance");
+            setTransactionStatus("success");
         } catch (error: any) {
             console.error("Error during rebalance:", error);
             setError(`Failed to execute rebalance`);
             toast.error("Rebalance failed. Please try again.");
             setButtonState("rebalance");
+            setTransactionStatus("error");
         } finally {
             setIsLoading(false);
         }
@@ -291,6 +306,14 @@ const MemecoinsRebalancer: React.FC = () => {
     const resetSwapAmount = () => {
         setSwapAmounts({});
     };
+    const resetTransactionStatus = () => {
+        setTransactionStatus("idle");
+    };
+
+    useEffect(() => {
+        resetSwapAmount();
+        setButtonState("proceed");
+    }, [buyTokens, sellTokens]);
 
     const saveTxn = async (data: any) => {
         try {
@@ -302,36 +325,66 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     useEffect(() => {
-        resetSwapAmount();
-        setButtonState("proceed");
-    }, [buyTokens, sellTokens]);
+        // if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
+        //     const txHash = callsStatus.receipts[0].transactionHash;
 
-    useEffect(() => {
-        if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
-            const txHash = callsStatus.receipts[0].transactionHash;
+        //     await saveTxn({
+        //         userAddress: address,
+        //         hash: txHash,
+        //         amount: amount,
+        //         selectedCoins: buyTokens,
+        //         percentages: percentages,
+        //     });
+        //     toast.success(
+        //         <a
+        //             href={`https://basescan.org/tx/${txHash}`}
+        //             target="_blank"
+        //             rel="noopener noreferrer"
+        //             className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
+        //         >
+        //             Success: {txHash.substring(0, 5)}...
+        //             {txHash.substring(txHash.length - 5, txHash.length)}
+        //             <RiExternalLinkLine className="text-base" />
+        //         </a>
+        //     );
+        //     resetState();
+        // }
+        const handleTransactionSave = async () => {
+            if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
+                const txHash = callsStatus.receipts[0].transactionHash;
 
-            saveTxn({
-                userAddress: address,
-                hash: txHash,
-                amount: amount,
-                selectedCoins: buyTokens,
-                percentages: percentages,
-            });
-            toast.success(
-                <a
-                    href={`https://basescan.org/tx/${txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
-                >
-                    Success: {txHash.substring(0, 5)}...
-                    {txHash.substring(txHash.length - 5, txHash.length)}
-                    <RiExternalLinkLine className="text-base" />
-                </a>
-            );
-            resetState();
-        }
+                try {
+                    toast.success(
+                        <a
+                            href={`https://basescan.org/tx/${txHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
+                        >
+                            Success: {txHash.substring(0, 5)}...
+                            {txHash.substring(txHash.length - 5, txHash.length)}
+                            <RiExternalLinkLine className="text-base" />
+                        </a>
+                    );
+                    // Save the transaction first
+                    await saveTxn({
+                        userAddress: address,
+                        hash: txHash,
+                        amount: amount,
+                        selectedCoins: buyTokens,
+                        percentages: percentages,
+                    });
+                    // Reset the state after saving the transaction
+                    resetState();
+                } catch (error) {
+                    console.error("Failed to save transaction or reset state:", error);
+                }
+            }
+        };
+
+        handleTransactionSave();
     }, [callsStatus]);
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     //set amount value
@@ -383,28 +436,33 @@ const MemecoinsRebalancer: React.FC = () => {
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                <div className="w-8/12 pr-4 overflow-auto hide_scrollbar h-full">
+                <div className="w-full sm:w-8/12 sm:pr-4 overflow-auto hide_scrollbar h-full">
                     <MemeCoinGrid resetSwapAmount={resetSwapAmount} />
                 </div>
 
-                <div className="w-4/12 pl-4 border-l border-zinc-700 flex flex-col gap-2 h-full mr-2">
+                <div
+                    className={`${
+                        showCart ? "block" : "hidden sm:flex"
+                    } sm:static fixed top-[60px] left-0 p-5 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border-t-0 border-zinc-800`}
+                >
                     <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
 
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
+                        {/* Buy Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50 mb-3">
-                            <h1
-                                className="text-sm text-zinc-200
-                            font-semibold mb-2"
-                            >
-                                Buy Tokens
-                            </h1>
+                            <div className="flex items-center">
+                                <FaArrowCircleUp className="text-green-500 mr-2" />
+                                <h1 className="text-base text-zinc-200 font-bold">Buy Tokens</h1>
+                            </div>
+
+                            {/* Buy Token Input and Display */}
                             {buyTokens.length > 0 ? (
-                                <div className="flex flex-col mb-2 text-zinc-300">
+                                <div className="flex flex-col mb-2 text-zinc-300 mt-2">
                                     <label className="text-xs text-zinc-200 mb-1">Total amount</label>
                                     <div className="w-full relative">
                                         <input
-                                            type="text" // Change type to text
-                                            inputMode="numeric" // Set input mode to numeric
+                                            type="text"
+                                            inputMode="numeric"
                                             className="bg-zinc-800 rounded-xl px-4 py-2 w-full text-zinc-200 text-base outline-none"
                                             placeholder={`Total Amount in USDC`}
                                             value={amount}
@@ -426,10 +484,23 @@ const MemecoinsRebalancer: React.FC = () => {
                                     </span>
                                 </div>
                             ) : (
-                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                    No tokens selected
-                                </div>
+                                <>
+                                    {/* No Tokens Selected or Only Sell Tokens Selected */}
+                                    {sellTokens.length === 0 && buyTokens.length === 0 ? (
+                                        <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
+                                            <FaBitbucket />
+                                            <p className="text-sm font-medium">No tokens selected</p>
+                                            <p className="text-xs font-light mt-1">
+                                                Select tokens to start rebalancing
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </>
                             )}
+
+                            {/* List of Selected Buy Tokens */}
                             {buyTokens.map((coin) => (
                                 <SelectedBuyToken
                                     key={coin.id}
@@ -441,18 +512,34 @@ const MemecoinsRebalancer: React.FC = () => {
                                 />
                             ))}
                         </div>
+
+                        {/* Sell Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50">
-                            <h1
-                                className="text-sm text-zinc-200
-                            font-semibold mb-2"
-                            >
-                                Sell Tokens
-                            </h1>
-                            {sellTokens.length <= 0 && (
-                                <div className="h-32 flex items-center justify-center text-sm font-light text-zinc-300">
-                                    No tokens selected
-                                </div>
+                            <div className="flex items-center">
+                                <FaArrowCircleDown className="text-red-500 mr-2" />
+                                <h1 className="text-base text-zinc-200 font-bold">Sell Tokens</h1>
+                            </div>
+
+                            {/* No Tokens Selected or Only Buy Tokens Selected */}
+                            {sellTokens.length > 0 ? (
+                                <></>
+                            ) : (
+                                <>
+                                    {buyTokens.length === 0 && buyTokens.length === 0 ? (
+                                        <div className="h-32 flex flex-col items-center justify-center text-zinc-300">
+                                            <FaBitbucket />
+                                            <p className="text-sm font-medium">No tokens selected</p>
+                                            <p className="text-xs font-light mt-1">
+                                                Select tokens to start rebalancing
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </>
                             )}
+
+                            {/* List of Selected Sell Tokens */}
                             {sellTokens.map((coin) => (
                                 <SelectedSellToken
                                     key={coin.id}
@@ -464,56 +551,75 @@ const MemecoinsRebalancer: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="">
-                        <div className="flex justify-between items-center">
-                            {(buyTokens.length != 0 || sellTokens.length != 0) && (
-                                <button
-                                    onClick={
-                                        buttonState === "proceed"
-                                            ? handleProceed
-                                            : buttonState === "rebalance"
-                                            ? toggleReview
-                                            : undefined
-                                    }
-                                    className={`flex items-center gap-2 px-3 py-2 bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300 
-                                    ${
-                                        buyTokens.length === 0 && sellTokens.length === 0
-                                            ? "opacity-50 cursor-not-allowed"
-                                            : ""
-                                    }
-                                    ${
-                                        isLoading || buttonState === "quoting" || buttonState === "rebalancing"
-                                            ? "cursor-not-allowed opacity-50"
-                                            : ""
-                                    }
-                                `}
-                                    disabled={
-                                        isLoading ||
-                                        buttonState === "quoting" ||
-                                        buttonState === "rebalancing" ||
-                                        (buyTokens.length === 0 && sellTokens.length === 0) // Enable if there are buy or sell tokens
-                                    }
-                                >
-                                    {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
-                                        <Loader />
-                                    )}
-                                    {buttonState === "proceed" && "Get Quote"}
-                                    {buttonState === "quoting" && "Wait for Quote..."}
-                                    {buttonState === "rebalance" && "Rebalance"}
-                                    {buttonState === "rebalancing" && "Rebalancing..."}
-                                </button>
-                            )}
-
-                            <div className="flex items-center gap-1">
-                                {buyTokens.length > 0 && (
+                    <div className="w-full p-4 bg-zinc-900 rounded-lg">
+                        {/* Parent container with button, note, and icons */}
+                        <div className="bg-zinc-800 rounded-lg p-3">
+                            {/* Main Button and Icons in the Same Line */}
+                            <div className="flex justify-between items-center">
+                                {(buyTokens.length !== 0 || sellTokens.length !== 0) && (
                                     <button
-                                        onClick={resetState}
-                                        className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
+                                        onClick={
+                                            buttonState === "proceed"
+                                                ? handleProceed
+                                                : buttonState === "rebalance"
+                                                ? toggleReview
+                                                : undefined
+                                        }
+                                        className={`flex items-center justify-center gap-2 w-full px-5 py-3 bg-zinc-700 text-white rounded-lg transition-all duration-300 
+                    ${buyTokens.length === 0 && sellTokens.length === 0 ? "opacity-50 cursor-not-allowed" : ""}
+                    ${
+                        isLoading || buttonState === "quoting" || buttonState === "rebalancing"
+                            ? "cursor-not-allowed opacity-50"
+                            : ""
+                    } text-lg font-bold text-center`} // Center the button text
+                                        disabled={
+                                            isLoading ||
+                                            buttonState === "quoting" ||
+                                            buttonState === "rebalancing" ||
+                                            (buyTokens.length === 0 && sellTokens.length === 0)
+                                        }
                                     >
-                                        <FiTrash2 />
+                                        {(isLoading || buttonState === "quoting" || buttonState === "rebalancing") && (
+                                            <Loader />
+                                        )}
+                                        {buttonState === "proceed" && (
+                                            <>
+                                                <FaShoppingCart /> {/* Shopping Cart Icon */}
+                                                Proceed to Buy & Sell
+                                            </>
+                                        )}
+                                        {buttonState === "quoting" && (
+                                            <>
+                                                <FaClock /> {/* Clock Icon */}
+                                                Waiting for Quote...
+                                            </>
+                                        )}
+                                        {buttonState === "rebalance" && (
+                                            <>
+                                                <FaExchangeAlt /> {/* Exchange Icon */}
+                                                Trade Now
+                                            </>
+                                        )}
+                                        {buttonState === "rebalancing" && (
+                                            <>
+                                                <FaSync /> {/* Sync Icon */}
+                                                Rebalancing Memes...
+                                            </>
+                                        )}
                                     </button>
                                 )}
-                                {buttonState != "proceed" && (
+
+                                {/* Trash and Refresh Icons */}
+                                <div className="flex items-center gap-2 ml-4">
+                                    {buyTokens.length > 0 && (
+                                        <button
+                                            onClick={resetState}
+                                            className="p-2 hover:bg-zinc-700 border border-transparent hover:border hover:border-zinc-600 text-white rounded-lg transition-all duration-300"
+                                        >
+                                            <FiTrash2 />
+                                        </button>
+                                    )}
+                                    {buyTokens.length > 0 && (
                                     <button
                                         onClick={handleProceed}
                                         className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
@@ -521,16 +627,31 @@ const MemecoinsRebalancer: React.FC = () => {
                                         <FiRefreshCw />
                                     </button>
                                 )}
+                                </div>
+                            </div>
+
+                            {/* Zero Gas Fee Label Below the Button, Inside the Box */}
+                            <div className="mt-2 ml-1 flex items-center gap-1">
+                                <FaFireAlt className="text-orange-600" /> {/* Fire icon */}
+                                <span className="text-sm font-semibold text-zinc-200">
+                                    Zero Gas Fee Sponsored by Us!
+                                </span>
                             </div>
                         </div>
-                        <div className="text-red-500 mt-1 text-xs">{error}</div>
-                        <TransactionStatus callStatus={callsStatus} />
+
+                        {/* Error message */}
+                        {error && <div className="text-red-500 mt-2 text-xs">{error}</div>}
+
+                        {/* Review section */}
                         {openReview && (
                             <ReviewRebalance
                                 toggleReview={toggleReview}
                                 swapAmounts={swapAmounts}
                                 buttonState={buttonState}
                                 handleExecute={handleRebalance}
+                                status={transactionStatus}
+                                callsStatus={callsStatus}
+                                resetTransactionStatus={resetTransactionStatus}
                             />
                         )}
                     </div>

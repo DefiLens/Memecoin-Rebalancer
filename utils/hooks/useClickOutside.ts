@@ -1,15 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, RefObject } from "react";
 
-const useClickOutside = (refs: any, callback: any) => {
+type RefType = RefObject<HTMLElement>;
+type CallbackType = () => void;
+
+const useClickOutside = (refs: RefType[], callback: CallbackType) => {
     const callbackRef = useRef(callback);
 
+    // Update callback ref if the callback changes
     useEffect(() => {
         callbackRef.current = callback;
     }, [callback]);
 
     useEffect(() => {
-        function handleClickOutside(event: any) {
-            const isOutside = refs.every((ref: any) => ref.current && !ref.current.contains(event.target));
+        function handleClickOutside(event: MouseEvent) {
+            // Check if the clicked target is outside all refs
+            const isOutside = refs.every((ref) => ref.current && !ref.current.contains(event.target as Node));
             if (isOutside) {
                 callbackRef.current();
             }

@@ -119,7 +119,7 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
             <div className="flex capitalize items-center justify-between gap-4 px-1">
                 {swapAmounts[coin.id] && (
                     <span className="text-xs text-cyan-500">
-                        {Number(swapAmounts[coin.id].amountIn).toPrecision(4)} {coin.symbol.toLocaleUpperCase()} ={" "}
+                        {Number(swapAmounts[coin.id].amountIn)} {coin.symbol.toLocaleUpperCase()} ={" "}
                         {Number(swapAmounts[coin.id].amountOut)} USDC
                     </span>
                 )}

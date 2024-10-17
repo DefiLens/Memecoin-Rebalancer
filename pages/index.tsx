@@ -3,14 +3,15 @@ import MemecoinsRebalancer from "../components/rebalance/MemecoinsRebalancer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../components/base/Footer";
-import MetaTags from "../components/base/metaTags";
-import MainLayout from "../components/base/MainLayout";
+import Header from "../components/base/Header";
+import MetaTags from "../components/base/MetaTags";
 
 export default function Home() {
     return (
         <div className="flex flex-col h-screen bg-[#131313]">
             <MetaTags />
             {/* <WalletInfo /> */}
+            <Header />
 
             <MainLayout />
             {/* <main className="flex flex-col flex-1 overflow-hidden">

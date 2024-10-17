@@ -44,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selectedToken, setSelectedToken }) 
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-zinc-700 p-4 rounded-lg text-white hover:bg-zinc-600 transition-colors"
+        className="w-full flex items-center justify-between bg-zinc-700 px-3 py-2 rounded-lg text-white hover:bg-zinc-600 transition-colors"
       >
         <div className="flex items-center">
           {selectedTokenInfo && (

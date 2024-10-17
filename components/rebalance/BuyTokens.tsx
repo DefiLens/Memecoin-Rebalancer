@@ -9,11 +9,11 @@ const BuyTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount 
     const { allCoins } = useGlobalStore(); // Get the setter from Zustand
     const [displayedCoins, setDisplayedCoins] = useState<ICoinDetails[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [displayCount, setDisplayCount] = useState(25);
+    // const [displayCount, setDisplayCount] = useState(25);
 
-    const loadMore = () => {
-        setDisplayCount((prevCount) => prevCount + 25);
-    };
+    // const loadMore = () => {
+    //     setDisplayCount((prevCount) => prevCount + 25);
+    // };
 
     useEffect(() => {
         let filteredCoins = allCoins.filter(
@@ -22,8 +22,9 @@ const BuyTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount 
                 coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
-        setDisplayedCoins(filteredCoins.slice(0, displayCount));
-    }, [allCoins, searchTerm, displayCount]);
+        // setDisplayedCoins(filteredCoins.slice(0, displayCount));
+        setDisplayedCoins(filteredCoins);
+    }, [allCoins, searchTerm]);
     return (
         <div className="w-full flex flex-col gap-4">
             <input
@@ -32,12 +33,13 @@ const BuyTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount 
                 value={searchTerm}
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
-                    setDisplayCount(25); // Reset display count when searching
+                    // setDisplayCount(25); // Reset display count when searching
                 }}
                 className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
             />
 
-            <div className="grid grid-cols-3 gap-2 hide_scrollbar">
+            {/* <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-2 hide_scrollbar"> */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 hide_scrollbar">
                 {displayedCoins.map((coin) => (
                     <Coin
                         key={coin.id}
@@ -49,7 +51,7 @@ const BuyTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount 
                 ))}
             </div>
 
-            {displayedCoins.length <
+            {/* {displayedCoins.length <
                 (searchTerm
                     ? allCoins.filter(
                           (coin) =>
@@ -63,7 +65,7 @@ const BuyTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount 
                 >
                     Load More
                 </button>
-            )}
+            )} */}
         </div>
     );
 };

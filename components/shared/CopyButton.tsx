@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiCopy, FiCheck } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 interface CopyButtonProps {
   copy: string | undefined;
@@ -12,6 +13,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ copy, className }) => {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
+    toast.success("Copied to clipboard")
     setTimeout(() => {
       setCopied(false);
     }, 3000); // Hide tick icon after 3 seconds

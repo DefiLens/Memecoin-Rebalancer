@@ -7,7 +7,7 @@ export const currencyFormat = (num: number): string => {
 };
 
 export const numberFormat = (num: number): string => {
-    return `${num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    return `${num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 };
 
 export const formatPercentage = (percentage: number | null) =>
@@ -32,3 +32,8 @@ export function incresePowerByDecimals(
 ) {
     return bg(amount.toString()).multipliedBy(bg(10).pow(decimals)).toString();
 }
+
+export const shorten = (address: string | undefined) => {
+    if (!address) return "";
+    return `${address.substring(0, 6)}...${address.substring(address.length - 4, address.length)}`;
+};

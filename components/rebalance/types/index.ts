@@ -34,16 +34,13 @@ export interface ICoinDetails {
     value?: string;
 }
 
-
 export interface ISwapAmount {
     amountIn: string;
     amountOut: string;
 }
 
 export type ButtonState = "proceed" | "quoting" | "rebalance" | "rebalancing";
-
-
-
+export type TransactionStatus = "pending" | "error" | "idle" | "success";
 //Props
 export interface PriceChartProps {
     id: string;
