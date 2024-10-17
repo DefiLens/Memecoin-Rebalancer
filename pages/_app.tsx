@@ -20,21 +20,21 @@ function MyApp({ Component, pageProps }: AppProps) {
     const [isPinVerified, setIsPinVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const pinVerified = localStorage.getItem("pinVerified");
-        if (pinVerified === "true") {
-            setIsPinVerified(true);
-        }
-        setIsLoading(false);
-    }, []);
+    // useEffect(() => {
+    //     const pinVerified = localStorage.getItem("pinVerified");
+    //     if (pinVerified === "true") {
+    //         setIsPinVerified(true);
+    //     }
+    //     setIsLoading(false);
+    // }, []);
 
-    if (isLoading) {
-        return <div>Loading...</div>; // Or a more sophisticated loading screen
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>; // Or a more sophisticated loading screen
+    // }
 
-    if (!isPinVerified) {
-        return <PinEntry onPinVerified={() => setIsPinVerified(true)} />;
-    }
+    // if (!isPinVerified) {
+    //     return <PinEntry onPinVerified={() => setIsPinVerified(true)} />;
+    // }
 
     return (
         <WagmiConfig config={config}>
