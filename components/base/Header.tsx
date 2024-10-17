@@ -54,13 +54,13 @@ const Header: React.FC = () => {
     }, [isConnected, address]);
 
     return (
-        <header className="bg-B1 h-[60px] flex items-center">
+        <header className="bg-B1 h-[60px] flex items-center border-b border-zinc-700">
             <div className="w-full flex justify-between items-center px-4">
                 {" "}
                 {/* Removed 'container mx-auto' */}
                 <div className="flex items-center">
-                    <img src="/assets/logo.svg" alt="DefiLens" className="h-8 w-8 mr-2" />
-                    <h1 className="hidden sm:block text-2xl font-bold text-white">DefiLens</h1>
+                    {/* <img src="/assets/logo.svg" alt="DefiLens" className="h-8 w-8 mr-2" />
+                    <h1 className="hidden sm:block text-2xl font-bold text-white">DefiLens</h1> */}
                 </div>
                 {/* <CoinbaseButton /> */}
                 <div className="flex gap-2 items-center">
