@@ -8,7 +8,7 @@ import { WalletCallReceipt } from "viem";
 import { error, loading, success } from "../../public/assets/gifs";
 import TransactionStatus from "../rebalance/TransactionStatus";
 import { FaExchangeAlt } from "react-icons/fa";
-
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
 interface ReviewRebalanceProps {
     swapAmounts: { [key: string]: ISwapAmount };
     buttonState: ButtonState;
@@ -198,6 +198,15 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                )}
+                {status === "error" && (
+                    <div className="flex flex-col justify-between p-4">
+                        <div className="flex flex-col gap-4 justify-center items-center">
+                            <MdOutlineReportGmailerrorred className="text-cyan-500 text-7xl" />
+
+                            <h1 className="text-xl font-semibold mb- 2">Transaction Failed</h1>
+                        </div>
                     </div>
                 )}
                 {status != "success" && (
