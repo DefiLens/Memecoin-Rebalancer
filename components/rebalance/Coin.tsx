@@ -110,7 +110,7 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                     </div>
                     <div className="flex items-center gap-3">
                         <span className="relative text-2xl font-medium inline-flex items-center gap-1">
-                            ${FormatDecimalValue(coin.current_price)}
+                            ${coin.current_price && FormatDecimalValue(coin.current_price)}
                         </span>
                         <span
                             className={`text-lg flex items-center gap-1 ${
@@ -129,7 +129,7 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                     </div>
                     {type === "sell" && (
                         <span className="text-sm font-semibold text-zinc-100">
-                            Your Balance: {FormatDecimalValue(Number(coin.balance))} {coin.symbol}
+                            Your Balance: {coin.balance && FormatDecimalValue(Number(coin.balance))} {coin.symbol}
                         </span>
                     )}
                 </div>
