@@ -29,7 +29,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selectedToken, setSelectedToken }) 
       id: coin.id,
       name: coin.name,
       image: coin.image.small,
-      address: coin.detail_platforms.base.contract_address,
+      address: coin?.detail_platforms?.base?.contract_address,
     })),
   ];
 

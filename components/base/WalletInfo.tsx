@@ -9,7 +9,6 @@ import AvatarIcon from "../shared/Avatar";
 import WithdrawModal from "../modals/WithdrawModal";
 import Portfolio from "../modals/PortfolioModal";
 import { toast } from "react-toastify";
-import CoinbaseButton from "./CoinbaseButton";
 
 const WalletInfo: React.FC = () => {
     const [showDepositModal, setShowDepositModal] = useState(false);

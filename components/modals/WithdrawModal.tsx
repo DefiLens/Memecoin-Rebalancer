@@ -32,9 +32,11 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose, userAddr
     });
 
     useEffect(() => {
-        const token = memeCoinData.find((coin) => coin.detail_platforms.base.contract_address === selectedToken);
+        if (!memeCoinData) return;
+
+        const token = memeCoinData.find((coin) => coin?.detail_platforms?.base?.contract_address === selectedToken);
         if (token) {
-            setTokenDecimal(token.detail_platforms.base.decimal_place);
+            setTokenDecimal(token?.detail_platforms?.base?.decimal_place);
         } else {
             setTokenDecimal(6); // Default for USDC
         }
@@ -83,7 +85,9 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose, userAddr
                 <div className="mb-6">
                     {" "}
                     {/* Added margin below dropdown */}
-                    <label className="block text-sm sm:text-base font-semibold text-zinc-200 mb-1">Select Token</label>{" "}
+                    <label className="block text-sm sm:text-base font-semibold text-zinc-200 mb-1">
+                        Select Token
+                    </label>{" "}
                     {/* Label for dropdown */}
                     <Dropdown selectedToken={selectedToken} setSelectedToken={setSelectedToken} />
                 </div>
@@ -109,7 +113,9 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose, userAddr
                 <div className="mb-6">
                     {" "}
                     {/* Added margin below input */}
-                    <label className="block text-sm sm:text-base font-semibold text-zinc-200 mb-1">Recipient Address</label>
+                    <label className="block text-sm sm:text-base font-semibold text-zinc-200 mb-1">
+                        Recipient Address
+                    </label>
                     <input
                         type="text"
                         value={recipientAddress}
