@@ -97,24 +97,30 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
         // Check if this is a fresh page load
         const isPageRefresh = !localStorage.getItem('lastFetchTimestamp');
         const shouldFetch = address && 
-                          allCoins.length > 0 && 
-                          (!hasInitialFetch || isPageRefresh);
-
+                            allCoins.length > 0 && 
+                            (!hasInitialFetch || isPageRefresh);
+      
         if (shouldFetch) {
-            fetchBalances();
+          fetchBalances();
         }
-
+      
+        // Define unload callback outside to ensure it's a single reference
+        const unloadCallback = () => {
+          localStorage.removeItem('lastFetchTimestamp');
+        };
+      
+        if (typeof window !== 'undefined') {
+          window.addEventListener('beforeunload', unloadCallback);
+        }
+      
         // Cleanup function to handle page unload
         return () => {
-            if (typeof window !== 'undefined') {
-                const unloadCallback = () => {
-                    localStorage.removeItem('lastFetchTimestamp');
-                };
-                window.addEventListener('beforeunload', unloadCallback);
-                return () => window.removeEventListener('beforeunload', unloadCallback);
-            }
+          if (typeof window !== 'undefined') {
+            window.removeEventListener('beforeunload', unloadCallback);
+          }
         };
-    }, [address, allCoins, fetchBalances, hasInitialFetch]);
+      }, [address, allCoins, fetchBalances, hasInitialFetch]);
+      
 
     useEffect(() => {
         let filteredCoins = tokenBalances.filter(
