@@ -21,9 +21,6 @@ const Footer = () => {
                         </a>
                     ))}
                 </div>
-                {/* <span className="hidden md:block text-center text-xs leading-5 text-zinc-300">
-          Gas Fee is sponsered by us.
-        </span> */}
 
                 <div className="hidden sm:flex items-center gap-1">
                     {/* <FaFireAlt className="text-orange-600" /> */}

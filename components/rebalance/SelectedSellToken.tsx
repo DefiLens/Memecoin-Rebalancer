@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { ICoinDetails, ISwapAmount } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
-import FormatDecimalValue from "../base/FormatDecimalValue";
 import { ISwapData } from "./MemecoinsRebalancer";
 import { useAccount } from "wagmi";
 import { useBalance } from "wagmi";

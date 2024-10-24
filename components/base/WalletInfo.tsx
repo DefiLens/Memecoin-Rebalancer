@@ -6,8 +6,8 @@ import { FaWallet, FaChartPie, FaRocket } from "react-icons/fa";
 import Image from "next/image";
 import CopyButton from "../shared/CopyButton";
 import AvatarIcon from "../shared/Avatar";
-import WithdrawModal from "../WithdrawModal";
-import Portfolio from "../Portfolio";
+import WithdrawModal from "../modals/WithdrawModal";
+import Portfolio from "../modals/PortfolioModal";
 import { toast } from "react-toastify";
 import CoinbaseButton from "./CoinbaseButton";
 

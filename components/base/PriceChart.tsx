@@ -16,11 +16,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/keys";
 import { PriceChartProps } from "../rebalance/types";
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend, Decimation);
 
 interface CoinChartData {
     x: number;
-    y: string;
+    y: number;  // Use number type for precise calculation
 }
 
 const PriceChart: React.FC<PriceChartProps> = ({ id }) => {
@@ -46,7 +47,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ id }) => {
 
     const coinChartData: CoinChartData[] = data?.prices?.map((value: any) => ({
         x: value[0],
-        y: value[1].toFixed(2),
+        y: parseFloat(value[1].toFixed(8)), // Keep up to 8 decimal places for very small values
     }));
 
     const options: any = {
@@ -69,7 +70,8 @@ const PriceChart: React.FC<PriceChartProps> = ({ id }) => {
                 intersect: false, // Tooltip will show even if not directly over a point
                 callbacks: {
                     label: function (tooltipItem: any) {
-                        return `$${tooltipItem.raw}`; // Format tooltip value as currency
+                        const value = tooltipItem.raw;
+                        return `$${value.toFixed(8)}`; // Show value with up to 8 decimals
                     },
                 },
                 backgroundColor: "rgba(0, 0, 0, 0.7)", // Dark background for tooltip
@@ -91,6 +93,9 @@ const PriceChart: React.FC<PriceChartProps> = ({ id }) => {
             },
             y: {
                 ticks: {
+                    callback: function (value: number) {
+                        return value.toFixed(8); // Always show 8 decimal places on the y-axis
+                    },
                     color: "rgba(255, 255, 255, 0.7)", // White for y-axis labels
                 },
                 grid: {
@@ -148,47 +153,37 @@ const PriceChart: React.FC<PriceChartProps> = ({ id }) => {
     };
 
     return (
-        <div className="">
+        <div className="price-chart-container">
             <div className="flex gap-4 mb-4 h-8">
                 <button
                     onClick={() => setFilter("365")}
-                    className={`px-2 py-1 text-sm ${
-                        filter === "365" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"
-                    } rounded`}
+                    className={`px-2 py-1 text-sm ${filter === "365" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"} rounded`}
                 >
-                    1 Year
+                    1y
                 </button>
                 <button
                     onClick={() => setFilter("180")}
-                    className={`px-2 py-1 text-sm ${
-                        filter === "180" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"
-                    } rounded`}
+                    className={`px-2 py-1 text-sm ${filter === "180" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"} rounded`}
                 >
-                    6 Months
+                    6m
                 </button>
                 <button
                     onClick={() => setFilter("30")}
-                    className={`px-2 py-1 text-sm ${
-                        filter === "30" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"
-                    } rounded`}
+                    className={`px-2 py-1 text-sm ${filter === "30" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"} rounded`}
                 >
-                    1 Month
+                    1m
                 </button>
                 <button
                     onClick={() => setFilter("7")}
-                    className={`px-2 py-1 text-sm ${
-                        filter === "7" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"
-                    } rounded`}
+                    className={`px-2 py-1 text-sm ${filter === "7" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"} rounded`}
                 >
-                    1 Week
+                    1w
                 </button>
                 <button
                     onClick={() => setFilter("1")}
-                    className={`px-2 py-1 text-sm ${
-                        filter === "1" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"
-                    } rounded`}
+                    className={`px-2 py-1 text-sm ${filter === "1" ? "bg-zinc-800 border border-zinc-700" : "bg-zinc-900 border border-zinc-700"} rounded`}
                 >
-                    Today
+                    1d
                 </button>
             </div>
             <Line options={options} data={chartData} plugins={[verticalLinePlugin]} />

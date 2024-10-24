@@ -4,6 +4,8 @@ import { useGlobalStore } from "../../context/global.store";
 import { ICoinDetails } from "./types";
 import { BASE_URL } from "../../utils/keys";
 import Coin from "./Coin";
+import { HiOutlineViewGrid } from "react-icons/hi";
+import { FaList } from "react-icons/fa";
 
 const WishListTokens: React.FC = () => {
     const { address } = useAccount();
@@ -13,6 +15,7 @@ const WishListTokens: React.FC = () => {
     const [displayCount, setDisplayCount] = useState(25);
     const [wishlist, setWishlist] = useState<string[]>([]);
     const [showWishlistOnly, setShowWishlistOnly] = useState(false);
+    const [showInList, setShowInList] = useState(false);
 
     const fetchWishlist = useCallback(async () => {
         if (!address) {
@@ -53,20 +56,45 @@ const WishListTokens: React.FC = () => {
 
     return (
         <div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
                 <input
                     type="text"
-                    placeholder="Search coins..."
+                    placeholder="Search memecoins..."
+                    value={searchTerm}
                     onChange={(e) => {
                         setSearchTerm(e.target.value);
-                        setDisplayCount(25); // Reset display count when searching
                     }}
-                    className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg outline-none mb-4"
+                    className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg outline-none z-10"
                 />
+                <div className="flex items-center rounded-lg border-zinc-800 border">
+                    <button
+                        onClick={() => setShowInList(true)}
+                        className={`${showInList && "bg-zinc-700"} rounded-lg p-3`}
+                    >
+                        <FaList />
+                    </button>
+                    <button
+                        onClick={() => setShowInList(false)}
+                        className={`${!showInList && "bg-zinc-700"} rounded-lg p-3`}
+                    >
+                        <HiOutlineViewGrid />
+                    </button>
+                </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 hide_scrollbar">
+            <div
+                className={`grid ${
+                    showInList ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                } gap-2 hide_scrollbar mt-4`}
+            >
                 {displayedCoins.map((coin) => (
-                    <Coin key={coin.id} coin={coin} type={"buy"} selectedCoins={[]} handleCoinSelect={() => {}} />
+                    <Coin
+                        key={coin.id}
+                        coin={coin}
+                        type={"buy"}
+                        selectedCoins={[]}
+                        handleCoinSelect={() => {}}
+                        showInList={showInList}
+                    />
                 ))}
             </div>
             {displayedCoins.length < 0 &&

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import CoinbaseButton from "./CoinbaseButton";
 import AvatarIcon from "../shared/Avatar";
 import useClickOutside from "../../utils/hooks/useClickOutside";
 import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
@@ -8,15 +7,15 @@ import { shorten } from "../../utils/helper";
 import CopyButton from "../shared/CopyButton";
 import { LuLogOut } from "react-icons/lu";
 import { FaChartPie, FaWallet } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
-import WithdrawModal from "../WithdrawModal";
-import Portfolio from "../Portfolio";
+import WithdrawModal from "../modals/WithdrawModal";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { handleLogin } from "../../utils/apis/trackingApi";
 import Image from "next/image";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { useGlobalStore } from "../../context/global.store";
 import { useRebalanceStore } from "../../context/rebalance.store";
+import DepositModal from "../modals/DepositModal";
+import PortfolioModal from "../modals/PortfolioModal";
 
 const Header: React.FC = () => {
     const { showCart, setShowCart } = useGlobalStore();
@@ -164,46 +163,7 @@ const Header: React.FC = () => {
                 </div>
             </div>
 
-            {/* Modal components (kept the same) */}
-            {showDepositModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[100]">
-                    <div className="bg-B1 p-3 sm:p-6 rounded-lg max-w-2xl w-full relative m-3">
-                        <button
-                            onClick={() => setShowDepositModal(false)}
-                            className="absolute top-3 right-4 text-zinc-400 hover:text-white"
-                        >
-                            ✕
-                        </button>
-                        <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">Deposit USDC</h3>
-                        <p className="mb-2 sm:mb-4 text-zinc-300 text-sm sm:text-base">
-                            Please send USDC to the following address:
-                        </p>
-                        <div className="bg-zinc-800 p-3 rounded mb-4">
-                            <div className="flex justify-between items-center">
-                                <span className="text-white text-sm sm:text-base font-mono break-all">{address}</span>
-                                <div className="flex items-center ml-2">
-                                    <CopyButton
-                                        copy={address}
-                                        className="text-lg ml-2 text-cyan-500 hover:text-cyan-600"
-                                    />
-                                    <a
-                                        href={`https://basescan.org/address/${address}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-lg ml-2 text-cyan-500 hover:text-cyan-600"
-                                    >
-                                        <FiExternalLink />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <p className="text-xs sm:text-sm text-yellow-500 mb-4">
-                            Note: Please ensure you are sending USDC on the Base network. USDC Contract:
-                            0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-                        </p>
-                    </div>
-                </div>
-            )}
+            {showDepositModal && <DepositModal onClose={() => setShowDepositModal(false)} />}
             {showWithdrawModal && (
                 <WithdrawModal
                     isOpen={showWithdrawModal}
@@ -211,7 +171,7 @@ const Header: React.FC = () => {
                     userAddress={address || ""}
                 />
             )}
-            {showPortfolio && <Portfolio isOpen={showPortfolio} onClose={() => setShowPortfolio(false)} />}
+            {showPortfolio && <PortfolioModal isOpen={showPortfolio} onClose={() => setShowPortfolio(false)} />}
         </header>
     );
 };

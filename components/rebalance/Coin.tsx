@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { FaCheckCircle } from "react-icons/fa";
-import FormatDecimalValue from "../base/FormatDecimalValue";
+import FormatDecimalValue from "../shared/FormatDecimalValue";
 import { currencyFormat, formatPercentage } from "../../utils/helper";
 import SingleCoin from "../coin/SingleCoin";
 import { CoinProps } from "./types";
@@ -13,7 +13,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { IoBookmark } from "react-icons/io5";
 import { DataState } from "../../context/dataProvider";
 
-const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type }) => {
+const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type, showInList }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
     const { wishlist, setWishlist } = DataState();
@@ -78,7 +78,6 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
         if (!toggleWishlist) return;
         toggleWishlist(coin.id);
     };
-
     return (
         <div
             onClick={handleSelectToken}
@@ -86,29 +85,31 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                 isSelected && "bg-cyan-900 bg-opacity-15"
             }`}
         >
-            <div className="absolute top-2 right-2 flex gap-2 text-center py-1 items-center">
-                <button onClick={handleToggleWishlist} className="w-5 h-5 text-xl">
-                    {isWishlisted ? (
-                        <IoBookmark className="text-cyan-500" />
-                    ) : (
-                        <IoBookmarkOutline className="hover:text-cyan-500" />
-                    )}
-                </button>
+            {!showInList && (
+                <div className="absolute top-2 right-2 flex gap-2 text-center py-1 items-center">
+                    <button onClick={handleToggleWishlist} className="w-5 h-5 text-xl">
+                        {isWishlisted ? (
+                            <IoBookmark className="text-cyan-500" />
+                        ) : (
+                            <IoBookmarkOutline className="hover:text-cyan-500" />
+                        )}
+                    </button>
 
-                {/* Show green tick if token is selected */}
-                {isSelected ? (
-                    <FaCheckCircle className="text-green-500 w-5 h-full" />
-                ) : (
-                    <div className="border hover:border-cyan-500 rounded-full w-5 h-5"></div>
-                )}
-            </div>
+                    {/* Show green tick if token is selected */}
+                    {isSelected ? (
+                        <FaCheckCircle className="text-green-500 w-5 h-full" />
+                    ) : (
+                        <div className="border hover:border-cyan-500 rounded-full w-5 h-5"></div>
+                    )}
+                </div>
+            )}
             <div className="flex justify-between">
-                <div className="flex flex-col mb-2">
-                    <div className="flex items-center gap-2 mb-2">
+                <div className={`flex ${showInList ? "flex-row items-center gap-6" : "flex-col gap-2"}`}>
+                    <div className="flex items-center gap-2 w-36">
                         <img src={coin.image} className="w-10 h-10 rounded-full" alt={coin.name} />
                         <span className="text-xl font-semibold text-zinc-100 capitalize">{coin.symbol}</span>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className={`flex items-center ${showInList ? "gap-7" : "gap-3"}`}>
                         <span className="relative text-2xl font-medium inline-flex items-center gap-1">
                             ${coin.current_price && FormatDecimalValue(coin.current_price)}
                         </span>
@@ -133,21 +134,51 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                         </span>
                     )}
                 </div>
+                {showInList && (
+                    <div className="flex gap-3 items-center">
+                        <div className="flex gap-2 text-center py-1 items-center">
+                            <button onClick={handleToggleWishlist} className="w-5 h-5 text-xl">
+                                {isWishlisted ? (
+                                    <IoBookmark className="text-cyan-500" />
+                                ) : (
+                                    <IoBookmarkOutline className="hover:text-cyan-500" />
+                                )}
+                            </button>
+
+                            {/* Show green tick if token is selected */}
+                            {isSelected ? (
+                                <FaCheckCircle className="text-green-500 w-5 h-full" />
+                            ) : (
+                                <div className="border hover:border-cyan-500 rounded-full w-5 h-5"></div>
+                            )}
+                        </div>
+                        <button
+                            onClick={(event) => toggleExpand(coin.id, event)}
+                            className={`transform  bg-zinc-800  rounded-lg duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${
+                                expandedCoin === coin.id ? "rotate-180" : "rotate-0"
+                            }`}
+                        >
+                            <FiChevronDown />
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Button to expand coin details */}
-            <button
-                onClick={(event) => toggleExpand(coin.id, event)}
-                className={`transform duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${
-                    expandedCoin === coin.id ? "rotate-180" : "rotate-0"
-                }`}
-            >
-                <FiChevronDown />
-            </button>
+            {!showInList && (
+                <button
+                    onClick={(event) => toggleExpand(coin.id, event)}
+                    className={`transform duration-300 flex items-center justify-center mt-1 p-1 text-lg text-zinc-400 ${
+                        expandedCoin === coin.id ? "rotate-180" : "rotate-0"
+                    }`}
+                >
+                    <FiChevronDown />
+                </button>
+            )}
 
             {/* Expanded coin details */}
             {expandedCoin === coin.id && (
-                <table className="w-full border-t border-zinc-700">
+                <table className="w-full border-t border-zinc-700 mt-4">
                     <tbody className="grid grid-cols-1 divide-y divide-zinc-700 dark:divide-moon-700">
                         <tr className="flex justify-between py-3">
                             <th className="text-left text-zinc-200 dark:text-moon-200 font-medium text-sm leading-5">

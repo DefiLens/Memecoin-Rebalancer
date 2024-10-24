@@ -1,17 +1,17 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
 import Image from "next/image";
-import { ICoinDetails } from "./rebalance/types";
-import { DataState } from "../context/dataProvider";
-import Loader from "./shared/Loader";
+import { ICoinDetails } from "../rebalance/types";
+import { DataState } from "../../context/dataProvider";
+import Loader from "../shared/Loader";
 
 // Portfolio Component
-interface PortfolioProps {
+interface PortfolioModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
+const PortfolioModal: React.FC<PortfolioModalProps> = ({ isOpen, onClose }) => {
     const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
     if (!isOpen) return null;
     return (
@@ -81,4 +81,4 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default Portfolio;
+export default PortfolioModal;

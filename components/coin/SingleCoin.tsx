@@ -5,8 +5,8 @@ import { RxCross1 } from "react-icons/rx";
 import { currencyFormat, formatPercentage, numberFormat } from "../../utils/helper";
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
-import FormatDecimalValue from "../base/FormatDecimalValue";
 import { ICoinDetails } from "../rebalance/types";
+import FormatDecimalValue from "../shared/FormatDecimalValue";
 
 interface SingleCoinProps {
     isOpen: boolean;
