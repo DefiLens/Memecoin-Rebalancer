@@ -13,7 +13,8 @@ import useClickOutside from "../../utils/hooks/useClickOutside";
 const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
     const [activeTab, setActiveTab] = useState("buy");
     const { activeFilter, setActiveFilter } = useGlobalStore(); // Use Zustand setter for active filter
-    const [showFilters, setShowFilters] = useState(true); // Control filter visibility
+    const [activeMobileFilter, setActiveMobileFilter] = useState<boolean>(false); // Use Zustand setter for active filter
+    const [showFilters, setShowFilters] = useState(false); // Control filter visibility
 
     // Filter options
     const filterOptions = [
@@ -29,7 +30,7 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
 
     const filterRef = useRef(null);
     useClickOutside([filterRef], () => {
-        // setShowFilters(false);
+        setActiveMobileFilter(false);
     });
 
     return (
@@ -67,7 +68,7 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
                 </div>
 
                 {/* Toggle Filters Button */}
-                {/* <div className="hidden sm:flex items-center">
+                <div className="hidden sm:flex items-center">
                     <button
                         onClick={() => setShowFilters(!showFilters)} // Toggle filter visibility
                         className="bg-zinc-800 border border-zinc-700 text-zinc-300 px-4 py-2 rounded-lg hover:bg-opacity-70"
@@ -84,18 +85,18 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
                             </span>
                         )}
                     </button>
-                </div> */}
-                {/* <div className="inline sm:hidden relative">
+                </div>
+                <div className="inline sm:hidden relative">
                     <button
-                        onClick={() => setShowFilters(!showFilters)} // Toggle filter visibility
+                        onClick={() => setActiveMobileFilter(!activeMobileFilter)} // Toggle filter visibility
                         className="bg-zinc-800 border border-zinc-700 text-zinc-300 p-1.5 rounded-md hover:bg-opacity-70"
                     >
-                        <MdOutlineFilterList />
+                        {!activeMobileFilter ? <MdOutlineFilterList /> : <MdOutlineFilterListOff />}
                     </button>
-                    {showFilters && (
+                    {activeMobileFilter && (
                         <div
                             ref={filterRef}
-                            className="absolute top-10 -right-0 bg-zinc-900 p-2 rounded-lg z-20 flex items-center gap-2 whitespace-nowrap flex-wrap border border-zinc-700"
+                            className="absolute flex sm:hidden top-10 -right-0 bg-zinc-900 p-2 rounded-lg z-20 items-center gap-2 whitespace-nowrap flex-wrap border border-zinc-700"
                         >
                             {filterOptions.map((filter) => (
                                 <button
@@ -112,12 +113,12 @@ const MemeCoinGrid: React.FC<MemeCoinGridProps> = ({ resetSwapAmount }) => {
                             ))}
                         </div>
                     )}
-                </div> */}
+                </div>
             </div>
 
             {/* Conditionally Render Filters Section */}
             {showFilters && (
-                <div ref={filterRef} className="hidden sm:flex items-center gap-4 mt-4 whitespace-nowrap flex-wrap">
+                <div className="hidden sm:flex items-center gap-4 mt-4 whitespace-nowrap flex-wrap">
                     {filterOptions.map((filter) => (
                         <button
                             key={filter.value}

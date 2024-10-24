@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { USDC_ADDRESS, memeCoinData } from '../utils/constant';
+import { USDC_ADDRESS, memeCoinData } from '../../utils/constant';
 
 interface Token {
   id: string;

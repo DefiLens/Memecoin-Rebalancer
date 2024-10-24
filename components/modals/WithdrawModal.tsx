@@ -3,12 +3,12 @@ import { useBalance } from "wagmi";
 import { useCallsStatus, useSendCalls } from "wagmi/experimental";
 import { FiX } from "react-icons/fi";
 import { RiExternalLinkLine } from "react-icons/ri";
-import { USDC_ADDRESS, memeCoinData } from "../utils/constant";
-import { decreasePowerByDecimals } from "../utils/helper";
+import { USDC_ADDRESS, memeCoinData } from "../../utils/constant";
+import { decreasePowerByDecimals } from "../../utils/helper";
 import { toast } from "react-toastify";
-import Loader from "./shared/Loader";
-import Dropdown from "./Dropdown"; // Import custom Dropdown
-import { buildERC20TransferTransaction } from "../utils/erc20Utils";
+import Loader from "../shared/Loader";
+import Dropdown from "../shared/Dropdown"; // Import custom Dropdown
+import { buildERC20TransferTransaction } from "../../utils/erc20Utils";
 import { parseUnits } from "viem";
 
 interface WithdrawModalProps {

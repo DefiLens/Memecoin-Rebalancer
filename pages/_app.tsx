@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { config } from "../config/wagmi";
 import { Buffer } from "buffer";
 import { useState, useEffect } from "react";
-import PinEntry from "../components/PinEntry";
+import PinEntry from "../components/shared/PinEntry";
 import DataStore from "../context/dataStore";
 
 if (typeof window !== "undefined") {

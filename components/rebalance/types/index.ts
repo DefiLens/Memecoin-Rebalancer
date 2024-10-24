@@ -53,6 +53,7 @@ export interface CoinProps {
     type: string;
     wishlist?: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
     toggleWishlist?: (coinId: string) => Promise<void>;
+    showInList: boolean;
 }
 
 export interface MemeCoinGridProps {

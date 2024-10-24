@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import Image from "next/image";
-import { ICoinDetails } from "./rebalance/types";
-import { DataState } from "../context/dataProvider";
-import Loader from "./shared/Loader";
+import { ICoinDetails } from "../rebalance/types";
+import { DataState } from "../../context/dataProvider";
+import Loader from "../shared/Loader";
 import { useAccount } from "wagmi";
-import { useGlobalStore } from "../context/global.store";
+import { useGlobalStore } from "../../context/global.store";
 import Moralis from 'moralis';
 import { formatUnits } from "viem";
 import { toast } from "react-toastify";
 
 // Portfolio Component
-interface PortfolioProps {
+interface PortfolioModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
+const PortfolioModal: React.FC<PortfolioModalProps> = ({ isOpen, onClose }) => {
     // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
     const { address } = useAccount();
     const { allCoins } = useGlobalStore();
@@ -194,4 +194,4 @@ const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default Portfolio;
+export default PortfolioModal;

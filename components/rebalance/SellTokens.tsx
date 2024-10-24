@@ -8,6 +8,8 @@ import Moralis from 'moralis';
 import { formatUnits } from "viem";
 import { toast } from "react-toastify";
 import { DataState } from "../../context/dataProvider";
+import { HiOutlineViewGrid } from "react-icons/hi";
+import { FaList } from "react-icons/fa";
 
 const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount }) => {
     const { address } = useAccount();
@@ -21,6 +23,7 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
     const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
     const [hasInitialFetch, setHasInitialFetch] = useState<boolean>(false);
     // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
+    const [showInList, setShowInList] = useState(false);
 
     async function initializeMoralis() {
         if (!isMoralisInitialized) {
@@ -141,8 +144,12 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
                 className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 hide_scrollbar">
-                {tokenBalances.map(
+            <div
+                className={`grid ${
+                    showInList ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                } gap-2 hide_scrollbar`}
+            >
+                {displayedCoins.map(
                     (coin: ICoinDetails) =>
                         parseFloat(coin.balance || "0") > 0 && (
                             <Coin
@@ -151,6 +158,7 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
                                 selectedCoins={sellTokens}
                                 handleCoinSelect={toggleSellToken}
                                 type={"sell"}
+                                showInList={showInList}
                             />
                         )
                 )}

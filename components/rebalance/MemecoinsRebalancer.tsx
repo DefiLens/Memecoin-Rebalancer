@@ -251,20 +251,6 @@ const MemecoinsRebalancer: React.FC = () => {
                 };
             });
 
-            // const calls = [
-            //     {
-            //         to: USDC_ADDRESS,
-            //         data: approvalData,
-            //         value: BigInt(0),
-            //     },
-            //     ...sellApprove,
-            //     ...swapData.map((data: any) => ({
-            //         to: data.to,
-            //         data: data.calldata,
-            //         value: BigInt(data.value || 0),
-            //     })),
-            // ];
-
             // Combine approval and swap calls
             const calls = [...approvalCalls, ...sellApprove, ...swapCalls];
 
@@ -325,30 +311,6 @@ const MemecoinsRebalancer: React.FC = () => {
     };
 
     useEffect(() => {
-        // if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
-        //     const txHash = callsStatus.receipts[0].transactionHash;
-
-        //     await saveTxn({
-        //         userAddress: address,
-        //         hash: txHash,
-        //         amount: amount,
-        //         selectedCoins: buyTokens,
-        //         percentages: percentages,
-        //     });
-        //     toast.success(
-        //         <a
-        //             href={`https://basescan.org/tx/${txHash}`}
-        //             target="_blank"
-        //             rel="noopener noreferrer"
-        //             className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
-        //         >
-        //             Success: {txHash.substring(0, 5)}...
-        //             {txHash.substring(txHash.length - 5, txHash.length)}
-        //             <RiExternalLinkLine className="text-base" />
-        //         </a>
-        //     );
-        //     resetState();
-        // }
         const handleTransactionSave = async () => {
             if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
                 const txHash = callsStatus.receipts[0].transactionHash;
@@ -443,7 +405,7 @@ const MemecoinsRebalancer: React.FC = () => {
                 <div
                     className={`${
                         showCart ? "block" : "hidden sm:flex"
-                    } sm:static fixed top-[60px] left-0 p-5 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border-t-0 border-zinc-800`}
+                    } sm:static fixed top-[60px] left-0 p-5 sm:p-0 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border-t-0 border-zinc-800`}
                 >
                     <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
 
@@ -551,7 +513,7 @@ const MemecoinsRebalancer: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="w-full p-4 bg-zinc-900 rounded-lg">
+                    <div className="w-full rounded-lg">
                         {/* Parent container with button, note, and icons */}
                         <div className="bg-zinc-800 rounded-lg p-3">
                             {/* Main Button and Icons in the Same Line */}
@@ -611,7 +573,7 @@ const MemecoinsRebalancer: React.FC = () => {
 
                                 {/* Trash and Refresh Icons */}
                                 <div className="flex items-center gap-2 ml-4">
-                                    {buyTokens.length > 0 && (
+                                    {(buyTokens.length > 0 || sellTokens.length > 0) && (
                                         <button
                                             onClick={resetState}
                                             className="p-2 hover:bg-zinc-700 border border-transparent hover:border hover:border-zinc-600 text-white rounded-lg transition-all duration-300"
@@ -619,14 +581,14 @@ const MemecoinsRebalancer: React.FC = () => {
                                             <FiTrash2 />
                                         </button>
                                     )}
-                                    {buyTokens.length > 0 && (
-                                    <button
-                                        onClick={handleProceed}
-                                        className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
-                                    >
-                                        <FiRefreshCw />
-                                    </button>
-                                )}
+                                    {(buyTokens.length > 0 || sellTokens.length > 0) && (
+                                        <button
+                                            onClick={handleProceed}
+                                            className="p-2 hover:bg-zinc-800 border border-transparent hover:border hover:border-zinc-700 text-white rounded transition-all duration-300"
+                                        >
+                                            <FiRefreshCw />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
 
