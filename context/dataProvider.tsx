@@ -50,117 +50,88 @@ const DataProvider = ({ children }: any) => {
     }, [fetchCoins]);
 
     //Tokens with balances
-    const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
-    const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
-    const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
-    const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
+    // const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
+    // const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
+    // const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
+    // const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
 
-    async function initializeMoralis() {
-        if (!isMoralisInitialized) {
-            try {
-                await Moralis.start({
-                    apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY
-                });
-                setIsMoralisInitialized(true);
-            } catch (error) {
-                if (!(error as Error).message.includes('Modules are started already')) {
-                    throw error;
-                }
-            }
-        }
-    }
+    // async function initializeMoralis() {
+    //     if (!isMoralisInitialized) {
+    //         try {
+    //             await Moralis.start({
+    //                 apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY
+    //             });
+    //             setIsMoralisInitialized(true);
+    //         } catch (error) {
+    //             if (!(error as Error).message.includes('Modules are started already')) {
+    //                 throw error;
+    //             }
+    //         }
+    //     }
+    // }
 
-    const fetchBalances = useCallback(async () => {
-        if (!address) return;
-        setIsTokenBalanceLoading(true);
-        try {
-            // const multicallContracts = allCoins.map((token) => {
-            //     const contractAddress = token.contract_address as Address;
-            //     return {
-            //         address: contractAddress,
-            //         abi: erc20Abi,
-            //         functionName: "balanceOf",
-            //         args: [address],
-            //     };
-            // });
+    // const fetchBalances = useCallback(async () => {
+    //     if (!address) return;
+    //     setIsTokenBalanceLoading(true);
+    //     try {
 
-            // const results = await publicClient.multicall({
-            //     contracts: multicallContracts,
-            // });
+    //         // alert("address" +address)
+    //         await initializeMoralis();
+    //         const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
+    //             "chain": "0x2105",
+    //             "address": address //"0xb274381A8960fDd2c6c58Ecc6A6407f5e70A711C"
+    //         });
 
-            // alert("address" +address)
-            await initializeMoralis();
-            const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
-                "chain": "0x2105",
-                "address": address //"0xb274381A8960fDd2c6c58Ecc6A6407f5e70A711C"
-            });
+    //         if (!response || !response.jsonResponse) {
+    //             console.error("Invalid response from Moralis");
+    //             return;
+    //         }
 
-            if (!response || !response.jsonResponse) {
-                console.error("Invalid response from Moralis");
-                return;
-            }
-
-
-            let totalValue = 0;
-            const balances = response.jsonResponse
-                .map((result: any) => {
-                    // Only process if balance is greater than 0
-                    if (BigInt(result.balance) > 0) {
-                        // Find the corresponding token using `.find` and clean conditional logic
-                        const token = allCoins.find(
-                            (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
-                        );
+    //         let totalValue = 0;
+    //         const balances = response.jsonResponse
+    //             .map((result: any) => {
+    //                 if (BigInt(result.balance) > 0) {
+    //                     const token = allCoins.find(
+    //                         (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
+    //                     );    
+    //                     if (!token) {
+    //                         console.error(`Token not found for address: ${result.token_address}`);
+    //                         return null;
+    //                     }
+    //                     const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
+    //                     const price = token.current_price || 0;
+    //                     const value = parseFloat(balance) * price;
+    //                     totalValue += value;
+    //                         return {
+    //                         ...token,
+    //                         balance: balance.toString(),
+    //                         value: value.toFixed(2),
+    //                     };
+    //                 } else {
+    //                     console.warn(`Zero balance for token address: ${result.token_address}`);
+    //                     return null;
+    //                 }
+    //             })
+    //             .filter((token: any) => token !== null); // Filter out any null values
     
-                        if (!token) {
-                            console.error(`Token not found for address: ${result.token_address}`);
-                            return null;
-                        }
+    //         // console.log("Final Balances:", balances);
+    //         // console.log("Total Portfolio Value:", totalValue.toFixed(2));
 
-                        // Format the balance based on the decimals of the token
-                        const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
-                        // console.log(`Formatted balance for ${token.name}:`, balance.toString());
-    
-                        // Get the price from the token data in allCoins
-                        const price = token.current_price || 0;
-    
-                        // Calculate the value
-                        const value = parseFloat(balance) * price;
-                        // console.log(`Calculated value for ${token.name}:`, value.toString());
-    
-                        // Accumulate the total value
-                        totalValue += value;
-    
-                        // Return the token with balance and calculated value
-                        return {
-                            ...token,
-                            balance: balance.toString(),
-                            value: value.toFixed(2),
-                        };
-                    } else {
-                        console.warn(`Zero balance for token address: ${result.token_address}`);
-                        return null;
-                    }
-                })
-                .filter((token: any) => token !== null); // Filter out any null values
-    
-            // console.log("Final Balances:", balances);
-            // console.log("Total Portfolio Value:", totalValue.toFixed(2));
+    //         setTokenBalances(balances);
+    //         setTotalPortfolioValue(totalValue);
+    //     } catch (error) {
+    //         console.error("Error fetching balances:", error);
+    //         toast.error("Failed to fetch token balances");
+    //     } finally {
+    //         setIsTokenBalanceLoading(false);
+    //     }
+    // }, [address, allCoins]);
 
-            setTokenBalances(balances);
-            setTotalPortfolioValue(totalValue);
-        } catch (error) {
-            console.error("Error fetching balances:", error);
-            toast.error("Failed to fetch token balances");
-        } finally {
-            setIsTokenBalanceLoading(false);
-        }
-    }, [address, allCoins]);
-
-    useEffect(() => {
-        if (address && allCoins.length > 0) {
-            fetchBalances();
-        }
-    }, [address, fetchBalances]);
+    // useEffect(() => {
+    //     if (address && allCoins.length > 0) {
+    //         fetchBalances();
+    //     }
+    // }, [address, fetchBalances]);
 
     const [wishlist, setWishlist] = useState<string[]>([]);
 
@@ -190,9 +161,9 @@ const DataProvider = ({ children }: any) => {
     return (
         <DataContext.Provider
             value={{
-                isTokenBalanceLoading,
-                tokenBalances,
-                totalPortfolioValue,
+                // isTokenBalanceLoading,
+                // tokenBalances,
+                // totalPortfolioValue,
                 wishlist,
                 setWishlist
             }}

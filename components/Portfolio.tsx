@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import Image from "next/image";
 import { ICoinDetails } from "./rebalance/types";
 import { DataState } from "../context/dataProvider";
 import Loader from "./shared/Loader";
+import { useAccount } from "wagmi";
+import { useGlobalStore } from "../context/global.store";
+import Moralis from 'moralis';
+import { formatUnits } from "viem";
+import { toast } from "react-toastify";
 
 // Portfolio Component
 interface PortfolioProps {
@@ -12,7 +17,109 @@ interface PortfolioProps {
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({ isOpen, onClose }) => {
-    const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
+    // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
+    const { address } = useAccount();
+    const { allCoins } = useGlobalStore();
+    const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
+    const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
+    const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
+    const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
+    const [hasInitialFetch, setHasInitialFetch] = useState<boolean>(false);
+
+    async function initializeMoralis() {
+        if (!isMoralisInitialized) {
+            try {
+                await Moralis.start({
+                    apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY
+                });
+                setIsMoralisInitialized(true);
+            } catch (error) {
+                if (!(error as Error).message.includes('Modules are started already')) {
+                    throw error;
+                }
+            }
+        }
+    }
+
+    const fetchBalances = useCallback(async () => {
+        if (!address) return;
+        setIsTokenBalanceLoading(true);
+        try {
+            await initializeMoralis();
+            const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
+                "chain": "0x2105",
+                "address": address
+            });
+
+            if (!response || !response.jsonResponse) {
+                console.error("Invalid response from Moralis");
+                return;
+            }
+
+            let totalValue = 0;
+            const balances = response.jsonResponse
+                .map((result: any) => {
+                    if (BigInt(result.balance) > 0) {
+                        const token = allCoins.find(
+                            (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
+                        );    
+                        if (!token) {
+                            console.error(`Token not found for address: ${result.token_address}`);
+                            return null;
+                        }
+                        const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
+                        const price = token.current_price || 0;
+                        const value = parseFloat(balance) * price;
+                        totalValue += value;
+                        return {
+                            ...token,
+                            balance: balance.toString(),
+                            value: value.toFixed(2),
+                        };
+                    } else {
+                        console.warn(`Zero balance for token address: ${result.token_address}`);
+                        return null;
+                    }
+                })
+                .filter((token: any) => token !== null);
+
+            setTokenBalances(balances);
+            setTotalPortfolioValue(totalValue);
+            
+            // Save to localStorage
+            localStorage.setItem('lastFetchTimestamp', Date.now().toString());
+            setHasInitialFetch(true);
+        } catch (error) {
+            console.error("Error fetching balances:", error);
+            toast.error("Failed to fetch token balances");
+        } finally {
+            setIsTokenBalanceLoading(false);
+        }
+    }, [address, allCoins]);
+
+    useEffect(() => {
+        // Check if this is a fresh page load
+        const isPageRefresh = !localStorage.getItem('lastFetchTimestamp');
+        const shouldFetch = address && 
+                          allCoins.length > 0 && 
+                          (!hasInitialFetch || isPageRefresh);
+
+        if (shouldFetch) {
+            fetchBalances();
+        }
+
+        // Cleanup function to handle page unload
+        return () => {
+            if (typeof window !== 'undefined') {
+                const unloadCallback = () => {
+                    localStorage.removeItem('lastFetchTimestamp');
+                };
+                window.addEventListener('beforeunload', unloadCallback);
+                return () => window.removeEventListener('beforeunload', unloadCallback);
+            }
+        };
+    }, [address, allCoins, fetchBalances, hasInitialFetch]);
+
     if (!isOpen) return null;
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-2">
