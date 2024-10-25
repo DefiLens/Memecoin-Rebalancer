@@ -26,6 +26,34 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ isOpen, onClose, userAddr
 
     const { sendCallsAsync, data: callsId, status: sendCallsStatus } = useSendCalls();
     const { data: callsStatus } = useCallsStatus({ id: callsId as string });
+
+    useEffect(() => {
+        const handleTransactionSave = async () => {
+            if (callsStatus?.status === "CONFIRMED" && callsStatus.receipts && callsStatus.receipts.length > 0) {
+                const txHash = callsStatus.receipts[0].transactionHash;
+                setIsLoading(false)
+                try {
+                    toast.success(
+                        <a
+                            href={`https://basescan.org/tx/${txHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-base font-light tracking-wide flex items-center gap-2 hover:text-cyan-400 transition-all duration-200"
+                        >
+                            Sent: {txHash.substring(0, 5)}...
+                            {txHash.substring(txHash.length - 5, txHash.length)}
+                            <RiExternalLinkLine className="text-base" />
+                        </a>
+                    );
+                } catch (error) {
+                    console.error("Failed to save transaction or reset state:", error);
+                }
+            }
+        };
+
+        handleTransactionSave();
+    }, [callsStatus]);
+
     const { data: balance } = useBalance({
         address: userAddress as `0x${string}`,
         token: selectedToken as `0x${string}`,
