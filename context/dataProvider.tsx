@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import BigNumber from "bignumber.js";
 import { ICoinDetails } from "../components/rebalance/types";
 import { BASE_URL } from "../utils/keys";
-import { erc20Abi, memeCoinData, publicClient } from "../utils/constant";
+import { memeCoinData } from "../utils/constant";
 import { toast } from "react-toastify";
 import { useGlobalStore } from "./global.store"; // Zustand store
 import { useAccount } from "wagmi";

@@ -42,9 +42,9 @@ export const meta = {
         "Effortlessly manage your memecoin portfolio with DefiLens Memecoin Rebalancer. Batch buy across chains, enjoy gasless trading, automate trades with set conditions, and stay updated on the latest trends - all without fees.",
     keywords:
         "defi, base, acccount abstraction, smart account, trading, batching, rebalance, Memecoin, Portfolio management, Gasless trading, Automated trades, Batch buying, Crypto trends, DefiLens, Multi-chain support, Trading without fees, Market updates",
-    url: "https://defilens.tech",
-    image: "https://defilens.tech/twitter-cover.png",
-    app: "https://app.defilens.tech/",
+    url: "https://memes.defilens.tech",
+    image: "/metacover.png",
+    app: "https://memes.defilens.tech/",
     SITE_NAME: "defilens.tech",
     APP_NAME: "DefiLens",
     username: "@DefiLensTech",
@@ -52,8 +52,6 @@ export const meta = {
 };
 
 import meme_coin_details from './meme_coin_details.json';
-import { createPublicClient, http, parseAbi } from "viem";
-import { base } from "viem/chains";
 
 interface IMemeCoinData {
     id: string;
@@ -75,13 +73,3 @@ interface IMemeCoinData {
 }
 
 export const memeCoinData: IMemeCoinData[] = meme_coin_details as IMemeCoinData[];
-
-export const erc20Abi = parseAbi([
-    "function balanceOf(address owner) view returns (uint256)",
-]);
-
-export const publicClient = createPublicClient({
-    chain: base,
-    transport: http(),
-  });
-  
