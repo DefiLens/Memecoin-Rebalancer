@@ -45,7 +45,7 @@ export const meta = {
     url: "https://memes.defilens.tech",
     image: "https://memes.defilens.tech/metacover.png",
     app: "https://memes.defilens.tech/",
-    SITE_NAME: "defilens.tech",
+    SITE_NAME: "https://memes.defilens.tech/",
     APP_NAME: "DefiLens",
     username: "@DefiLensTech",
     email: "contact@defilens.com",
