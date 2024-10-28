@@ -37,13 +37,13 @@ export const socialHandles = [
 ];
 
 export const meta = {
-    title: "Memecoins Rebalancer blurb",
+    title: "Buy New Memecoins Instantly | Batch Trading | Base & Solana | Zero Gas",
     description:
         "Effortlessly manage your memecoin portfolio with DefiLens Memecoin Rebalancer. Batch buy across chains, enjoy gasless trading, automate trades with set conditions, and stay updated on the latest trends - all without fees.",
     keywords:
         "defi, base, acccount abstraction, smart account, trading, batching, rebalance, Memecoin, Portfolio management, Gasless trading, Automated trades, Batch buying, Crypto trends, DefiLens, Multi-chain support, Trading without fees, Market updates",
     url: "https://memes.defilens.tech",
-    image: "/metacover.png",
+    image: "https://memes.defilens.tech/metacover.png",
     app: "https://memes.defilens.tech/",
     SITE_NAME: "defilens.tech",
     APP_NAME: "DefiLens",
