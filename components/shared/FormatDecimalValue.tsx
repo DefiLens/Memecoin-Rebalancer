@@ -23,6 +23,6 @@ function FormatDecimalValue(value: number): JSX.Element {
   }
 
   // Handle cases where there are less than 5 leading zeros (if any) or none at all
-  return <span>{value.toFixed(6)}</span>; // Adjust precision as necessary
+  return <span>{value.toFixed(8)}</span>; // Adjust precision as necessary
 }
 export default FormatDecimalValue;
