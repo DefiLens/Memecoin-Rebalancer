@@ -115,6 +115,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     recipient: address,
                     decimalsIn: 6,
                     decimalsOut: coin.decimal_place,
+                    currentPrice: coin.current_price.toString()
                 })),
                 ...sellTokens.map((coin) => ({
                     tokenIn: coin.contract_address,
@@ -123,6 +124,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     recipient: address,
                     decimalsIn: coin.decimal_place,
                     decimalsOut: 6,
+                    currentPrice: coin.current_price.toString()
                 })),
             ];
 
@@ -141,7 +143,7 @@ const MemecoinsRebalancer: React.FC = () => {
             }
 
             const data = await response.json();
-            console.log(data);
+            console.log("data: ", data);
 
             // Create a new amounts object to store amountIn and amountOut for each token.
             const amounts: { [key: string]: { amountIn: string; amountOut: string } } = {};
