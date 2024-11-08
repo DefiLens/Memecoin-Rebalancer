@@ -45,7 +45,7 @@ const DataProvider = ({ children }: any) => {
 
     useEffect(() => {
         fetchCoins();
-        const intervalId = setInterval(fetchCoins, 1000); // Fetch every 60 seconds
+        const intervalId = setInterval(fetchCoins, 2000); // Fetch every 60 seconds
         return () => clearInterval(intervalId);
     }, [fetchCoins]);
 
