@@ -53,7 +53,7 @@ const Header: React.FC = () => {
     }, [isConnected, address]);
 
     return (
-        <header className="bg-B1 h-[60px] flex items-center">
+        <header className="bg-B1 h-[60px] flex items-center border-b border-zinc-700">
             <div className="w-full flex justify-between items-center px-4">
                 {" "}
                 {/* Removed 'container mx-auto' */}
@@ -77,9 +77,12 @@ const Header: React.FC = () => {
                     </button>
                     <button
                         onClick={() => setShowCart(!showCart)}
+                        // className={`${
+                        //     showCart ? "bg-cyan-800" : "bg-zinc-800"
+                        // } inline sm:hidden p-2 border border-zinc-700 rounded-xl hover:bg-opacity-70 transition-all duration-200 relative`}
                         className={`${
                             showCart ? "bg-cyan-800" : "bg-zinc-800"
-                        } inline sm:hidden p-2 border border-zinc-700 rounded-xl hover:bg-opacity-70 transition-all duration-200 relative`}
+                        } inline p-2 border border-zinc-700 rounded-xl hover:bg-opacity-70 transition-all duration-200 relative`}
                     >
                         {buyTokens.length + sellTokens.length > 0 && (
                             <div className="absolute -top-1 -right-1 bg-cyan-600 h-4 w-4 rounded-full text-[10px] flex items-center justify-center">

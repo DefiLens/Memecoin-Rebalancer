@@ -29,6 +29,7 @@ import {
 } from "react-icons/fa";
 import { useGlobalStore } from "../../context/global.store";
 bg.config({ DECIMAL_PLACES: 20 });
+import { RxCross1 } from "react-icons/rx";
 
 export interface ISwapData {
     amountIn: string;
@@ -115,7 +116,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     recipient: address,
                     decimalsIn: 6,
                     decimalsOut: coin.decimal_place,
-                    currentPrice: coin.current_price.toString()
+                    currentPrice: coin.current_price.toString(),
                 })),
                 ...sellTokens.map((coin) => ({
                     tokenIn: coin.contract_address,
@@ -124,7 +125,7 @@ const MemecoinsRebalancer: React.FC = () => {
                     recipient: address,
                     decimalsIn: coin.decimal_place,
                     decimalsOut: 6,
-                    currentPrice: coin.current_price.toString()
+                    currentPrice: coin.current_price.toString(),
                 })),
             ];
 
@@ -400,17 +401,38 @@ const MemecoinsRebalancer: React.FC = () => {
     return (
         <>
             <div className="flex flex-1 bg-B1 p-4 rounded-lg overflow-hidden">
-                <div className="w-full sm:w-8/12 sm:pr-4 overflow-auto hide_scrollbar h-full">
+                {/* <div className="w-full sm:w-8/12 sm:pr-4 overflow-auto hide_scrollbar h-full">
+                    <MemeCoinGrid resetSwapAmount={resetSwapAmount} />
+                </div> */}
+                <div className="w-full sm:pr-4 overflow-auto hide_scrollbar h-full">
                     <MemeCoinGrid resetSwapAmount={resetSwapAmount} />
                 </div>
 
-                <div
+                {/* <div
                     className={`${
                         showCart ? "block" : "hidden sm:flex"
-                    } sm:static fixed top-[60px] left-0 p-5 sm:p-0 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border-t-0 border-zinc-800`}
+                    } sm:static fixed top-[60px] left-0 p-5 sm:p-0 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:h-full sm:w-4/12 sm:pl-4 flex flex-col gap-2 sm:mr-2 z-[10] border-t sm:border-l sm:border;.-t-0 border-zinc-800`}
+                > */}
+                <div
+                    onClick={() => setShowCart(false)}
+                    className={`${
+                        showCart ? "block" : "hidden"
+                    } w-screen h-screen fixed left-0 top-0 z-[9]`}
+                ></div>
+                <div
+                    className={`${
+                        showCart ? "block" : "hidden"
+                    } fixed top-[60px] right-0 p-5 overflow-hidden bg-B1 w-screen h-[calc(100vh-60px)] sm:w-4/12 flex flex-col gap-2 z-[10] shadow-2xl shadow-zinc-700`}
                 >
-                    <h2 className="text-xl font-bold mb-4 text-white">Rebalance Portfolio</h2>
-
+                    <div className="flex items-center justify-between gap-3">
+                        <h2 className="text-xl font-bold mt-2 mb-4 text-white">Rebalance Portfolio</h2>
+                        <button
+                            onClick={() => setShowCart(!showCart)}
+                            className="bg-zinc-800 hover:bg-zinc-700 transition-all duration-200 ease-linear p-1.5 rounded-md text-sm"
+                        >
+                            <RxCross1 />
+                        </button>
+                    </div>
                     <div className="flex-grow overflow-y-auto hide_scrollbar">
                         {/* Buy Tokens Section */}
                         <div className="border border-zinc-700 p-3 rounded-xl bg-opacity-50 mb-3">
