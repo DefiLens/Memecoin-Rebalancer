@@ -25,6 +25,12 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
     // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
     const [showInList, setShowInList] = useState(false);
 
+    displayedCoins.sort((a, b) => {
+        const aValue = a.balance && a.current_price ? Number(a.balance) * a.current_price : 0;
+        const bValue = b.balance && b.current_price ? Number(b.balance) * b.current_price : 0;
+        return bValue - aValue; // Sort in descending order (highest value first)
+    });
+
     async function initializeMoralis() {
         if (!isMoralisInitialized) {
             try {

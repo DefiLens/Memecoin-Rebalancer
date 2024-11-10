@@ -16,8 +16,8 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [expandedCoin, setExpandedCoin] = useState<string | null>(null);
     const { wishlist, setWishlist } = DataState();
-    const [priceBlink, setPriceBlink] = useState(false);
-    const [percentageBlink, setPercentageBlink] = useState(false);
+    const [priceShakeFadeScale, setPriceShakeFadeScale] = useState(false);
+    const [percentageShakeFadeScale, setPercentageShakeFadeScale] = useState(false);
     const { address } = useAccount();
 
     const toggleExpand = (coinId: string, event: React.MouseEvent) => {
@@ -79,19 +79,23 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
         toggleWishlist(coin.id);
     };
 
-    // Trigger the 4-second blink effect on price change
+    // Trigger the 3.5-second shake, fade, and scale effect on price change
     useEffect(() => {
-        setPriceBlink(true);
-        const timeout = setTimeout(() => setPriceBlink(false), 4000); // 4 seconds
+        setPriceShakeFadeScale(true);
+        const timeout = setTimeout(() => setPriceShakeFadeScale(false), 3500); // 3.5 seconds
         return () => clearTimeout(timeout);
     }, [coin.current_price]);
 
-    // Trigger the 4-second blink effect on percentage change
+    // Trigger the 3.5-second shake, fade, and scale effect on percentage change
     useEffect(() => {
-        setPercentageBlink(true);
-        const timeout = setTimeout(() => setPercentageBlink(false), 4000); // 4 seconds
+        setPercentageShakeFadeScale(true);
+        const timeout = setTimeout(() => setPercentageShakeFadeScale(false), 3500); // 3.5 seconds
         return () => clearTimeout(timeout);
     }, [coin.price_change_percentage_24h]);
+
+    const assetValue = coin.balance && coin.current_price
+        ? parseFloat(coin.balance) * coin.current_price
+        : null;
 
     return (
         <div
@@ -123,14 +127,14 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                         <span className="text-xl font-semibold text-zinc-100 capitalize">{coin.symbol}</span>
                     </div>
                     <div className={`flex items-center ${showInList ? "gap-7" : "gap-3"}`}>
-                        <span className={`relative text-2xl font-medium inline-flex items-center gap-1 ${priceBlink ? "blink" : ""}`}>
+                        <span className={`relative text-2xl font-medium inline-flex items-center gap-1 ${priceShakeFadeScale ? "smooth-shake-fade-scale" : ""}`}>
                             ${coin.current_price && FormatDecimalValue(coin.current_price)}
                         </span>
                         <span
                             className={`text-lg flex items-center gap-1 ${coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                } ${percentageBlink ? "blink" : ""}`}
+                                ? "text-green-500"
+                                : "text-red-500"
+                                } ${percentageShakeFadeScale ? "smooth-shake-fade-scale" : ""}`}
                         >
                             {coin.price_change_percentage_24h && coin.price_change_percentage_24h >= 0 ? (
                                 <TiArrowSortedUp />
@@ -141,9 +145,32 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                         </span>
                     </div>
                     {type === "sell" && (
-                        <span className="text-sm font-semibold text-zinc-100">
-                            Your Balance: {coin.balance && FormatDecimalValue(Number(coin.balance))} {coin.symbol}
-                        </span>
+                        <div className="flex flex-col mt-2 h-[80px]">
+                            <span className="text-sm text-zinc-400 mb-2">
+                                Holdings
+                            </span>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-zinc-400 mb-1">Balance</span>
+                                    <div className="flex items-center gap-1">
+                                        <span className="text-sm text-zinc-100 truncate">
+                                            {coin.balance && FormatDecimalValue(Number(coin.balance))}
+                                        </span>
+                                        <span className="text-sm text-zinc-100 min-w-[40px]">
+                                            {coin.symbol}
+                                        </span>
+                                    </div>
+                                </div>
+                                {assetValue && (
+                                    <div className="flex flex-col">
+                                        <span className="text-xs text-zinc-400 mb-1">Total Value</span>
+                                        <span className="text-sm text-zinc-100 truncate">
+                                            ${FormatDecimalValue(assetValue)}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     )}
                 </div>
                 {showInList && (
@@ -203,9 +230,9 @@ const Coin: React.FC<CoinProps> = ({ coin, selectedCoins, handleCoinSelect, type
                             <td className="pl-2 text-right text-zinc-300 font-semibold text-sm leading-5">
                                 <span
                                     className={`text-lg flex items-center gap-1 ${coin.market_cap_change_percentage_24h &&
-                                            coin.market_cap_change_percentage_24h >= 0
-                                            ? "text-green-500"
-                                            : "text-red-500"
+                                        coin.market_cap_change_percentage_24h >= 0
+                                        ? "text-green-500"
+                                        : "text-red-500"
                                         }`}
                                 >
                                     {coin.market_cap_change_percentage_24h &&
