@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { ICoinDetails, ISwapAmount } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
@@ -78,6 +78,10 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
         setAmount(balance.formatted);
         updateSellTokenAmount(coin.id, balance.formatted);
     };
+
+    useEffect(() => {
+        setMaxAmount()
+    }, [balance])
 
     return (
         <div key={coin.id} className="mb-3 bg-zinc-800 py-2 px-3 rounded-lg">
