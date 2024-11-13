@@ -189,10 +189,17 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
                         onClick={handleSelectOrClearAll} // Toggle between select all and clear all
                         className="w-fit py-2 px-4 whitespace-nowrap bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200"
                     >
+                        Memefolio: ${totalPortfolioValue} {/* Dynamic button text */}
+                    </button>
+                    <button
+                        onClick={handleSelectOrClearAll} // Toggle between select all and clear all
+                        className="w-fit py-2 px-4 whitespace-nowrap bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200"
+                    >
                         {areAllTokensSelected ? "Clear All" : "Select All"} {/* Dynamic button text */}
                     </button>
                     <ViewToggle />
                 </div>
+
             </div>
             <main className="flex-grow overflow-hidden relative">
                 <div className={`h-full overflow-auto`}>
