@@ -22,6 +22,22 @@ const config: Config = {
       backgroundImage: {
         "primary-gradient": "linear-gradient(to bottom, #5566FF, #333D99)",
       },
+      keyframes: {
+        highlightGreen: {
+          '0%': { color: 'rgba(34, 197, 94, 0.2)' },
+          '100%': { color: 'rgba(34, 197, 94, 0.2)' },
+          // '100%': { color: 'transparent' },
+        },
+        highlightRed: {
+          '0%': { color: 'rgba(239, 68, 68, 0.2)' },
+          '100%': { color: 'rgba(239, 68, 68, 0.2)' },
+          // '100%': { color: 'transparent' },
+        },
+      },
+      animation: {
+        'highlight-green': 'highlightGreen 1s ease-out',
+        'highlight-red': 'highlightRed 1s ease-out',
+      },
     },
   },
   plugins: [],

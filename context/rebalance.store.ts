@@ -13,6 +13,11 @@ export interface IRebalanceStore {
     updateSellTokenAmount: (tokenId: string, amount: string) => void;
     addSellTokenBalance: (tokenId: string, balance: string) => void;
     clearSelectedTokens: () => void;
+
+    swapAmounts: { [key: string]: { amountIn: string; amountOut: string } };
+    setSwapAmounts: (amounts: { [key: string]: { amountIn: string; amountOut: string } }) => void;
+    clearSwapAmount: () => void;
+    selectAllSellTokens: (tokens: ICoinDetails[]) => void; // New function
 }
 
 // Create the Zustand store
@@ -93,4 +98,27 @@ export const useRebalanceStore = create<IRebalanceStore>((set) => ({
             };
         }),
     clearSelectedTokens: () => set({ buyTokens: [], sellTokens: [] }),
+
+
+
+    swapAmounts: {},
+    setSwapAmounts: (amounts) =>
+        set((state) => ({
+            swapAmounts: {
+                ...state.swapAmounts,
+                ...amounts, // Merge new amounts with existing ones
+            },
+        })),
+
+    clearSwapAmount: () => set({ swapAmounts: {} }),
+
+    selectAllSellTokens: (tokens) =>
+        set((state) => ({
+            sellTokens: tokens.filter(
+                (token) => !state.sellTokens.some((t) => t.id === token.id) // Avoid duplicates
+            ),
+            buyTokens: state.buyTokens.filter(
+                (token) => !tokens.some((t) => t.id === token.id) // Remove tokens from buy list
+            ),
+        })),
 }));
