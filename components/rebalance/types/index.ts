@@ -31,6 +31,7 @@ export interface ICoinDetails {
     contract_address?: string;
     amount?: string;
     balance?: string;
+    value?: string;
 }
 
 export interface ISwapAmount {
@@ -52,6 +53,7 @@ export interface CoinProps {
     type: string;
     wishlist?: any //{ coinId: string }[]; // Adjust this type if your wishlist structure is different
     toggleWishlist?: (coinId: string) => Promise<void>;
+    showInList: boolean;
 }
 
 export interface MemeCoinGridProps {

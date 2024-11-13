@@ -10,7 +10,6 @@ export default function Home() {
     return (
         <div className="flex flex-col h-screen bg-[#131313]">
             <MetaTags />
-            {/* <WalletInfo /> */}
             <Header />
 
             <main className="flex flex-col flex-1 overflow-hidden">

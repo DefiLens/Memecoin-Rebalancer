@@ -2,15 +2,13 @@ import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RxCross1 } from "react-icons/rx";
 import Loader from "./Loader";
-import { ButtonState, ICoinDetails, ISwapAmount } from "../rebalance/types";
+import { ButtonState, ISwapAmount } from "../rebalance/types";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import { WalletCallReceipt } from "viem";
 import { error, loading, success } from "../../public/assets/gifs";
-import Image from "next/image";
 import TransactionStatus from "../rebalance/TransactionStatus";
-import { SiTicktick } from "react-icons/si";
-import Link from "next/link";
-
+import { FaExchangeAlt } from "react-icons/fa";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
 interface ReviewRebalanceProps {
     swapAmounts: { [key: string]: ISwapAmount };
     buttonState: ButtonState;
@@ -51,11 +49,11 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
 
     const imageSrc = getImageSrc();
     return (
-        <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-50 text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
-            <div className="min-h-52 w-[35rem] flex flex-col justify-center items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
+        <div className="fixed w-full h-full flex justify-center items-center top-0 right-0 left-0 bottom-0 z-[70] text-zinc-100 backdrop-brightness-50 p-5 md:p-10">
+            <div className="min-h-52 w-[35rem] flex flex-col justify-between items-center gap-2 bg-B1 border-2 border-zinc-800 rounded-2xl relative p-3">
                 {/* Heading */}
                 <div className="w-full flex items-center justify-between text-center text-xl md:text-2xl font-bold">
-                    <span>Review Batch</span>
+                    <span>Review Cart</span>
                     <button
                         onClick={() => {
                             toggleReview();
@@ -66,16 +64,8 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                         <RxCross1 />
                     </button>
                 </div>
-                {/* {imageSrc ? (
-                    <Image
-                        src={imageSrc}
-                        alt="transaction_state_icon"
-                        className="w-20 h-20 md:w-28 md:h-28"
-                        width={100}
-                        height={100}
-                    />
-                ) : null} */}
-                {status === "idle" && (
+
+                {(status === "idle" || status === "pending") && (
                     <div className="h-full w-full flex flex-col justify-center items-center gap-2">
                         <div className="w-full border-3 max-h-96 overflow-auto flex flex-col justify-start items-center gap-5 my-5">
                             <div className="w-full max-h-full overflow-auto flex flex-col gap-5">
@@ -158,7 +148,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                                                     {Number(swapAmounts[coin.id].amountIn).toPrecision(
                                                                         10
                                                                     )}{" "}
-                                                                    {coin.symbol}
+                                                                    {coin.name}
                                                                 </p>
                                                             )}
                                                         </div>
@@ -174,7 +164,7 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                                                         </div>
                                                         <div className="flex flex-col justify-start items-start">
                                                             <span className="text-lg font-semibold text-B200">
-                                                                Usdc
+                                                                USDC
                                                             </span>
                                                             {swapAmounts[coin.id] && (
                                                                 <p className="inline-flex items-center gap-2 text-sm text-zinc-400 text-font-600">
@@ -210,6 +200,15 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                         </table>
                     </div>
                 )}
+                {status === "error" && (
+                    <div className="flex flex-col justify-between p-4">
+                        <div className="flex flex-col gap-4 justify-center items-center">
+                            <MdOutlineReportGmailerrorred className="text-cyan-500 text-7xl" />
+
+                            <h1 className="text-xl font-semibold mb- 2">Transaction Failed</h1>
+                        </div>
+                    </div>
+                )}
                 {status != "success" && (
                     <button
                         onClick={handleExecute}
@@ -225,13 +224,14 @@ const ReviewRebalance: React.FC<ReviewRebalanceProps> = ({
                         }
                     >
                         {(buttonState === "quoting" || buttonState === "rebalancing") && <Loader />}
-                        Execute
+                        <>
+                            <FaExchangeAlt /> {/* Exchange Icon */}
+                            Execute Cart
+                        </>
                     </button>
                 )}
 
-                {/* {status === "success" &&  */}
-                <TransactionStatus callStatus={callsStatus} />
-                {/* } */}
+                {status === "success" && <TransactionStatus callStatus={callsStatus} />}
             </div>
         </div>
     );

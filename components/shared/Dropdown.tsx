@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { USDC_ADDRESS, memeCoinData } from '../utils/constant';
+import { USDC_ADDRESS, memeCoinData } from '../../utils/constant';
 
 interface Token {
   id: string;
@@ -29,7 +29,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selectedToken, setSelectedToken }) 
       id: coin.id,
       name: coin.name,
       image: coin.image.small,
-      address: coin.detail_platforms.base.contract_address,
+      address: coin?.detail_platforms?.base?.contract_address,
     })),
   ];
 
@@ -44,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selectedToken, setSelectedToken }) 
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-zinc-700 p-4 rounded-lg text-white hover:bg-zinc-600 transition-colors"
+        className="w-full flex items-center justify-between bg-zinc-700 px-3 py-2 rounded-lg text-white hover:bg-zinc-600 transition-colors"
       >
         <div className="flex items-center">
           {selectedTokenInfo && (

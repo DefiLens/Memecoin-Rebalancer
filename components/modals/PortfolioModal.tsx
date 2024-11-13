@@ -1,35 +1,30 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Coin from "./Coin";
-import { useGlobalStore } from "../../context/global.store";
-import { useRebalanceStore } from "../../context/rebalance.store";
-import { ICoinDetails } from "./types";
+import { FiX } from "react-icons/fi";
+import Image from "next/image";
+import { ICoinDetails } from "../rebalance/types";
+import { DataState } from "../../context/dataProvider";
+import Loader from "../shared/Loader";
 import { useAccount } from "wagmi";
+import { useGlobalStore } from "../../context/global.store";
 import Moralis from 'moralis';
 import { formatUnits } from "viem";
 import { toast } from "react-toastify";
-import { DataState } from "../../context/dataProvider";
-import { HiOutlineViewGrid } from "react-icons/hi";
-import { FaList } from "react-icons/fa";
 
-const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount }) => {
+// Portfolio Component
+interface PortfolioModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const PortfolioModal: React.FC<PortfolioModalProps> = ({ isOpen, onClose }) => {
+    // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
     const { address } = useAccount();
     const { allCoins } = useGlobalStore();
-    const { sellTokens, toggleSellToken } = useRebalanceStore();
-    const [displayedCoins, setDisplayedCoins] = useState<ICoinDetails[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
     const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
     const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
     const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
     const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
     const [hasInitialFetch, setHasInitialFetch] = useState<boolean>(false);
-    // const { isTokenBalanceLoading, tokenBalances, totalPortfolioValue } = DataState();
-    const [showInList, setShowInList] = useState(false);
-
-    displayedCoins.sort((a, b) => {
-        const aValue = a.balance && a.current_price ? Number(a.balance) * a.current_price : 0;
-        const bValue = b.balance && b.current_price ? Number(b.balance) * b.current_price : 0;
-        return bValue - aValue; // Sort in descending order (highest value first)
-    });
 
     async function initializeMoralis() {
         if (!isMoralisInitialized) {
@@ -131,46 +126,72 @@ const SellTokens: React.FC<{ resetSwapAmount: () => void }> = ({ resetSwapAmount
       }, [address, allCoins, fetchBalances, hasInitialFetch]);
       
 
-    useEffect(() => {
-        let filteredCoins = tokenBalances.filter(
-            (coin: ICoinDetails) =>
-                coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                coin.symbol.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setDisplayedCoins(filteredCoins);
-    }, [tokenBalances, searchTerm]);
-
+    if (!isOpen) return null;
     return (
-        <div className="w-full flex flex-col gap-4">
-            <input
-                type="text"
-                placeholder="Search memecoins..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-zinc-700 p-2 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none z-10"
-            />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-2">
+            <div className="bg-zinc-800 p-3 sm:p-6 rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col">
+                <div className="flex justify-between items-center mb-6">
+                    <div>
+                        <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">Token Portfolio</h3>
+                        <p className="text-xl text-gray-300 mt-2">Total Value: ${totalPortfolioValue.toFixed(2)}</p>
+                    </div>
+                    <button onClick={onClose} className="text-gray-400 hover:text-white">
+                        <FiX size={24} />
+                    </button>
+                </div>
 
-            <div
-                className={`grid ${
-                    showInList ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-                } gap-2 hide_scrollbar`}
-            >
-                {displayedCoins.map(
-                    (coin: ICoinDetails) =>
-                        parseFloat(coin.balance || "0") > 0 && (
-                            <Coin
-                                key={coin.id}
-                                coin={coin}
-                                selectedCoins={sellTokens}
-                                handleCoinSelect={toggleSellToken}
-                                type={"sell"}
-                                showInList={showInList}
-                            />
-                        )
-                )}
+                <div className="overflow-y-auto flex-grow">
+                    <table className="w-full text-left">
+                        <thead className="sticky top-0 bg-zinc-900">
+                            <tr className="text-gray-400 border-b border-gray-700">
+                                <th className="py-4 px-6 text-lg font-bold">Token</th>
+                                <th className="py-4 px-6 text-lg font-bold">Balance</th>
+                                <th className="py-4 px-6 text-lg font-bold">Price</th>
+                                <th className="py-4 px-6 text-lg font-bold">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tokenBalances.map(
+                                (token: ICoinDetails) =>
+                                    parseFloat(token.balance || "0") > 0 && (
+                                        <tr key={token.id} className="border-b border-gray-700 text-white">
+                                            <td className="py-4 px-6 flex items-center">
+                                                <div className="h-6 w-6">
+                                                    <Image
+                                                        src={token.image}
+                                                        alt={token.name}
+                                                        width={50}
+                                                        height={50}
+                                                        className="mr-6 rounded-full"
+                                                    />
+                                                </div>
+                                                <span className="text-lg ml-4 font-semibold whitespace-nowrap">
+                                                    {token.name}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-6 text-lg font-semibold">
+                                                {parseFloat(token.balance || "0").toFixed(6)}
+                                            </td>
+                                            <td className="py-4 px-6 text-lg font-semibold">
+                                                ${token.current_price.toFixed(6)}
+                                            </td>
+                                            <td className="py-4 px-6 text-lg font-semibold">
+                                                ${parseFloat(token.value || "0").toFixed(2)}
+                                            </td>
+                                        </tr>
+                                    )
+                            )}
+                        </tbody>
+                    </table>
+                    {isTokenBalanceLoading && (
+                        <div className="flex items-center justify-center text-center py-4 text-white mt-5">
+                            <Loader />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 };
 
-export default SellTokens;
+export default PortfolioModal;

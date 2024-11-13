@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { ICoinDetails, ISwapAmount } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
-import FormatDecimalValue from "../base/FormatDecimalValue";
 import { ISwapData } from "./MemecoinsRebalancer";
 import { useAccount } from "wagmi";
 import { useBalance } from "wagmi";
@@ -80,6 +79,10 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
         updateSellTokenAmount(coin.id, balance.formatted);
     };
 
+    useEffect(() => {
+        setMaxAmount()
+    }, [balance])
+
     return (
         <div key={coin.id} className="mb-3 bg-zinc-800 py-2 px-3 rounded-lg">
             <div className="flex items-center justify-between mb-2 capitalize">
@@ -119,7 +122,7 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
             <div className="flex capitalize items-center justify-between gap-4 px-1">
                 {swapAmounts[coin.id] && (
                     <span className="text-xs text-cyan-500">
-                        {Number(swapAmounts[coin.id].amountIn).toPrecision(4)} {coin.symbol.toLocaleUpperCase()} ={" "}
+                        {Number(swapAmounts[coin.id].amountIn)} {coin.symbol.toLocaleUpperCase()} ={" "}
                         {Number(swapAmounts[coin.id].amountOut)} USDC
                     </span>
                 )}
