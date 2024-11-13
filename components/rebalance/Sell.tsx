@@ -27,7 +27,7 @@ export type SortKey =
 export type SortOrder = "asc" | "desc";
 
 const Sell: React.FC<MemeCoinGridProps> = () => {
-    const { selectAllSellTokens } = useRebalanceStore();
+    const { selectAllSellTokens, clearAllSellTokens, sellTokens } = useRebalanceStore();
     const { viewMode } = DataState();
     const { allCoins } = useGlobalStore();
     const [searchTerm, setSearchTerm] = useState("");
@@ -115,11 +115,11 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
         } finally {
             setIsTokenBalanceLoading(false);
         }
-    }, [address, allCoins]);
+    }, [address]);
 
     useEffect(() => {
         if (address && allCoins) fetchBalances();
-    }, [address, allCoins]);
+    }, [address]);
 
     useEffect(() => {
         let filteredCoins = tokenBalances.filter(
@@ -166,8 +166,17 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
         setSortConfig({ key, order });
     };
 
-    const handleSelectAll = () => {
-        selectAllSellTokens(currentTokens);
+    const areAllTokensSelected = displayedCoins.every((token) =>
+        sellTokens.some((selectedToken) => selectedToken.id === token.id)
+    );
+
+    const handleSelectOrClearAll = () => {
+        if (areAllTokensSelected) {
+            clearAllSellTokens(); // Clear all tokens if all are selected
+        } else {
+            clearAllSellTokens()
+            selectAllSellTokens(displayedCoins); // Select all tokens if not all are selected
+        }
     };
 
     return (
@@ -176,13 +185,13 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
                 <TabBar />
                 <div className="flex items-center justify-end p-2 gap-3">
                     <SearchInput value={searchTerm} onChange={setSearchTerm} />
-                    <ViewToggle />
                     <button
-                        onClick={handleSelectAll}
-                        className={`w-full py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200`}
+                        onClick={handleSelectOrClearAll} // Toggle between select all and clear all
+                        className="w-fit py-2 px-4 whitespace-nowrap bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200"
                     >
-                        Select All
+                        {areAllTokensSelected ? "Clear All" : "Select All"} {/* Dynamic button text */}
                     </button>
+                    <ViewToggle />
                 </div>
             </div>
             <main className="flex-grow overflow-hidden relative">
