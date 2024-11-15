@@ -118,7 +118,7 @@ const OneToken: React.FC<OneTokenProps> = ({ token, index, action }: any) => {
                     </div>
                     <div>
                         <div className="text-sm font-semibold text-zinc-100 flex items-center gap-1">
-                            <span className="text-xs font-medium">{token.symbol.toUpperCase()}/SOL</span>
+                            <span className="text-xs font-medium">{token.symbol.toUpperCase()}</span>
                             <img className="h-3.5 w-3.5" src="/base.svg" alt="Pump Fun" />
                         </div>
                         <div className="text-xs font-light text-zinc-400">{token.name}</div>
