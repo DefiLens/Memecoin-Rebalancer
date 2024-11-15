@@ -1,13 +1,11 @@
 import React from "react";
-import { ICoinDetails, ISwapAmount } from "./types";
+import { ICoinDetails } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import { RxCross1 } from "react-icons/rx";
-import { ISwapData } from "./MemecoinsRebalancer";
 import FormatDecimalValue from "../shared/FormatDecimalValue";
 
 interface SelectedSellTokenProps {
     coin: ICoinDetails;
-    swapData: ISwapData[] | null;
     percentages: { [key: string]: string };
     handlePercentageChange: (id: string, value: string) => void;
     swapAmounts: { [key: string]: { amountIn: string; amountOut: string } };
@@ -15,7 +13,6 @@ interface SelectedSellTokenProps {
 
 const SelectedBuyToken: React.FC<SelectedSellTokenProps> = ({
     coin,
-    swapData,
     percentages,
     handlePercentageChange,
     swapAmounts,

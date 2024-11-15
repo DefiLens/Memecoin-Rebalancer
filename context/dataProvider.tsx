@@ -7,14 +7,30 @@ import { toast } from "react-toastify";
 import { useGlobalStore } from "./global.store"; // Zustand store
 import { useAccount } from "wagmi";
 import { Address, formatUnits } from "viem";
-import Moralis from 'moralis';
+import Moralis from "moralis";
 
 BigNumber.config({ DECIMAL_PLACES: 10 });
-export const DataContext = createContext<any | null>(null);
+// Define the context type
+type DataContextType = {
+    wishlist: string[];
+    setWishlist: any;
+    viewMode: "list" | "grid";
+    setViewMode: (mode: "list" | "grid") => void;
+};
+
+export const DataContext = createContext<any | undefined>(undefined);
 
 const DataProvider = ({ children }: any) => {
     const { address } = useAccount();
     const { allCoins, setAllCoins, activeFilter } = useGlobalStore(); // Get the active filter from Zustand
+    const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+
+    useEffect(() => {
+        if(!address) return;
+        if (typeof window !== "undefined") {
+            localStorage.setItem("viewMode", viewMode);
+        }
+    }, [address]);
 
     const fetchCoins = useCallback(async () => {
         try {
@@ -49,90 +65,6 @@ const DataProvider = ({ children }: any) => {
         return () => clearInterval(intervalId);
     }, [fetchCoins]);
 
-    //Tokens with balances
-    // const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
-    // const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
-    // const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
-    // const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
-
-    // async function initializeMoralis() {
-    //     if (!isMoralisInitialized) {
-    //         try {
-    //             await Moralis.start({
-    //                 apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY
-    //             });
-    //             setIsMoralisInitialized(true);
-    //         } catch (error) {
-    //             if (!(error as Error).message.includes('Modules are started already')) {
-    //                 throw error;
-    //             }
-    //         }
-    //     }
-    // }
-
-    // const fetchBalances = useCallback(async () => {
-    //     if (!address) return;
-    //     setIsTokenBalanceLoading(true);
-    //     try {
-
-    //         // alert("address" +address)
-    //         await initializeMoralis();
-    //         const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
-    //             "chain": "0x2105",
-    //             "address": address //"0xb274381A8960fDd2c6c58Ecc6A6407f5e70A711C"
-    //         });
-
-    //         if (!response || !response.jsonResponse) {
-    //             console.error("Invalid response from Moralis");
-    //             return;
-    //         }
-
-    //         let totalValue = 0;
-    //         const balances = response.jsonResponse
-    //             .map((result: any) => {
-    //                 if (BigInt(result.balance) > 0) {
-    //                     const token = allCoins.find(
-    //                         (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
-    //                     );    
-    //                     if (!token) {
-    //                         console.error(`Token not found for address: ${result.token_address}`);
-    //                         return null;
-    //                     }
-    //                     const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
-    //                     const price = token.current_price || 0;
-    //                     const value = parseFloat(balance) * price;
-    //                     totalValue += value;
-    //                         return {
-    //                         ...token,
-    //                         balance: balance.toString(),
-    //                         value: value.toFixed(2),
-    //                     };
-    //                 } else {
-    //                     console.warn(`Zero balance for token address: ${result.token_address}`);
-    //                     return null;
-    //                 }
-    //             })
-    //             .filter((token: any) => token !== null); // Filter out any null values
-    
-    //         // console.log("Final Balances:", balances);
-    //         // console.log("Total Portfolio Value:", totalValue.toFixed(2));
-
-    //         setTokenBalances(balances);
-    //         setTotalPortfolioValue(totalValue);
-    //     } catch (error) {
-    //         console.error("Error fetching balances:", error);
-    //         toast.error("Failed to fetch token balances");
-    //     } finally {
-    //         setIsTokenBalanceLoading(false);
-    //     }
-    // }, [address, allCoins]);
-
-    // useEffect(() => {
-    //     if (address && allCoins.length > 0) {
-    //         fetchBalances();
-    //     }
-    // }, [address, fetchBalances]);
-
     const [wishlist, setWishlist] = useState<string[]>([]);
 
     const fetchWishlist = useCallback(async () => {
@@ -161,11 +93,10 @@ const DataProvider = ({ children }: any) => {
     return (
         <DataContext.Provider
             value={{
-                // isTokenBalanceLoading,
-                // tokenBalances,
-                // totalPortfolioValue,
                 wishlist,
-                setWishlist
+                setWishlist,
+                viewMode,
+                setViewMode,
             }}
         >
             {children}

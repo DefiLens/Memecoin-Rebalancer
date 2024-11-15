@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { ICoinDetails, ISwapAmount } from "./types";
+import { ICoinDetails } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
-import { ISwapData } from "./MemecoinsRebalancer";
 import { useAccount } from "wagmi";
 import { useBalance } from "wagmi";
 import { Address } from "viem";
-import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
+import { incresePowerByDecimals } from "../../utils/helper";
 
 import { BigNumber as bg } from "bignumber.js";
 bg.config({ DECIMAL_PLACES: 20 });
 
 interface SelectedSellTokenProps {
     coin: ICoinDetails;
-    swapData: ISwapData[] | null;
     swapAmounts: { [key: string]: { amountIn: string; amountOut: string } };
 }
 
-const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, swapAmounts }) => {
+const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapAmounts }) => {
     const { updateSellTokenAmount, removeSellToken } = useRebalanceStore();
     const [amount, setAmount] = useState<string>("");
     const { address } = useAccount();
@@ -80,7 +78,9 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
     };
 
     useEffect(() => {
-        setMaxAmount()
+        if (balance) {
+            setMaxAmount()
+        }
     }, [balance])
 
     return (
