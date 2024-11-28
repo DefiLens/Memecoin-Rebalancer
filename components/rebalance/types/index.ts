@@ -27,9 +27,13 @@ export interface ICoinDetails {
     price_change_percentage_1h_in_currency: number;
     price_change_percentage_24h_in_currency: number;
     price_change_percentage_7d_in_currency: number;
+
+    detail_platforms: {
+        base: { contract_address: string }
+    },
     // Additional fields to be merged from frontend
     decimal_place?: number;
-    contract_address?: string;
+    // contract_address?: string;
     amount?: string;
     balance?: string;
     value?: string;

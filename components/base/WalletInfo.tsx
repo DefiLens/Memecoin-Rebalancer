@@ -130,7 +130,7 @@ const WalletInfo: React.FC = () => {
 
             {/* Modal components (kept the same) */}
             {showDepositModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                <div className="fixed inset-0 bg-zinc-950 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-zinc-800 p-6 rounded-lg max-w-2xl w-full relative">
                         <button
                             onClick={() => setShowDepositModal(false)}

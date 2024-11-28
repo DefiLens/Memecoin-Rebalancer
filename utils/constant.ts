@@ -42,13 +42,13 @@ export const meta = {
         "Effortlessly manage your memecoin portfolio with DefiLens Memecoin Rebalancer. Batch buy across chains, enjoy gasless trading, automate trades with set conditions, and stay updated on the latest trends - all without fees.",
     keywords:
         "defi, base, acccount abstraction, smart account, trading, batching, rebalance, Memecoin, Portfolio management, Gasless trading, Automated trades, Batch buying, Crypto trends, DefiLens, Multi-chain support, Trading without fees, Market updates",
-    url: "https://memes.defilens.tech",
-    image: "https://memes.defilens.tech/metacover.png",
-    app: "https://memes.defilens.tech/",
-    SITE_NAME: "https://memes.defilens.tech/",
-    APP_NAME: "DefiLens",
-    username: "@DefiLensTech",
-    email: "contact@defilens.com",
+    url: "https://base.snapbam.fun/",
+    image: "https://base.snapbam.fun/",
+    app: "https://base.snapbam.fun/home_screenshot.png",
+    SITE_NAME: "snapbam.fun",
+    APP_NAME: "Snapbam",
+    username: "@Snapbam",
+    email: "contact@snapbam.fun",
 };
 
 import meme_coin_details from './meme_coin_details.json';

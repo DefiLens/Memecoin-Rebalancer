@@ -4,7 +4,7 @@ function FormatDecimalValue(value: number): JSX.Element {
   const parts = value.toFixed(18).toString().split('.');
 
   if (parts.length < 2) {
-    return <span>{value}</span>; // Return directly if no decimal part
+    return <span>{value.toFixed(4)}</span>; // Return directly if no decimal part
   }
 
   const decimalPart = parts[1];
