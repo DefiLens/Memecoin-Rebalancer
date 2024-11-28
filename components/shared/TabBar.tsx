@@ -54,4 +54,9 @@ export const tabList = [
         href: "/bookmarks",
         icon: TiStarOutline,
     },
+    {
+        name: "Wallet",
+        href: "/wallet",
+        icon: TiStarOutline,
+    },
 ];

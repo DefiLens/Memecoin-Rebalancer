@@ -1,21 +1,17 @@
+"use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ICoinDetails, MemeCoinGridProps } from "./types";
+import MainLayout from "../../components/layouts/MainLayout";
 import { useGlobalStore } from "../../context/global.store";
-import Loader from "../shared/Loader";
-import TokenList from "../Token/TokenList";
-import TokenGrid from "../Token/TokenGrid";
-import { FaList, FaTh } from "react-icons/fa";
 import { useAccount } from "wagmi";
 import { formatUnits } from "viem";
 import { toast } from "react-toastify";
 import Moralis from "moralis";
-import TabBar from "../shared/TabBar";
 import { DataState } from "../../context/dataProvider";
-import ViewToggle from "../shared/ViewToggle";
-import { SearchInput } from "../shared/Search";
 import { useRebalanceStore } from "../../context/rebalance.store";
-import OneTokenSkeleton from "../skeleton/OneTokenSkeleton";
-import OneGridTokenSkeleton from "../skeleton/OneGridTokenSkeleton";
+import { ICoinDetails } from "../../components/rebalance/types";
+import Loader from "../../components/shared/Loader";
+import TokenList from "../../components/Token/TokenList";
+import TokenGrid from "../../components/Token/TokenGrid";
 import { BASE_URL } from "../../utils/keys";
 
 export type SortKey =
@@ -29,7 +25,7 @@ export type SortKey =
   | "total_volume";
 export type SortOrder = "asc" | "desc";
 
-const Sell: React.FC<MemeCoinGridProps> = () => {
+const Bookmark = () => {
   const { selectAllSellTokens, clearAllSellTokens, sellTokens } = useRebalanceStore();
   const { viewMode } = DataState();
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +42,6 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
   const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
   const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
   const [hasInitialFetch, setHasInitialFetch] = useState<boolean>(false);
-  const [hasCalledFunction, setHasCalledFunction] = useState(false);
 
   async function initializeMoralis() {
     if (!isMoralisInitialized) {
@@ -64,12 +59,9 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
   }
 
   const fetchBalances = useCallback(async () => {
+    if (!address) return;
+    setIsTokenBalanceLoading(true);
     try {
-      if (!address) return;
-      setHasCalledFunction(true);
-      setIsTokenBalanceLoading(true);
-      setIsLoading(true);
-
       await initializeMoralis();
       const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
         chain: "0x2105",
@@ -97,7 +89,6 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
               return null;
             }
             const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
-            console.log("balance", balance);
             const price = token.current_price || 0;
             const value = parseFloat(balance) * price;
             totalValue += value;
@@ -123,7 +114,6 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
       console.error("Error fetching balances:", error);
       toast.error("Failed to fetch token balances");
     } finally {
-      setIsLoading(false);
       setIsTokenBalanceLoading(false);
     }
   }, [address]);
@@ -143,6 +133,7 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
 
   const currentTokens = useMemo(() => {
     // First, filter the tokens based on the search term
+    console.log("displayedCoins", displayedCoins);
     let result = displayedCoins.filter(
       (token: any) =>
         token.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -190,49 +181,35 @@ const Sell: React.FC<MemeCoinGridProps> = () => {
   };
 
   return (
-    <div className="w-full flex flex-col h-full">
-      <div className="bg-zinc-950 px-4 flex flex-col-reverse sm:flex-row sm:justify-between sm:items-end h-fit sm:h-14 border-y border-zinc-800">
-        {/* <TabBar /> */}
-        <div className="h-full flex items-center text-lg font-semibold">Sell Coins</div>
-        <div className="flex items-center justify-end p-2 gap-3">
-          <SearchInput value={searchTerm} onChange={setSearchTerm} />
-          <button
-            onClick={handleSelectOrClearAll} // Toggle between select all and clear all
-            className="hidden sm:inline w-fit py-2 px-4 whitespace-nowrap bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200"
-          >
-            Memefolio: ${totalPortfolioValue} {/* Dynamic button text */}
-          </button>
-          <button
-            onClick={handleSelectOrClearAll} // Toggle between select all and clear all
-            className="w-fit py-2 px-4 whitespace-nowrap bg-zinc-900 border border-zinc-800 rounded-lg text-sm text-zinc-100 transition-colors duration-200"
-          >
-            {areAllTokensSelected ? "Clear All" : "Select All"} {/* Dynamic button text */}
-          </button>
-          <ViewToggle />
+    <MainLayout>
+      <div className="w-full flex flex-col h-full">
+        <div className="bg-zinc-950 px-4 flex flex-col-reverse sm:flex-row sm:justify-between sm:items-end h-fit sm:h-14 border-y border-zinc-800">
+          <div className="h-full flex items-center text-lg font-semibold">Your Wallet</div>
+          <div className="flex items-center justify-end p-2 gap-3"></div>
         </div>
-      </div>
-      <main className="flex-grow overflow-hidden relative">
-        <div className={`h-full overflow-auto`}>
-          {isLoading && (
-            <div className="w-full flex items-center justify-center h-full">
-              {viewMode === "list" ? <OneTokenSkeleton /> : <OneGridTokenSkeleton />}
-            </div>
-          )}
-          {error && <p className="text-center text-red-500">{error}</p>}
+        <main className="flex-grow overflow-hidden relative">
+          <div className={`h-full overflow-auto`}>
+            {isLoading && (
+              <div className="w-full flex items-center justify-center h-full">
+                <Loader />
+              </div>
+            )}
+            {error && <p className="text-center text-red-500">{error}</p>}
 
-          {!isLoading && !error && (
-            <>
-              {viewMode === "list" ? (
-                <TokenList tokens={currentTokens} sortConfig={sortConfig} requestSort={requestSort} action="sell" />
-              ) : (
-                <TokenGrid tokens={currentTokens} sortConfig={sortConfig} requestSort={requestSort} action="sell" />
-              )}
-            </>
-          )}
-        </div>
-      </main>
-    </div>
+            {!isLoading && !error && (
+              <>
+                {viewMode === "list" ? (
+                  <TokenList tokens={currentTokens} sortConfig={sortConfig} requestSort={requestSort} action="sell" />
+                ) : (
+                  <TokenGrid tokens={currentTokens} sortConfig={sortConfig} requestSort={requestSort} action="sell" />
+                )}
+              </>
+            )}
+          </div>
+        </main>
+      </div>
+    </MainLayout>
   );
 };
 
-export default Sell;
+export default Bookmark;
