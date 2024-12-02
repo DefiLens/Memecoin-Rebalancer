@@ -40,6 +40,12 @@ const Header: React.FC = () => {
     setShowDropdown(false);
   });
 
+  const [showChainDropDown, setShowChainDropdown] = useState(false);
+  const selectChainRef = useRef(null);
+  useClickOutside([selectChainRef], () => {
+    setShowChainDropdown(false);
+  });
+
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
 
@@ -92,10 +98,54 @@ const Header: React.FC = () => {
 
         {/* <CoinbaseButton /> */}
         <div className="flex gap-2 items-center">
+          <div
+            onClick={() => setShowChainDropdown(!showChainDropDown)}
+            ref={selectChainRef}
+            className="relative flex justify-center items-center gap-3 px-2 sm:px-2 py-1.5 sm:py-2 rounded-xl transition duration-300 cursor-pointer bg-zinc-800 hover:bg-opacity-60"
+          >
+            <a className="tracking-wide group cursor-pointer flex text-sm font-medium text-left px-1 rounded-md items-center">
+              <div className="flex items-center gap-2">
+                <span className="h-7 w-7 text-zinc-200">
+                  <Image height={50} width={50} src="/base.svg" alt="Pump Fun" />
+                </span>
+                <span className="transition-opacity duration-75">Base</span>
+              </div>
+            </a>
+            {/* <IoIosArrowDown
+                className={`text-white text-xl transition-all duration-150 ${showChainDropDown ? "rotate-180" : ""}`}
+              /> */}
+
+            {showChainDropDown && (
+              <div className="absolute top-14 right-0 z-50 flex flex-col justify-center items-start border-1 shadow-xl rounded-lg">
+                <div className="bg-zinc-950 border border-zinc-700 w-full relative flex flex-col p-4 gap-2 cursor-default rounded-xl min">
+                  <a className="tracking-wide group cursor-pointer flex text-sm font-medium text-left rounded-md items-center px-4 py-2 bg-zinc-800 border border-zinc-600 hover:bg-opacity-70 transition-all duration-200">
+                    <div className="flex items-center gap-2">
+                      <span className="h-7 w-7 text-zinc-200">
+                        <Image height={50} width={50} src="/base.svg" alt="Pump Fun" />
+                      </span>
+                      <span className="transition-opacity duration-75">Base</span>
+                    </div>
+                  </a>
+                  <a
+                    href="https://solana.snapbam.fun/"
+                    target="_blank"
+                    className="tracking-wide group cursor-pointer flex text-sm font-medium text-left rounded-md items-center px-3 py-2 bg-zinc-800 hover:bg-opacity-70 transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="h-7 w-7 text-zinc-200">
+                        <Image height={50} width={50} src="/solana.webp" alt="Pump Fun" />
+                      </span>
+                      <span className="transition-opacity duration-75">Solana</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
           {isConnected && (
             <button
               onClick={() => setShowDepositModal(true)}
-              className="bg-zinc-800 border border-zinc-700 rounded-xl hover:bg-opacity-70 transition-all duration-200 flex items-center gap-2 pr-2 sm:pr-4 pl-2"
+              className="bg-zinc-800 border border-zinc-700 rounded-xl hover:bg-opacity-70 transition-all duration-200 flex items-center gap-2 pr-2 pl-2"
             >
               <div className="flex items-center gap-2 sm:border-r sm:border-zinc-700 p-2">
                 <Image src="/usdc.png" alt="USDC" width={20} height={20} className="rounded-full" />
@@ -103,7 +153,7 @@ const Header: React.FC = () => {
               </div>
 
               <MdOutlineFileDownload className="hidden sm:inline text-xl" />
-              <span className="hidden sm:inline">Deposit USDC</span>
+              {/* <span className="hidden sm:inline">Deposit USDC</span> */}
             </button>
           )}
           <button
