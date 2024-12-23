@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { FiCopy, FiCheck } from 'react-icons/fi';
-import { toast } from 'react-toastify';
-
+import React, { useState } from "react";
+import { FiCopy, FiCheck } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { PiCopySimple } from "react-icons/pi";
 interface CopyButtonProps {
   copy: string | undefined;
   className?: string;
+  showToast?: boolean;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ copy, className }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({ copy, className, showToast = true }) => {
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, e: React.MouseEvent) => {
+    e.stopPropagation();
     navigator.clipboard.writeText(text);
     setCopied(true);
-    toast.success("Copied to clipboard")
+    if(showToast) toast.success("Copied to clipboard");
     setTimeout(() => {
       setCopied(false);
-    }, 3000); // Hide tick icon after 3 seconds
+    }, 2000); // Hide tick icon after 3 seconds
   };
 
   return (
     <div
-      onClick={() => copyToClipboard(copy ?? '')}
-      className={`text-white rounded-md cursor-pointer ${className}`}
+      onClick={(e) => copyToClipboard(copy ?? "", e)}
+      className={`text-zinc-400 rounded-md cursor-pointer ${className}`}
     >
       {copied ? (
         <FiCheck className="text-green-500" />
       ) : (
-        <FiCopy className="" />
+        <PiCopySimple className="" />
       )}
     </div>
   );

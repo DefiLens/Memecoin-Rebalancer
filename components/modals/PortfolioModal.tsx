@@ -61,7 +61,7 @@ const PortfolioModal: React.FC<PortfolioModalProps> = ({ isOpen, onClose }) => {
                 .map((result: any) => {
                     if (BigInt(result.balance) > 0) {
                         const token = allCoins.find(
-                            (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
+                            (obj: any) => obj?.detail_platforms?.base?.toLowerCase() === result.token_address?.toLowerCase()
                         );    
                         if (!token) {
                             console.error(`Token not found for address: ${result.token_address}`);

@@ -7,173 +7,108 @@ import { toast } from "react-toastify";
 import { useGlobalStore } from "./global.store"; // Zustand store
 import { useAccount } from "wagmi";
 import { Address, formatUnits } from "viem";
-import Moralis from 'moralis';
+import Moralis from "moralis";
 
 BigNumber.config({ DECIMAL_PLACES: 10 });
-export const DataContext = createContext<any | null>(null);
+// Define the context type
+type DataContextType = {
+  wishlist: string[];
+  setWishlist: any;
+  viewMode: "list" | "grid";
+  setViewMode: (mode: "list" | "grid") => void;
+};
+
+export const DataContext = createContext<any | undefined>(undefined);
 
 const DataProvider = ({ children }: any) => {
-    const { address } = useAccount();
-    const { allCoins, setAllCoins, activeFilter } = useGlobalStore(); // Get the active filter from Zustand
+  const { address } = useAccount();
+  const { allCoins, setAllCoins, activeFilter, allCoinLoading, setAllCoinLoading } = useGlobalStore(); // Get the active filter from Zustand
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
-    const fetchCoins = useCallback(async () => {
-        try {
-            const queryParams = new URLSearchParams({
-                [activeFilter]: "desc", // Apply the active filter dynamically
-            });
-            const response = await fetch(`${BASE_URL}/swap/token?${queryParams}`);
-            const backendData: ICoinDetails[] = await response.json();
+  useEffect(() => {
+    if (!address) return;
+    if (typeof window !== "undefined") {
+      localStorage.setItem("viewMode", viewMode);
+    }
+  }, [address]);
 
-            const mergedData = backendData.map((coin) => {
-                const frontendCoin = memeCoinData.find((fcoin) => fcoin.id === coin.id);
-                if (frontendCoin && frontendCoin.detail_platforms.base) {
-                    return {
-                        ...coin,
-                        decimal_place: frontendCoin.detail_platforms.base.decimal_place,
-                        contract_address: frontendCoin.detail_platforms.base.contract_address,
-                    };
-                }
-                return coin;
-            });
+  const fetchCoins = useCallback(async () => {
+    try {
+      setAllCoinLoading(true);
+      const queryParams = new URLSearchParams({
+        [activeFilter]: "desc", // Apply the active filter dynamically
+      });
+      const response = await fetch(`${BASE_URL}/swap/token?${queryParams}`);
+      const backendData: ICoinDetails[] = await response.json();
 
-            setAllCoins(mergedData); // Update Zustand state with merged data
-        } catch (error) {
-            console.error("Error fetching coin data:", error);
-            toast.error("Failed to fetch memecoin list");
-        }
-    }, [setAllCoins, activeFilter]);
+      // console.log("backendData", backendData)
+      // const mergedData = backendData.map((coin) => {
+      //   const frontendCoin = memeCoinData.find((fcoin) => fcoin.id === coin.id);
+      //   if (frontendCoin && frontendCoin.detail_platforms.base) {
+      //     return {
+      //       ...coin,
+      //       decimal_place: frontendCoin.detail_platforms.base.decimal_place,
+      //       contract_address: frontendCoin.detail_platforms.base.contract_address,
+      //     };
+      //   }
+      //   return coin;
+      // });
 
-    useEffect(() => {
-        fetchCoins();
-        const intervalId = setInterval(fetchCoins, 2000); // Fetch every 60 seconds
-        return () => clearInterval(intervalId);
-    }, [fetchCoins]);
+      setAllCoins(backendData); // Update Zustand state with merged data
+    } catch (error) {
+      console.error("Error fetching coin data:", error);
+      toast.error("Failed to fetch memecoin list");
+    } finally {
+      setAllCoinLoading(false);
+    }
+  }, [setAllCoins, activeFilter]);
 
-    //Tokens with balances
-    // const [isTokenBalanceLoading, setIsTokenBalanceLoading] = useState<boolean>(false);
-    // const [tokenBalances, setTokenBalances] = useState<ICoinDetails[]>([]);
-    // const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0);
-    // const [isMoralisInitialized, setIsMoralisInitialized] = useState(false);
+  useEffect(() => {
+    fetchCoins();
+    const intervalId = setInterval(fetchCoins, 1200); // Fetch every 1.2 seconds
+    return () => clearInterval(intervalId);
+  }, [fetchCoins]);
 
-    // async function initializeMoralis() {
-    //     if (!isMoralisInitialized) {
-    //         try {
-    //             await Moralis.start({
-    //                 apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY
-    //             });
-    //             setIsMoralisInitialized(true);
-    //         } catch (error) {
-    //             if (!(error as Error).message.includes('Modules are started already')) {
-    //                 throw error;
-    //             }
-    //         }
-    //     }
-    // }
+  const [wishlist, setWishlist] = useState<string[]>([]);
 
-    // const fetchBalances = useCallback(async () => {
-    //     if (!address) return;
-    //     setIsTokenBalanceLoading(true);
-    //     try {
+  const fetchWishlist = useCallback(async () => {
+    if (!address) {
+      console.log("No user address available");
+      return;
+    }
+    try {
+      const response = await fetch(`${BASE_URL}/wishlist/${address}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch wishlist");
+      }
+      const wishlistData = await response.json();
+      setWishlist(wishlistData.map((item: { coinId: string }) => item.coinId));
+    } catch (error) {
+      console.error("Error fetching wishlist:", error);
+    }
+  }, [address]);
 
-    //         // alert("address" +address)
-    //         await initializeMoralis();
-    //         const response: any = await Moralis.EvmApi.token.getWalletTokenBalances({
-    //             "chain": "0x2105",
-    //             "address": address //"0xb274381A8960fDd2c6c58Ecc6A6407f5e70A711C"
-    //         });
+  useEffect(() => {
+    if (address) {
+      fetchWishlist();
+    }
+  }, [address]);
 
-    //         if (!response || !response.jsonResponse) {
-    //             console.error("Invalid response from Moralis");
-    //             return;
-    //         }
-
-    //         let totalValue = 0;
-    //         const balances = response.jsonResponse
-    //             .map((result: any) => {
-    //                 if (BigInt(result.balance) > 0) {
-    //                     const token = allCoins.find(
-    //                         (obj: any) => obj.contract_address?.toLowerCase() === result.token_address?.toLowerCase()
-    //                     );    
-    //                     if (!token) {
-    //                         console.error(`Token not found for address: ${result.token_address}`);
-    //                         return null;
-    //                     }
-    //                     const balance = formatUnits(BigInt(result.balance), Number(result.decimals));
-    //                     const price = token.current_price || 0;
-    //                     const value = parseFloat(balance) * price;
-    //                     totalValue += value;
-    //                         return {
-    //                         ...token,
-    //                         balance: balance.toString(),
-    //                         value: value.toFixed(2),
-    //                     };
-    //                 } else {
-    //                     console.warn(`Zero balance for token address: ${result.token_address}`);
-    //                     return null;
-    //                 }
-    //             })
-    //             .filter((token: any) => token !== null); // Filter out any null values
-    
-    //         // console.log("Final Balances:", balances);
-    //         // console.log("Total Portfolio Value:", totalValue.toFixed(2));
-
-    //         setTokenBalances(balances);
-    //         setTotalPortfolioValue(totalValue);
-    //     } catch (error) {
-    //         console.error("Error fetching balances:", error);
-    //         toast.error("Failed to fetch token balances");
-    //     } finally {
-    //         setIsTokenBalanceLoading(false);
-    //     }
-    // }, [address, allCoins]);
-
-    // useEffect(() => {
-    //     if (address && allCoins.length > 0) {
-    //         fetchBalances();
-    //     }
-    // }, [address, fetchBalances]);
-
-    const [wishlist, setWishlist] = useState<string[]>([]);
-
-    const fetchWishlist = useCallback(async () => {
-        if (!address) {
-            console.log("No user address available");
-            return;
-        }
-        try {
-            const response = await fetch(`${BASE_URL}/wishlist/${address}`);
-            if (!response.ok) {
-                throw new Error("Failed to fetch wishlist");
-            }
-            const wishlistData = await response.json();
-            setWishlist(wishlistData.map((item: { coinId: string }) => item.coinId));
-        } catch (error) {
-            console.error("Error fetching wishlist:", error);
-        }
-    }, [address]);
-
-    useEffect(() => {
-        if (address) {
-            fetchWishlist();
-        }
-    }, [address]);
-
-    return (
-        <DataContext.Provider
-            value={{
-                // isTokenBalanceLoading,
-                // tokenBalances,
-                // totalPortfolioValue,
-                wishlist,
-                setWishlist
-            }}
-        >
-            {children}
-        </DataContext.Provider>
-    );
+  return (
+    <DataContext.Provider
+      value={{
+        wishlist,
+        setWishlist,
+        viewMode,
+        setViewMode,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
 };
 export const DataState = () => {
-    return useContext(DataContext);
+  return useContext(DataContext);
 };
 
 export default DataProvider;

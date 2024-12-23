@@ -1,13 +1,11 @@
 import React from "react";
-import { ICoinDetails, ISwapAmount } from "./types";
+import { ICoinDetails } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
 import { RxCross1 } from "react-icons/rx";
-import { ISwapData } from "./MemecoinsRebalancer";
 import FormatDecimalValue from "../shared/FormatDecimalValue";
 
 interface SelectedSellTokenProps {
     coin: ICoinDetails;
-    swapData: ISwapData[] | null;
     percentages: { [key: string]: string };
     handlePercentageChange: (id: string, value: string) => void;
     swapAmounts: { [key: string]: { amountIn: string; amountOut: string } };
@@ -15,7 +13,6 @@ interface SelectedSellTokenProps {
 
 const SelectedBuyToken: React.FC<SelectedSellTokenProps> = ({
     coin,
-    swapData,
     percentages,
     handlePercentageChange,
     swapAmounts,
@@ -23,7 +20,7 @@ const SelectedBuyToken: React.FC<SelectedSellTokenProps> = ({
     const { removeBuyToken } = useRebalanceStore();
 
     return (
-        <div className="mb-3 bg-zinc-800 py-2 px-3 rounded-lg ">
+        <div className="mb-3 bg-zinc-900 py-2 px-3 rounded-lg ">
             <div className="flex items-center justify-between mb-2 capitalize">
                 <div className="flex items-center">
                     <img src={coin.image} alt={coin.symbol} className="w-8 h-8 rounded-full mr-2" />
@@ -42,7 +39,7 @@ const SelectedBuyToken: React.FC<SelectedSellTokenProps> = ({
                     inputMode="numeric"
                     value={percentages[coin.id] || ""}
                     onChange={(e) => handlePercentageChange(coin.id, e.target.value)}
-                    className="w-20 border border-zinc-700 p-1 bg-zinc-800 text-white rounded-lg sticky top-0 outline-none mr-1"
+                    className="w-20 p-1 bg-transparent text-white rounded-lg sticky top-0 outline-none mr-1 border border-zinc-700"
                     min="0"
                     max="100"
                     step="0.01"
@@ -52,7 +49,7 @@ const SelectedBuyToken: React.FC<SelectedSellTokenProps> = ({
             {swapAmounts[coin.id] && (
                 <div className="mt-2 flex capitalize items-center gap-4">
                     <span className="text-xs text-cyan-500">
-                        {Number(swapAmounts[coin.id].amountIn)} USDC ={" "}
+                        {FormatDecimalValue(Number(swapAmounts[coin.id].amountIn))} USDC ={" "}
                         {FormatDecimalValue(Number(swapAmounts[coin.id].amountOut))}{" "}
                         <span className="capitalize">{coin.symbol.toLocaleUpperCase()}</span>
                     </span>

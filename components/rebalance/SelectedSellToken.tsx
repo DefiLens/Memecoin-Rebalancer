@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { ICoinDetails, ISwapAmount } from "./types";
+import { ICoinDetails } from "./types";
 import { useRebalanceStore } from "../../context/rebalance.store";
-import { ISwapData } from "./MemecoinsRebalancer";
 import { useAccount } from "wagmi";
 import { useBalance } from "wagmi";
 import { Address } from "viem";
-import { decreasePowerByDecimals, incresePowerByDecimals } from "../../utils/helper";
+import { incresePowerByDecimals } from "../../utils/helper";
 
 import { BigNumber as bg } from "bignumber.js";
+import FormatDecimalValue from "../shared/FormatDecimalValue";
 bg.config({ DECIMAL_PLACES: 20 });
 
 interface SelectedSellTokenProps {
     coin: ICoinDetails;
-    swapData: ISwapData[] | null;
     swapAmounts: { [key: string]: { amountIn: string; amountOut: string } };
 }
 
-const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, swapAmounts }) => {
+const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapAmounts }) => {
     const { updateSellTokenAmount, removeSellToken } = useRebalanceStore();
     const [amount, setAmount] = useState<string>("");
     const { address } = useAccount();
-    const tokenAddress = coin.contract_address as Address; // Explicitly cast to Address type
+    const tokenAddress = coin.detail_platforms.base; // Explicitly cast to Address type
     const { data: balance, isLoading } = useBalance({
         address,
-        token: tokenAddress,
+        token: `0x${tokenAddress}`,
     });
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -80,11 +79,13 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
     };
 
     useEffect(() => {
-        setMaxAmount()
+        if (balance) {
+            setMaxAmount()
+        }
     }, [balance])
 
     return (
-        <div key={coin.id} className="mb-3 bg-zinc-800 py-2 px-3 rounded-lg">
+        <div key={coin.id} className="mb-3 bg-zinc-900 py-2 px-3 rounded-lg">
             <div className="flex items-center justify-between mb-2 capitalize">
                 <div className="flex items-center">
                     <img src={coin.image} alt={coin.symbol} className="w-8 h-8 rounded-full mr-2" />
@@ -102,7 +103,7 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
                     <input
                         type="text" // Change type to text
                         inputMode="numeric" // Set input mode to numeric
-                        className="bg-zinc-900 rounded-xl px-4 py-2 w-full text-zinc-200 text-base outline-none"
+                        className="bg-zinc-900 rounded-xl px-4 py-2 w-full text-zinc-200 text-base outline-none border border-zinc-700"
                         placeholder={`Amount in ${coin.symbol}`}
                         value={amount}
                         onChange={setAmountChange}
@@ -122,12 +123,12 @@ const SelectedSellToken: React.FC<SelectedSellTokenProps> = ({ coin, swapData, s
             <div className="flex capitalize items-center justify-between gap-4 px-1">
                 {swapAmounts[coin.id] && (
                     <span className="text-xs text-cyan-500">
-                        {Number(swapAmounts[coin.id].amountIn)} {coin.symbol.toLocaleUpperCase()} ={" "}
-                        {Number(swapAmounts[coin.id].amountOut)} USDC
+                        {FormatDecimalValue(Number(swapAmounts[coin.id].amountIn))} {coin.symbol.toLocaleUpperCase()} ={" "}
+                        {FormatDecimalValue(Number(swapAmounts[coin.id].amountOut))} USDC
                     </span>
                 )}
                 <span className="text-xs text-cyan-500 ml-auto">
-                    Balance: {Number(balance?.formatted)} {coin.symbol.toLocaleUpperCase()}
+                    Balance: {FormatDecimalValue(Number(balance?.formatted))} {coin.symbol.toLocaleUpperCase()}
                 </span>
             </div>
         </div>

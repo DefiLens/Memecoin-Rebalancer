@@ -10,8 +10,6 @@ export interface ICoinDetails {
     total_volume: number;
     high_24h: number;
     low_24h: number;
-    price_change_24h: number;
-    price_change_percentage_24h: number;
     market_cap_change_24h: number;
     market_cap_change_percentage_24h: number;
     circulating_supply: number;
@@ -24,11 +22,18 @@ export interface ICoinDetails {
     atl_change_percentage: number;
     atl_date: string;
     last_updated: string;
+    price_change_24h: number;
+    price_change_percentage_24h: number;
+    price_change_percentage_1h_in_currency: number;
     price_change_percentage_24h_in_currency: number;
     price_change_percentage_7d_in_currency: number;
+
+    detail_platforms: {
+        base: { contract_address: string }
+    },
     // Additional fields to be merged from frontend
     decimal_place?: number;
-    contract_address?: string;
+    // contract_address?: string;
     amount?: string;
     balance?: string;
     value?: string;
@@ -59,7 +64,7 @@ export interface CoinProps {
 export interface MemeCoinGridProps {
     // selectedCoins: ICoinDetails[];
     // handleCoinSelect: (coin: ICoinDetails) => Promise<void>;
-    resetSwapAmount: () => void;
+    // resetSwapAmount: () => void;
 }
 
 export interface ApprovalAddress {
